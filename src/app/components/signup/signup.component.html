@@ -1,0 +1,77 @@
+<div class="container fade-in" style="font-family: Montserrat;">
+  <div class="row justify-content-md-center mt-4 mb-4 align-items-center">
+    <div class="col-md-5">
+      <div class="card mx-auto shadow-lg mt-5 mb-5 border-0 rounded-0 p-3">
+        <h5 class="text-muted text-center mt-2 fw-light fs-3">
+          Crear cuenta
+        </h5>
+        <div class="card-body">
+          <form class="px-4 py-3 needs-validation" [formGroup]="signUpForm" (ngSubmit)="signUp()">
+            <div class="row">
+              <!--Nombre-->
+              <div class="mb-4 col-md-6">
+                <input type="text" class="form-control text-muted p-2" required placeholder="Nombre"
+                  formControlName="nameSignUp" maxlength="40" [ngClass]="{'is-invalid': signUpForm.get('nameSignUp')?.errors 
+                  && (signUpForm.get('nameSignUp')?.dirty || signUpForm.get('nameSignUp')?.touched)}">
+                <div *ngIf="signUpForm.get('nameSignUp')?.invalid && (signUpForm.get('nameSignUp')?.dirty || signUpForm.get('nameSignUp')?.touched)">
+                  <p class="text-danger">Ingrese su nombre</p>
+                </div>
+              </div>
+              <!--Apellido-->
+              <div class="mb-4 col-md-6">
+                <input type="text" class="form-control text-muted p-2" required placeholder="Apellido"
+                  formControlName="lastnameSignUp" maxlength="40"
+                  [ngClass]="{'is-invalid': signUpForm.get('lastnameSignUp')?.errors 
+                  && (signUpForm.get('lastnameSignUp')?.dirty || signUpForm.get('lastnameSignUp')?.touched) && 'is-invalid'}">
+                <div *ngIf="signUpForm.get('lastnameSignUp')?.invalid && (signUpForm.get('lastnameSignUp')?.dirty || signUpForm.get('lastnameSignUp')?.touched)">
+                  <p class="text-danger">Ingrese su apellido</p>
+                </div>
+              </div>
+            </div>
+            <!--Correo-->
+            <div class="mb-4">
+              <input type="email" class="form-control text-muted p-2" required placeholder="Email" maxlength="50"
+                formControlName="emailSignUp" maxlength="60"
+                [ngClass]="{'is-invalid': signUpForm.get('emailSignUp')?.errors 
+                && (signUpForm.get('emailSignUp')?.dirty || signUpForm.get('emailSignUp')?.touched) && 'is-invalid'}">
+              <div *ngIf="signUpForm.get('emailSignUp')?.invalid && (signUpForm.get('emailSignUp')?.dirty || signUpForm.get('emailSignUp')?.touched)">
+                <p class="text-danger">Ingrese un correo valido</p>
+              </div>
+            </div>
+            <!--Contraseña-->
+            <div class="mb-4">
+              <input type="password" class="form-control text-muted p-2" maxlength="25" required
+                placeholder="Contraseña" formControlName="passwordSignUp" maxlength="60"
+                [ngClass]="{'is-invalid': signUpForm.get('passwordSignUp')?.errors 
+                && (signUpForm.get('passwordSignUp')?.dirty || signUpForm.get('passwordSignUp')?.touched) && 'is-invalid'}">
+              <div *ngIf="signUpForm.get('passwordSignUp')?.invalid && (signUpForm.get('passwordSignUp')?.dirty || signUpForm.get('passwordSignUp')?.touched)">
+                <p class="text-danger">Ingrese una contraseña, minimo 8 caracteres</p>
+              </div>
+            </div> 
+            <!--Repetir contraseña-->
+            <div class="mb-4">
+              <input type="password" class="form-control text-muted p-2" maxlength="25" required
+                placeholder="Repetir Contraseña" formControlName="repeatPasswordSignUp" maxlength="60"
+                [ngClass]="{'is-invalid': signUpForm.get('repeatPasswordSignUp')?.errors 
+                && (signUpForm.get('repeatPasswordSignUp')?.dirty || signUpForm.get('repeatPasswordSignUp')?.touched) && 'is-invalid'}">
+              <div *ngIf="signUpForm.get('repeatPasswordSignUp')?.invalid && (signUpForm.get('repeatPasswordSignUp')?.dirty || signUpForm.get('repeatPasswordSignUp')?.touched)">
+                <p class="text-danger">Las contraseñas deben coincidir</p>
+              </div>
+            </div>
+
+            <div class="text-center d-grid gap-2 col-6 mx-auto">
+              <div class="loader" [ngClass]="{'show': loading}"></div>
+              <button type="submit" [disabled]="signUpForm.invalid"
+                class="btn btn-outline-info btn-lg boton">Crear
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="card-footer border-0 bg-transparent">
+          <p class="text-muted text-center">¿Tienes cuenta? <a class="text-decoration-none ps-2" routerLink="/login"
+              style="cursor: pointer; color: #0011AA;">Iniciar sesion</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

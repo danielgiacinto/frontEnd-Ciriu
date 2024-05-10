@@ -1,0 +1,19 @@
+.boton-comprar{
+    background-color: #86BB3C;
+    opacity: 1;
+    border: none;
+    transition: width 0.3s;
+    border-radius: 25px;
+    transition: 0.3s ease-in-out;
+    font-size: 18px;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: whitesmoke;
+}
+
+.boton-comprar:hover {
+    background-color: #86BB3C;
+    opacity: 0.9;
+    color: white;
+    box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.2), 0 5px 20px 0 rgba(0, 0, 0, 0.19);
+}

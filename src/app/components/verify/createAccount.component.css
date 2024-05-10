@@ -1,0 +1,16 @@
+.linea {
+    border: 1px solid #000;
+    width: 100%; 
+}
+
+.boton {
+    background-color: #61FF00;
+    color: black;
+    border: 25px;
+    border-radius: 25px;
+    opacity: 0.5;
+}
+
+.boton:hover {
+    opacity: 0.6;
+}

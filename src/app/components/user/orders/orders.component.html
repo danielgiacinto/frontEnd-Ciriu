@@ -1,0 +1,132 @@
+<div class="container" style="font-family: Montserrat;">
+  <div class="card mx-auto shadow-lg border mt-5 mb-5 border-0 rounded-5 p-3">
+    <div class="row">
+      <div class="col-md-12 ps-5 pt-3">
+        <h4 class="display-6 text-muted">
+          <span class="text-body-tertiary"><i class="bi bi-person"></i> Bienvenido, </span>
+          {{user.name.toLowerCase() | titlecase}}
+        </h4>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-3 ps-5 pe-4 pt-4">
+        <div class="d-grid gap-2 mb-5">
+          <button class="btn btn-primary btn-lg boton p-3" routerLink="/user/info"><i class="bi bi-info-circle">
+              Informacion</i></button>
+          <button class="btn btn-primary btn-lg boton p-3" routerLink="/user/orders"><i class="bi bi-file-text"> Mis
+              pedidos</i></button>
+          <button class="btn btn-primary btn-lg boton p-3" (click)="logout()"><i class="bi bi-box-arrow-right"> Cerrar
+              sesion</i></button>
+        </div>
+      </div>
+      <!--Mostrar ordenes-->
+      <div class="col-md-9">
+        <div class="m-3 p-3">
+          <div class="row pb-3">
+            <div class="col-md-12 text-center">
+              <h4 class="text-muted fw-bold text-body-tertiary fs-3">
+                <span class="rounded-5"><i class="bi bi-file-text"></i> Mis pedidos</span>
+              </h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+              <ng-container *ngIf="orders.length > 0; else noOrders">
+                <div class="accordion-item bg-primary-subtle bg-opacity-50 rounded-5"
+                  *ngFor="let order of orders; let i = index">
+                  <h5 class="accordion-header">
+                    <button class="accordion-button collapsed btn" type="button" data-bs-toggle="collapse"
+                      [attr.data-bs-target]="'#collapse-' + order.id" aria-expanded="false"
+                      [attr.aria-controls]="'collapse-' + order.id" style="width: 100%; text-align: start;">
+                      <div class="row mb-0">
+                        <div class="col-md-4">
+                          <p class="text-muted">Fecha</p>
+                        </div>
+                        <div class="col-md-4">
+                          <p class="text-muted">Estado de pago</p>
+                        </div>
+                        <div class="col-md-4">
+                          <p class="text-muted">Total</p>
+                        </div>
+                        <div class="col-md-4">
+                          <i class="bi bi-calendar text-primary"></i> <span class="text-primary"> {{order.date}}</span>
+                        </div>
+                        <div class="col-md-4">
+                          <div *ngIf="order.status === 'Aprobado'">
+                            <p><i class="bi bi-check-circle-fill text-success"> Aprobado</i></p>
+                          </div>
+                          <div *ngIf="order.status === 'Pendiente'">
+                            <p><i class="bi bi-exclamation-triangle-fill text-secondary"> Pendiente</i></p>
+                          </div>
+                          <div *ngIf="order.status === 'En proceso'">
+                            <p><i class="bi bi-hourglass-split text-warning"> En proceso</i></p>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <p><i class="bi bi-cash-coin"></i> {{getTotal(i) | currency}}</p>
+                        </div>
+                      </div>
+                    </button>
+                  </h5>
+                  <div [id]="'collapse-' + order.id" class="accordion-collapse collapse"
+                    [attr.data-bs-parent]="'#accordionFlushExample'">
+                    <div class="accordion-body">
+                      <div class="row">
+                        <div class="col-md-4">
+                          <p><i class="bi bi-hash"></i> {{order.id_payment}}</p>
+                        </div>
+                        <div class="col-md-4">
+                          <p><i class="bi bi-truck text-secondary"></i> {{order.shipping}} </p>
+                        </div>
+                        <div class="col-md-4">
+                          <p><i class="bi bi-wallet2 text-success"></i> {{order.format_payment | titlecase}} </p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <hr>
+                        <div class="col-md-12 mb-3">
+                          <h5>Detalles de los productos</h5>
+                        </div>
+                        <div class="col-md-12" *ngFor="let product of order.orderDetails">
+                          <div class="row">
+                            <div class="col-md-2">
+                              <p class="text-muted opacity-50">{{product.product.code}}</p>
+                            </div>
+                            <div class="col-md-4">
+                              <p>{{product.product.name | titlecase}} </p>
+                            </div>
+                            <div class="col-md-1">
+                              <p>X {{product.quantity}}</p>
+                            </div>
+                            <div class="col-md-2">
+                              <p>c/u {{product.price | currency}}</p>
+                            </div>
+                            <div class="col-md-3">
+                              <p class="text-end fw-semibold">Subtotal: {{product.price * product.quantity | currency}}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        <hr>
+                        <div class="col-md-12">
+                          <p class="text-end fs-6 fw-bold">Total: {{getTotal(i) | currency}}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-template #noOrders>
+                <div class="text-end mt-5 fs-5">
+                  <p class="text-center"><i class="bi bi-info-circle me-1"></i> No tiene ninguna orden para mostrar.</p>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

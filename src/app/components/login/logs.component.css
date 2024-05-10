@@ -1,0 +1,47 @@
+
+.boton {
+    background-color: #61FF00;
+    color: black;
+    border: 25px;
+    border-radius: 25px;
+    opacity: 0.5;
+}
+
+.boton:hover {
+    opacity: 0.6;
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.loader {
+    border: 8px solid #f3f3f3; /* Light grey */
+    border-top: 8px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite; /* Spin animation */
+    margin: 20px auto; /* Center the loader */
+    display: none; /* Hide loader by default */
+}
+      
+.loader.show {
+    display: block; 
+}
+      
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+

@@ -1,0 +1,44 @@
+
+
+.logo {
+    width: 70px;
+    height: 70px;
+}
+
+.logo img {
+    width: 100%;
+    margin-left: 25px;
+    transform: scale(1.1);
+    background-color: transparent;
+    transition: transform 0.5s ease-in-out;
+}
+
+.logo img:hover {
+  transform: scale(1.15);
+  transition: transform 0.5s ease-in-out;
+}
+
+.letras{
+    font-family: 'Gluten';
+    font-size: 21px;
+    letter-spacing: 2px;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+    color: white;
+    transition: -webkit-text-stroke 0.5s ease-in-out;
+}
+
+.letras:hover {
+    -webkit-text-stroke: 1px white;
+}
+
+
+.nav-item {
+    margin: 0 10px;
+}
+
+
+
+
+

@@ -1,0 +1,102 @@
+<div class="container" style="font-family: Montserrat;">
+  <div class="card mt-5 bg-light rounded-0 mb-5 rounded-0 border-0 shadow">
+    <div class="row m-0 mt-3">
+      <div class="col-md-4 mt-2">
+        <button class="btn" routerLink="/checkout"><i class="bi bi-arrow-90deg-left fs-6 text-muted"> Volver</i></button>
+      </div>
+      <div class="col-md-4 text-center">
+        <h4 class="fs-2 text-muted"><i class="bi bi-bag text-muted"></i> Detalle de la compra</h4>
+      </div>
+      <div class="col-md-4">
+      </div>
+    </div>
+    <hr>
+    <div class="row ps-4">
+      <div class="col-md-12 mt-3">
+        <h6 class="text-muted fw-light"><i class="bi bi-info-circle fs-5"> Por favor, completar la informacion
+            correspondiente</i></h6>
+      </div>
+    </div>
+    <div class="row p-4">
+      <!--Productos-->
+      <div class="col-md-5">
+        <div class="card p-3 rounded-5 shadow-sm border-1">
+          <table class="table table-borderless">
+            <thead>
+              <tr>
+                <th class="align-middle fs-4 text-center text-muted" colspan="2">Productos</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let product of cart">
+                <th scope="row" class="align-middle"><img src="{{product.image}}" width="100px" height="100px"
+                    alt="producto">
+                </th>
+                <td>
+                  <p class="fw-bold">{{product.name.toUpperCase()}} </p>
+                  <p>
+                    Cantidad: {{product.quantity}} <span class="fw-light ps-4"> {{product.price | currency}} c/u</span>
+                  </p>
+                  <p>Subtotal: <span class="ps-5 fw-semibold">{{product.price * product.quantity | currency}}</span></p>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2" class="text-center fs-4"><strong>Total: {{getTotal() | currency}}</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!--Formulario-->
+      <div class="col-md-7">
+        <form class="row g-3 needs-validation" [formGroup]="paymentForm">
+          <div class="col-md-6 ps-5">
+            <h4 class="fs-4 text-muted pb-3">Envío</h4>
+            <div class="row">
+              <div class="col-md-12 ps-4 pb-2">
+                <input type="radio" id="envioDomicilio" formControlName="shipping" class="form-check-input fs-5"
+                  value="Envío a domicilio" name="shipping">
+                <label class="form-label text-muted fs-5" for="envioDomicilio"><i class="bi bi-truck ps-3"></i> Envío a
+                  domicilio</label>
+              </div>
+              <div class="col-md-12 ps-4">
+                <input type="radio" id="retiroLocal" formControlName="shipping" class="form-check-input fs-5"
+                  value="Retiro en local" name="shipping">
+                <label class="form-label text-muted fs-5" for="retiroLocal"><i class="bi bi-bag ps-3"></i> Retiro en
+                  local
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 ps-5">
+            <h4 class="fs-4 text-muted pb-3">Método de pago</h4>
+            <div class="row">
+              <div class="col-md-6 ps-4 d-flex align-items-center">
+                <input type="radio" id="efectivo" formControlName="payment" class="form-check-input fs-5" value="1"
+                  name="payment">
+                <label class="form-label text-muted fs-5 d-flex align-items-center" for="efectivo">
+                  <img
+                    src="https://seeklogo.com/images/M/mercado-pago-logo-52B7182205-seeklogo.com.png?v=638388567080000000"
+                    width="125px" height="100px" alt="logo" class="ps-3">
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 mt-5">
+            <div class="d-grid gap-2 d-flex justify-content-center">
+              <div class="spinner-border text-primary" role="status" id="spinner" *ngIf="hiddenSpinner">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <button class="btn btn-primary boton-comprar" (click)="pay()" type="button" *ngIf="hiddenButton"
+                id="checkoutButton" type="submit" [disabled]="!paymentForm.valid">
+                Realizar pago
+              </button>
+              <div id="wallet_container"></div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

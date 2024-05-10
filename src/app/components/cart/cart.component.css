@@ -1,0 +1,39 @@
+.boton-comprar{
+    background-color: #86BB3C;
+    opacity: 0.9;
+    border: none;
+    transition: width 0.3s;
+    border-radius: 25px;
+    transition: 0.3s ease-in-out;
+    font-size: 18px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.boton-comprar:hover {
+    background-color: #86BB3C;
+    opacity: 1;
+}
+.cart-sidebar {
+    position: fixed;
+    top: 0;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    right: 0;
+    bottom: 0;
+    width: 35%; /* O el ancho deseado */
+    height: 100vh; /* O la altura deseada */
+    background-color: rgb(255, 255, 255); /* Color de fondo */
+    transition: right 2.5s ease-in-out; /* Transición suave al abrir/cerrar */
+    z-index: 1000;
+}
+
+@media (max-width: 800px) {
+    .cart-sidebar {
+        width: 100%; 
+    }
+}
+
+  
+
+

@@ -1,0 +1,219 @@
+<div class="container-fluid pt-5" style="font-family: 'Montserrat'; color: #515151;">
+
+  <div class="row">
+    <div class="col-md-3 col-sm-12">
+      <a class="text-center ps-4 text-body-tertiary text-decoration-none" routerLink="/home"><i
+          class="bi bi-arrow-left-circle fs-4"> Inicio</i></a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 pe-4">
+      <div class="input-group mb-3 rounded-5 bg-secondary-subtle">
+        <button class="btn btn-link-light text-white border-0"><i class="bi bi-search"></i></button>
+        <input type="text" class="form-control rounded-end-5" placeholder="Buscar productos, marcas y más..."
+          aria-describedby="button-addon2" (change)="searchProducts($event)">
+      </div>
+    </div>
+    <div class="col-md-2 d-none d-md-block">
+    </div>
+    <div class="col-md-1 d-none d-md-block">
+    </div>
+    <div class="col-md-2 pe-5 col-sm-4">
+      <select class="form-select rounded-5" (change)="orderProducts($event)">
+        <option class="form-select text-muted" selected disabled>Ordenar por</option>
+        <option value="default" class="form-select text-muted">Por defecto</option>
+        <option class="form-select text-muted" value="asc">Menor precio</option>
+        <option class="form-select text-muted" value="desc">Mayor precio</option>
+      </select>
+    </div>
+  </div>
+  <div class="row mt-2">
+    <div class="col-md-3"></div>
+    <div class="col-md-4 text-start">
+      <h6 class="fw-light">{{totalElements}} Resultados</h6>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3 d-none d-md-block">
+      <div class="mt-4 ps-4 pe-4">
+        <h5 class="fw-light fs-4 text-center mb-3"><i class="bi bi-filter-left"></i> Categorías</h5>
+        <div class="col-md-12 text-center pb-2 pt-2" *ngIf="viewClearFilter">
+          <a class="link-danger link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+            routerLink="/products" (click)="clearFilters()">
+            <i class="bi bi-x-lg"> Limpiar filtros</i>
+          </a>
+        </div>
+        <!--Categorias-->
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+          <div class="accordion-item" *ngFor="let category of categories">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed focus-ring focus-ring-light" type="button"
+                data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + category.id" aria-expanded="false"
+                [attr.aria-controls]="'collapse' + category.id">
+                {{ category.category }}
+              </button>
+            </h2>
+            <div [id]="'collapse' + category.id" class="accordion-collapse collapse"
+              [attr.aria-labelledby]="'heading' + category.id" data-bs-parent="#accordionFlushExample">
+              <div class="list-group">
+                <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']"
+                  [queryParams]="{ category: category.category }" (click)="filterByCategory(category.category)">Todo en
+                  {{ category.category }}</a>
+                <a *ngFor="let subCategory of getSubCategoriesByCategory(category.category)"
+                  class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']"
+                  [queryParams]="{ category: subCategory.sub_category}"
+                  (click)="filterByCategory(subCategory.sub_category)">{{ subCategory.sub_category }}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <!-- <div class="accordion accordion-flush" id="accordionFlushExample">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed focus-ring focus-ring-light" type="button" data-bs-toggle="collapse"
+                data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                Jugueteria
+              </button>
+            </h2>
+            <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+              <div class="list-group">
+                <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']" [queryParams]="{category: 'Jugueteria'}" (click)="filterByCategory('Jugueteria')">Todo en Jugueteria</a>
+                <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']" [queryParams]="{category: 'Autos'}" (click)="filterByCategory('Autos')"> Autos</a>
+                <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']" [queryParams]="{category: 'Juego de Mesa'}" (click)="filterByCategory('Juego de Mesa')"> Juego de Mesa</a>
+                <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']" [queryParams]="{category: 'Peluches'}" (click)="filterByCategory('Peluches')"> Peluches</a>
+                <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']" [queryParams]="{category: 'Didactico'}" (click)="filterByCategory('Didactico')"> Didactico</a>
+                <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']" [queryParams]="{category: 'Muñecas'}" (click)="filterByCategory('Muñecas')"> Muñecas</a>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed focus-ring focus-ring-light" type="button" data-bs-toggle="collapse"
+                data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                Marroquineria
+              </button>
+            </h2>
+            <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+              <div class="list-group">
+                <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']" [queryParams]="{category: 'Marroquineria'}" (click)="filterByCategory('Marroquineria')">Todo en Marroquineria</a>
+                <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']" [queryParams]="{category: 'Billeteras'}" (click)="filterByCategory('Billeteras')"> Billeteras</a>
+                <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']" [queryParams]="{category: 'Mochilas'}" (click)="filterByCategory('Mochilas')"> Mochilas</a>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed focus-ring focus-ring-light" type="button" data-bs-toggle="collapse"
+                data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                Tecnologia
+              </button>
+            </h2>
+            <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+              <div class="list-group">
+                <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']" [queryParams]="{category: 'Tecnologia'}" (click)="filterByCategory('Tecnologia')">Todo en Tecnologia</a>
+                <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']" [queryParams]="{category: 'Parlantes'}" (click)="filterByCategory('Parlantes')"> Parlantes</a>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed focus-ring focus-ring-light" type="button" data-bs-toggle="collapse"
+                data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                Deportes
+              </button>
+            </h2>
+            <div id="flush-collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+              <div class="list-group">
+                <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']" [queryParams]="{category: 'Deportes'}" (click)="filterByCategory('Deportes')">Todo en Deportes</a>
+                <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']" [queryParams]="{category: 'Pelotas'}" (click)="filterByCategory('Pelotas')"> Pelotas</a>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed focus-ring focus-ring-light" type="button" data-bs-toggle="collapse"
+                data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFour">
+                Bazar
+              </button>
+            </h2>
+            <div id="flush-collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+              <div class="list-group">
+                <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']" [queryParams]="{category: 'Bazar'}" (click)="filterByCategory('Bazar')">Todo en Bazar</a>
+                <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']" [queryParams]="{category: 'Termos'}" (click)="filterByCategory('Termos')"> Termos</a>
+              </div>
+            </div>
+          </div>
+        </div> -->
+      </div>
+      <div class="mb-5 mt-5 ps-4 pe-4">
+        <h5 class="fw-light fs-4 text-center mb-3"><i class="bi bi-funnel"></i> Marcas</h5>
+        <div class="list-group text-center list-group-flush" *ngFor="let brand of brands">
+          <a class="list-group-item list-group-item-action" [routerLink]="['/products']"
+            [queryParams]="{category: brand.brand}" (click)="filterByBrand(brand.brand)"> {{brand.brand}}</a>
+        </div>
+      </div>
+    </div>
+
+    <!--Productos-->
+    <div class="col-md-9">
+      <div class="row">
+        <div class="col-md-6 col-sm-12 col-lg-4" *ngFor="let toy of toys">
+          <div class="card mb-3 mt-3 rounded-0 border-0 shadow" style="width: 20rem;">
+            <a routerLink="{{toy.code}}">
+              <img src={{toy.image[0]}} class="card-img-top mx-auto d-block mt-2 mb-2"
+                style="width: 250px; height: 250px;" alt="imagen"
+                [ngStyle]="{'cursor': toy.image.length > 1 ? 'pointer' : 'auto'}" (mouseenter)="changeImage(toy, 1)">
+            </a>
+            <div class="card-body text-center">
+              <h5 class="card-title" style="text-transform: capitalize;">{{toy.name}}</h5>
+            </div>
+            <div class="card-footer border-0 rounded-0 p-3" style="background-color: #ededed;">
+              <div class="row">
+                <div class="col-md-6 m-auto">
+                  <p class="card-text fw-bold text-muted">{{toy.price | currency}}</p>
+                </div>
+                <div class="col-md-6 text-end">
+                  <ng-container *ngIf="toy.stock > 0; else noStockButton">
+                    <button href="#" class="btn btn-primary boton me-2 fw-semibold" (click)="addToCart(toy)"><i
+                        class="bi bi-bag"></i> Agregar</button>
+                  </ng-container>
+                  <ng-template #noStockButton>
+                    <button class="btn btn-warning text-dark rounded-4 me-2 fw-semibold" disabled><i
+                        class="bi bi-bag-x"></i> Sin Stock</button>
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--Navegacion-->
+      <div class="row mt-3">
+        <div class="col-md-12 mb-3">
+          <h6 class="text-center">Queres seguir viendo más productos?</h6>
+        </div>
+        <div class="col-md-12">
+          <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+              <li class="page-item" [class.disabled]="currentPage === 0">
+                <a class="page-link" [routerLink]="['/products']" [queryParams]="{ page: currentPage - 1}"
+                  (click)="prevPage()"><i class="bi bi-chevron-left"> </i></a>
+              </li>
+              <li class="page-item" *ngFor="let pageNumber of getPageNumbers()">
+                <a class="page-link" [routerLink]="['/products']" [queryParams]="{ page: pageNumber }"
+                  (click)="goToPage(pageNumber)">{{ pageNumber + 1 }}</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" [routerLink]="['/products']" [queryParams]="{ page: currentPage + 1 }"
+                  (click)="nextPage()"><i class="bi bi-chevron-right"></i></a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

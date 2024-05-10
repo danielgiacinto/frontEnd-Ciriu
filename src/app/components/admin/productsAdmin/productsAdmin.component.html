@@ -1,0 +1,582 @@
+<div class="container" style="font-family: Montserrat;">
+  <div class="card mx-auto shadow-lg border mt-5 mb-5 border-0 rounded-5 p-3">
+    <div class="row">
+      <div class="col-md-12 ps-5 pt-3">
+        <h4 class="display-6 text-muted">
+          <span class="text-body-tertiary"><i class="bi bi-person"></i> Bienvenido, </span>
+          {{user.name.toLowerCase() | titlecase}}
+        </h4>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-3 ps-5 pe-4 pt-4">
+        <div class="d-grid gap-2 mb-5">
+          <button class="btn btn-primary btn-lg boton p-3" routerLink="/admin/orders"><i
+              class="bi bi-file-earmark-text"> Pedidos</i></button>
+          <button class="btn btn-primary btn-lg boton p-3" routerLink="/admin/products"><i class="bi bi-boxes">
+              Productos</i>
+          </button>
+          <button class="btn btn-primary btn-lg boton p-3" routerLink="/admin/stock"><i class="bi bi-box">
+              Stock</i></button>
+          <button class="btn btn-primary btn-lg boton p-3" routerLink="/admin/report"><i class="bi bi-bar-chart-line">
+              Reportes</i></button>
+          <a class="btn btn-primary btn-lg boton p-3" routerLink="/admin/support"><i class="bi bi-gear-wide-connected">
+              Soporte</i></a>
+          <button class="btn btn-primary btn-lg boton p-3" (click)="logout()"><i class="bi bi-box-arrow-right"> Cerrar
+              sesion</i></button>
+        </div>
+      </div>
+      <!--Mostrar productos -->
+      <div class="col-md-9">
+        <div class="m-3 p-3">
+          <div class="row pb-4">
+            <div class="col-md-12 text-center">
+              <h4 class="text-muted fw-bold text-body-tertiary fs-3">
+                <span class="rounded-5"><i class="bi bi-boxes"></i> Productos</span>
+              </h4>
+            </div>
+          </div>
+          <div class="row pb-2">
+            <div class="col-md-5">
+              <div class="input-group mb-3">
+                <button class="btn btn-light rounded-left border-1"
+                  style="background-color: #86BB3C; border-color: #86BB3C;"><i
+                    class="bi bi-search text-white"></i></button>
+                <input type="text" class="form-control rounded-right text-muted border-start-0 border-1"
+                  style="border-color: #86BB3C;" placeholder="Buscar productos, marcas y más..."
+                  aria-describedby="button-addon2" (change)="searchProducts($event)">
+              </div>
+            </div>
+            <div class="col-md-2 col-sm-4">
+              <select class="form-select rounded-0" (change)="orderProducts($event)">
+                <option class="form-select text-muted" selected disabled>Ordenar</option>
+                <option value="default" class="form-select text-muted">Por defecto</option>
+                <option class="form-select text-muted" value="asc">Menor precio</option>
+                <option class="form-select text-muted" value="desc">Mayor precio</option>
+              </select>
+            </div>
+            <div class="col-md-2 ms-5 align-self-end form-check form-switch">
+              <input class="form-check-input fs-5" type="checkbox" role="switch" id="flexSwitchCheckDefault"
+                (change)="filterByNonStock($event)">
+              <label class="form-check-label" class="form-label fs-5" for="flexSwitchCheckDefault">Sin stock</label>
+            </div>
+            <div class="col-md-2 align-items-end d-flex justify-content-end">
+              <button type="button" class="btn btn-primary border-0 p-2 rounded-5 ps-3 pe-3"
+                style="background-color: #86BB3C;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                <i class="bi bi-plus-circle">Nuevo</i>
+              </button>
+            </div>
+            <!--Nuevo producto-->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+              aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content container-fluid">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-4 text-success" id="staticBackdropLabel"><i
+                        class="bi bi-folder-plus fs-4 pe-2"></i> Nuevo producto</h1>
+                    <button type="button" class="btn-close" (click)="clearForm()" data-bs-dismiss="modal"
+                      aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form [formGroup]="formNewToy" (ngSubmit)="newToy()">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <p class="text-muted">Complete los siguientes campos para crear un nuevo producto</p>
+                        </div>
+                        <!-- Codigo-->
+                        <div class="col-md-5 mb-4">
+                          <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-chat"></i></span>
+                            <input type="text" class="form-control" formControlName="code" placeholder="Codigo"
+                              [ngClass]="{'is-invalid': formNewToy.get('code')?.errors 
+                            && (formNewToy.get('code')?.dirty || formNewToy.get('code')?.touched) && 'is-invalid'}">
+                          </div>
+                          <div
+                            *ngIf="formNewToy.get('code')?.invalid && (formNewToy.get('code')?.dirty || formNewToy.get('code')?.touched)">
+                            <p class="text-danger"> Debe ingresar un código válido</p>
+                          </div>
+                        </div>
+                        <!-- Nombre-->
+                        <div class="col-md-7 mb-4">
+                          <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-chat"></i></span>
+                            <input type="text" class="form-control" formControlName="name" placeholder="Nombre"
+                              [ngClass]="{'is-invalid': formNewToy.get('name')?.errors 
+                            && (formNewToy.get('name')?.dirty || formNewToy.get('name')?.touched) && 'is-invalid'}">
+                          </div>
+                          <div
+                            *ngIf="formNewToy.get('name')?.invalid && (formNewToy.get('name')?.dirty || formNewToy.get('name')?.touched)">
+                            <p class="text-danger"> Debe ingresar un nombre de producto</p>
+                          </div>
+                        </div>
+                        <!-- Categoria -->
+                        <div class="col-md-5 mb-4">
+                          <div class="input-group">
+                            <label class="input-group-text" for="inputGroupSelect01"><i
+                                class="bi bi-c-circle-fill"></i></label>
+                            <select class="form-select text-muted" id="inputGroupSelect01" formControlName="category"
+                              (change)="onCategoryChange($event)"
+                              [ngClass]="{'is-invalid': formNewToy.get('category')?.errors 
+                            && (formNewToy.get('category')?.dirty || formNewToy.get('category')?.touched) && 'is-invalid'}">
+                              <option value="" disabled selected> Categoria</option>
+                              <option *ngFor="let category of categories" [value]="category.id">{{category.category}}
+                              </option>
+                            </select>
+                          </div>
+                          <div
+                            *ngIf="formNewToy.get('category')?.invalid && (formNewToy.get('category')?.dirty || formNewToy.get('category')?.touched)">
+                            <p class="text-danger"> Debe seleccionar una categoria</p>
+                          </div>
+                        </div>
+                        <div class="col-md-1">
+                          <button class="btn btn-outline-success border-0 p-2 rounded-1"data-bs-toggle="modal" data-bs-target="#Category" type="button"><i class="bi bi-plus-circle"></i></button>
+                        </div>
+                        <!--Sub Categoria-->
+                        <div class="col-md-5 mb-4">
+                          <div class="input-group">
+                            <label class="input-group-text" for="inputGroupSelect01"><i
+                                class="bi bi-c-circle-fill"></i></label>
+                            <select class="form-select text-muted" id="inputSubCategory" formControlName="sub_category"
+                              [ngClass]="{'is-invalid': formNewToy.get('sub_category')?.errors 
+                          && (formNewToy.get('sub_category')?.dirty || formNewToy.get('sub_category')?.touched) && 'is-invalid'}">
+                              <option value="" disabled selected> Sub categoria</option>
+                              <option *ngFor="let subCategory of subCategories" [value]="subCategory.id">
+                                {{subCategory.sub_category}}</option>
+                            </select>
+                          </div>
+                          <div
+                            *ngIf="formNewToy.get('sub_category')?.invalid && (formNewToy.get('sub_category')?.dirty || formNewToy.get('sub_category')?.touched)">
+                            <p class="text-danger"> Debe seleccionar una sub categoria</p>
+                          </div>
+                        </div>
+                        <div class="col-md-1">
+                          <button class="btn btn-outline-success border-0 p-2 rounded-1" type="button"><i class="bi bi-plus-circle"></i></button>
+                        </div>
+                        <!--Precio-->
+                        <div class="col-md-4 mb-4">
+                          <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1"><i
+                                class="bi bi-currency-dollar"></i></span>
+                            <input type="number" class="form-control" formControlName="price" placeholder="Precio"
+                              [ngClass]="{'is-invalid': formNewToy.get('price')?.errors 
+                            && (formNewToy.get('price')?.dirty || formNewToy.get('price')?.touched) && 'is-invalid'}">
+                          </div>
+                          <div
+                            *ngIf="formNewToy.get('price')?.invalid && (formNewToy.get('price')?.dirty || formNewToy.get('price')?.touched)">
+                            <p class="text-danger"> Debe definir un precio</p>
+                          </div>
+                        </div>
+                        <!-- Marca -->
+                        <div class=" col-md-4 mb-4">
+                          <div class="input-group">
+                            <label class="input-group-text" for="inputGroupSelect01"><i
+                                class="bi bi-tag-fill"></i></label>
+                            <select class="form-select text-muted" id="inputGroupSelect01" formControlName="brand"
+                              [ngClass]="{'is-invalid': formNewToy.get('brand')?.errors 
+                          && (formNewToy.get('brand')?.dirty || formNewToy.get('brand')?.touched) && 'is-invalid'}">
+                              <option value="" disabled selected> Marca</option>
+                              <option *ngFor="let brand of brands" [value]="brand.id">{{brand.brand}}</option>
+                            </select>
+                          </div>
+                          <div
+                            *ngIf="formNewToy.get('brand')?.invalid && (formNewToy.get('brand')?.dirty || formNewToy.get('brand')?.touched)">
+                            <p class="text-danger"> Seleccione una marca</p>
+                          </div>
+                        </div>
+                        <div class="col-md-1">
+                          <button class="btn btn-outline-success border-0 p-2 rounded-1" type="button" data-bs-target="#Brand"><i class="bi bi-plus-circle"></i></button>
+                        </div>
+                        <!-- Stock -->
+                        <div class="col-md-3 mb-4">
+                          <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-123"></i></span>
+                            <input type="number" class="form-control" formControlName="stock" placeholder="Stock"
+                              [ngClass]="{'is-invalid': formNewToy.get('stock')?.errors 
+                            && (formNewToy.get('stock')?.dirty || formNewToy.get('stock')?.touched) && 'is-invalid'}">
+                          </div>
+                          <div
+                            *ngIf="formNewToy.get('stock')?.invalid && (formNewToy.get('stock')?.dirty || formNewToy.get('stock')?.touched)">
+                            <p class="text-danger"> Debe ingresar un stock</p>
+                          </div>
+                        </div>
+                        <!--Descripcion-->
+                        <div class="col-md-12 mb-4">
+                          <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-chat"></i></span>
+                            <textarea class="form-control" aria-label="With textarea" placeholder="Descripcion..."
+                              formControlName="description"
+                              [ngClass]="{'is-invalid': formNewToy.get('description')?.errors 
+                              && (formNewToy.get('description')?.dirty || formNewToy.get('description')?.touched) && 'is-invalid'}">
+                            </textarea>
+                          </div>
+                          <div
+                            *ngIf="formNewToy.get('description')?.invalid && (formNewToy.get('description')?.dirty || formNewToy.get('description')?.touched)">
+                            <p class="text-danger"> Debe escribir una descripcion</p>
+                          </div>
+                        </div>
+                        <!-- Imagen -->
+                        <div formArrayName="image">
+                          <p class="text-muted">Por favor ingrese las imagenes que desea para este producto</p>
+                          <div class="col-md-12 text-center mb-3">
+                            <button type="button" class="btn btn-outline-success" (click)="addImage()">+ Agregar
+                              imagen</button>
+                          </div>
+                          <div class="col-md-10" *ngFor="let img of images.controls; let i=index">
+                            <div class="d-flex justify-content-center mb-3">
+                              <div class="input-group">
+                                <span class="input-group-text" id="basic-addon1"><i class="bi bi-image"></i></span>
+                                <input id="alias-{{ i }}" type="text" [formControlName]="i" class="form-control"
+                                  required placeholder="Url de la imagen">
+                                <div class="input-group-append">
+                                  <button type="button" class="btn btn-outline-danger ms-2" (click)="removeImage(i)"><i
+                                      class="bi bi-trash"></i></button>
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              *ngIf="formNewToy.get('image.' + i)?.invalid && (formNewToy.get('image.' + i)?.dirty || formNewToy.get('image.' + i)?.touched)">
+                              <p class="text-danger text-center">Debe ingresar la URL de la imagen</p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- <div class="col-md-5 mb-4">
+                          <div class="card border-2 rounded-5">
+                            <div class="card-body text-center">
+                              <ng-container *ngIf="!previewUrl">
+                                <img src="https://cdn-icons-png.freepik.com/512/3082/3082060.png" style="opacity: 25%;" width="180px" height="180px">
+                              </ng-container>
+                              <div *ngIf="previewUrl">
+                                <img [src]="previewUrl" width="180px" height="180px" alt="Vista previa de la imagen">
+                              </div>                     
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-7 align-self-end mb-4">
+                          <div class="input-group">
+                            <label class="input-group-text" for="inputGroupFile01"><i class="bi bi-file-earmark-plus"></i></label>
+                            <input type="file" class="form-control" id="inputGroupFile01" formControlName="image" accept="image/png, image/jpeg"
+                              (change)="showPreview($event)" (change)="uploadFile($event)" [ngClass]="{'is-invalid': formNewToy.get('image')?.errors 
+                              && (formNewToy.get('image')?.dirty || formNewToy.get('image')?.touched) && 'is-invalid'}">
+                          </div>
+                          <div
+                            *ngIf="formNewToy.get('image')?.invalid && (formNewToy.get('image')?.dirty || formNewToy.get('image')?.touched)">
+                            <p class="text-danger"> Debe seleccionar una foto</p>
+                          </div>
+                        </div> -->
+                      </div>
+
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary rounded-5" (click)="clearForm()"
+                          data-bs-dismiss="modal"><i class="bi bi-x-circle-fill text-white"></i> Cancelar</button>
+                        <button type="submit" class="btn btn-primary boton"
+                          [disabled]="formNewToy.invalid || guardandoCambios">
+                          <span *ngIf="!guardandoCambios">
+                            <i class="bi bi-floppy2-fill"></i> Guardar cambios
+                          </span>
+                          <span *ngIf="guardandoCambios">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Guardando...
+                          </span>
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--Total resultados-->
+          <div class="row mb-3">
+            <div class="col-md-12">
+              <h6 class="fw-light">{{totalElements}} Resultados</h6>
+            </div>
+          </div>
+          <!-- Productos -->
+          <div class="row">
+            <div class="col-md-12 col-sm-12">
+              <table class="table table-striped-columns table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Caracteristicas</th>
+                    <th scope="col">Detalles</th>
+                    <th scope="col">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let toy of toys">
+                    <th scope="row" class="align-middle">
+                      <img src="{{toy.image}}" width="100px" height="100px" alt="producto">
+                    </th>
+                    <td scope="row" class="align-middle">
+                      <p>Codigo: {{toy.code}}</p>
+                      <p>Nombre: {{toy.name}}</p>
+                      <p>Marca: {{toy.brand}}</p>
+                    </td>
+                    <td scope="row" class="align-middle">
+                      <p>Precio: {{toy.price | currency}}</p>
+                      <p>Stock: {{toy.stock}}</p>
+                    </td>
+                    <td scope="row mt-5" class="align-middle">
+                      <div class="col mb-2">
+                        <button type="button" class="btn btn-primary border-0 p-2 rounded-3 me-2"
+                          style="background-color: #FFD27C;" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                          (click)="getToyEdit(toy.code)">
+                          <i class="bi bi-pencil-fill"></i>
+                        </button>
+                        <button type="button" (click)="deleteProduct(toy.code)"
+                          class="btn btn-primary border-0 p-2 rounded-3" style="background-color: #FF8383;"><i
+                            class="bi bi-trash"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Editar producto -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-4 text-warning" id="staticBackdropLabel"><i class="bi bi-pencil-fill"></i>
+                    Editar producto</h1>
+                  <button type="button" class="btn-close" (click)="clearForm()" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form [formGroup]="formEditToy" (ngSubmit)="editToy()">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <p class="text-muted">Edite los siguientes campos para actualizar el producto</p>
+                      </div>
+                      <!-- Nombre-->
+                      <div class="col-md-7 mb-4">
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1"><i class="bi bi-chat"></i></span>
+                          <input type="text" class="form-control" formControlName="nameEdit" placeholder="Nombre"
+                            [ngClass]="{'is-invalid': formEditToy.get('name')?.errors 
+                          && (formEditToy.get('nameEdit')?.dirty || formEditToy.get('nameEdit')?.touched) && 'is-invalid'}">
+                        </div>
+                        <div
+                          *ngIf="formEditToy.get('nameEdit')?.invalid && (formEditToy.get('nameEdit')?.dirty || formEditToy.get('nameEdit')?.touched)">
+                          <p class="text-danger"> Debe ingresar un nombre de producto</p>
+                        </div>
+                      </div>
+                      <!--Precio-->
+                      <div class="col-md-5 mb-4">
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1"><i class="bi bi-currency-dollar"></i></span>
+                          <input type="number" class="form-control" formControlName="priceEdit" placeholder="Precio"
+                            [ngClass]="{'is-invalid': formEditToy.get('priceEdit')?.errors 
+                          && (formEditToy.get('priceEdit')?.dirty || formEditToy.get('priceEdit')?.touched) && 'is-invalid'}">
+                        </div>
+                        <div
+                          *ngIf="formEditToy.get('priceEdit')?.invalid && (formEditToy.get('priceEdit')?.dirty || formEditToy.get('priceEdit')?.touched)">
+                          <p class="text-danger"> Debe definir un precio</p>
+                        </div>
+                      </div>
+                      <!-- Categoria -->
+                      <div class="col-md-4 mb-4">
+                        <div class="input-group">
+                          <label class="input-group-text" for="inputGroupSelect01"><i
+                              class="bi bi-c-circle-fill"></i></label>
+                          <select class="form-select text-muted" id="inputGroupSelect01" formControlName="categoryEdit"
+                            (change)="onCategoryChange($event)"
+                            [ngClass]="{'is-invalid': formEditToy.get('categoryEdit')?.errors 
+                          && (formEditToy.get('categoryEdit')?.dirty || formEditToy.get('categoryEdit')?.touched) && 'is-invalid'}">
+                            <option value="" disabled selected> Categoria</option>
+                            <option *ngFor="let category of categories" [value]="category.id">{{category.category}}
+                            </option>
+                          </select>
+                        </div>
+                        <div
+                          *ngIf="formEditToy.get('categoryEdit')?.invalid && (formEditToy.get('categoryEdit')?.dirty || formEditToy.get('categoryEdit')?.touched)">
+                          <p class="text-danger"> Debe seleccionar una categoria</p>
+                        </div>
+                      </div>
+                      <!--Sub Categoria-->
+                      <div class="col-md-4 mb-4">
+                        <div class="input-group">
+                          <label class="input-group-text" for="inputGroupSelect01"><i
+                              class="bi bi-c-circle-fill"></i></label>
+                          <select class="form-select text-muted" id="inputSubCategory"
+                            formControlName="sub_categoryEdit"
+                            [ngClass]="{'is-invalid': formEditToy.get('sub_categoryEdit')?.errors 
+                        && (formEditToy.get('sub_categoryEdit')?.dirty || formEditToy.get('sub_categoryEdit')?.touched) && 'is-invalid'}">
+                            <option value="" disabled selected> Sub categoria</option>
+                            <option *ngFor="let subCategory of subCategories" [value]="subCategory.id">
+                              {{subCategory.sub_category}}</option>
+                          </select>
+                        </div>
+                        <div
+                          *ngIf="formEditToy.get('sub_categoryEdit')?.invalid && (formEditToy.get('sub_categoryEdit')?.dirty || formEditToy.get('sub_categoryEdit')?.touched)">
+                          <p class="text-danger"> Debe seleccionar una sub categoria</p>
+                        </div>
+                      </div>
+                      <!-- Marca -->
+                      <div class=" col-md-4 mb-4">
+                        <div class="input-group">
+                          <label class="input-group-text" for="inputGroupSelect01"><i
+                              class="bi bi-tag-fill"></i></label>
+                          <select class="form-select text-muted" id="inputGroupSelect01" formControlName="brandEdit"
+                            [ngClass]="{'is-invalid': formEditToy.get('brandEdit')?.errors 
+                        && (formEditToy.get('brandEdit')?.dirty || formEditToy.get('brandEdit')?.touched) && 'is-invalid'}">
+                            <option value="" disabled selected> Marca</option>
+                            <option *ngFor="let brand of brands" [value]="brand.id">{{brand.brand}}</option>
+                          </select>
+                        </div>
+                        <div
+                          *ngIf="formEditToy.get('brandEdit')?.invalid && (formEditToy.get('brandEdit')?.dirty || formEditToy.get('brandEdit')?.touched)">
+                          <p class="text-danger"> Seleccione una marca</p>
+                        </div>
+                      </div>
+                      <!--Descripcion-->
+                      <div class="col-md-12 mb-4">
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="bi bi-chat"></i></span>
+                          <textarea class="form-control" aria-label="With textarea" placeholder="Descripcion..."
+                            formControlName="descriptionEdit"
+                            [ngClass]="{'is-invalid': formEditToy.get('descriptionEdit')?.errors 
+                            && (formEditToy.get('descriptionEdit')?.dirty || formEditToy.get('descriptionEdit')?.touched) && 'is-invalid'}">
+                          </textarea>
+                        </div>
+                        <div
+                          *ngIf="formEditToy.get('descriptionEdit')?.invalid && (formEditToy.get('descriptionEdit')?.dirty || formEditToy.get('descriptionEdit')?.touched)">
+                          <p class="text-danger"> Debe escribir una descripcion</p>
+                        </div>
+                      </div>
+                      <!-- Imagen -->
+                      <div formArrayName="imageEdit">
+                        <p class="text-muted">Por favor ingrese las imagenes que desea para este producto</p>
+                        <div class="col-md-12 text-center mb-3">
+                          <button type="button" class="btn btn-outline-success" (click)="addImageEdit()">+ Agregar
+                            imagen</button>
+                        </div>
+                        <div class="col-md-10" *ngFor="let img of imagesEdit.controls; let i=index">
+                          <div class="d-flex justify-content-center mb-3">
+                            <div class="input-group">
+                              <span class="input-group-text" id="basic-addon1"><i class="bi bi-image"></i></span>
+                              <input id="alias-{{ i }}" type="text" [formControlName]="i" class="form-control" required
+                                placeholder="Url de la imagen">
+                              <div class="input-group-append">
+                                <button type="button" class="btn btn-outline-danger ms-2"
+                                  (click)="removeImageEdit(i)"><i class="bi bi-trash"></i></button>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            *ngIf="formEditToy.get('imageEdit.' + i)?.invalid && (formEditToy.get('imageEdit.' + i)?.dirty || formEditToy.get('imageEdit.' + i)?.touched)">
+                            <p class="text-danger text-center">Debe ingresar la URL de la imagen</p>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- <div class="col-md-5 mb-4">
+                        <div class="card border-2 rounded-5">
+                          <div class="card-body text-center">
+                            <ng-container *ngIf="!previewUrl">
+                              <img src="https://cdn-icons-png.freepik.com/512/3082/3082060.png" style="opacity: 25%;" width="180px" height="180px">
+                            </ng-container>
+                            <div *ngIf="previewUrl">
+                              <img [src]="previewUrl" width="180px" height="180px" alt="Vista previa de la imagen">
+                            </div>                     
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-7 align-self-end mb-4">
+                        <div class="input-group">
+                          <label class="input-group-text" for="inputGroupFile01"><i class="bi bi-file-earmark-plus"></i></label>
+                          <input type="file" class="form-control" id="inputGroupFile01" formControlName="image" accept="image/png, image/jpeg"
+                            (change)="showPreview($event)" (change)="uploadFile($event)" [ngClass]="{'is-invalid': formEditToy.get('imageEdit')?.errors 
+                            && (formEditToy.get('imageEdit')?.dirty || formEditToy.get('imageEdit')?.touched) && 'is-invalid'}">
+                        </div>
+                        <div
+                          *ngIf="formEditToy.get('imageEdit')?.invalid && (formEditToy.get('imageEdit')?.dirty || formEditToy.get('imageEdit')?.touched)">
+                          <p class="text-danger"> Debe seleccionar una foto</p>
+                        </div>
+                      </div> -->
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary rounded-5" (click)="clearForm()"
+                        data-bs-dismiss="modal"><i class="bi bi-x-circle-fill text-white"></i> Cancelar</button>
+                      <button type="submit" class="btn btn-primary boton"
+                        [disabled]="formEditToy.invalid || guardandoCambios">
+                        <span *ngIf="!guardandoCambios">
+                          <i class="bi bi-floppy2-fill"></i> Actualizar
+                        </span>
+                        <span *ngIf="guardandoCambios">
+                          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                          Actualizando...
+                        </span>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--Navegacion-->
+          <div class="row mt-3">
+            <div class="col-md-12">
+              <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                  <li class="page-item" [class.disabled]="currentPage === 0">
+                    <a class="page-link" routerLink="/admin/products" [queryParams]="{ page: currentPage - 1 }"
+                      (click)="prevPage()"><i class="bi bi-chevron-left"> </i></a>
+                  </li>
+                  <li class="page-item" *ngFor="let pageNumber of getPageNumbers()">
+                    <a class="page-link" routerLink="/admin/products" [queryParams]="{ page: pageNumber }"
+                      (click)="goToPage(pageNumber)">{{ pageNumber + 1 }}</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" routerLink="/admin/products" [queryParams]="{ page: currentPage + 1 }"
+                      (click)="nextPage()"><i class="bi bi-chevron-right"></i></a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+          <!-- Categorias -->
+          <div class="modal fade" id="Category" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Categorias</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Categoria</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let category of categories">
+                        <th scope="row">{{ category.id }}</th>
+                        <td>{{ category.category }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="row">
+                    <div class="col-md-8">
+                      <input type="text" class="form-control" placeholder="Escribir nueva categoria">
+                    </div> 
+                    <div class="col-md-4">
+                      <button type="button" class="btn btn-success">Añadir</button>
+                    </div> 
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

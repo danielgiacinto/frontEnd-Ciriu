@@ -1,0 +1,20 @@
+.boton {
+    background-color: #A8C87B;
+    border: none;
+    transition: width 0.3s;
+    opacity: 0.9;
+    border-radius: 25px;
+    transition: 0.3s ease-in-out;
+    box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.4), 0 5px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.boton:hover {
+    background-color: #9abf66;
+}
+
+.icon {
+    width: 50px;
+    height: 50px;
+    padding: 5px;
+    opacity: 0.5;
+}
