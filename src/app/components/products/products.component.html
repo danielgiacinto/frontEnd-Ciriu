@@ -49,7 +49,7 @@
               <button class="accordion-button collapsed focus-ring focus-ring-light" type="button"
                 data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + category.id" aria-expanded="false"
                 [attr.aria-controls]="'collapse' + category.id">
-                {{ category.category }}
+                {{ category.category | titlecase }}
               </button>
             </h2>
             <div [id]="'collapse' + category.id" class="accordion-collapse collapse"
@@ -60,98 +60,19 @@
                   {{ category.category }}</a>
                 <a *ngFor="let subCategory of getSubCategoriesByCategory(category.category)"
                   class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']"
-                  [queryParams]="{ category: subCategory.sub_category}"
-                  (click)="filterByCategory(subCategory.sub_category)">{{ subCategory.sub_category }}</a>
+                  [queryParams]="{ category: subCategory.subcategory}"
+                  (click)="filterByCategory(subCategory.subcategory)">{{ subCategory.subcategory | titlecase }}</a>
               </div>
             </div>
           </div>
         </div>
 
-
-
-        <!-- <div class="accordion accordion-flush" id="accordionFlushExample">
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed focus-ring focus-ring-light" type="button" data-bs-toggle="collapse"
-                data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                Jugueteria
-              </button>
-            </h2>
-            <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-              <div class="list-group">
-                <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']" [queryParams]="{category: 'Jugueteria'}" (click)="filterByCategory('Jugueteria')">Todo en Jugueteria</a>
-                <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']" [queryParams]="{category: 'Autos'}" (click)="filterByCategory('Autos')"> Autos</a>
-                <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']" [queryParams]="{category: 'Juego de Mesa'}" (click)="filterByCategory('Juego de Mesa')"> Juego de Mesa</a>
-                <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']" [queryParams]="{category: 'Peluches'}" (click)="filterByCategory('Peluches')"> Peluches</a>
-                <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']" [queryParams]="{category: 'Didactico'}" (click)="filterByCategory('Didactico')"> Didactico</a>
-                <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']" [queryParams]="{category: 'Muñecas'}" (click)="filterByCategory('Muñecas')"> Muñecas</a>
-              </div>
-            </div>
-          </div>
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed focus-ring focus-ring-light" type="button" data-bs-toggle="collapse"
-                data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                Marroquineria
-              </button>
-            </h2>
-            <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-              <div class="list-group">
-                <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']" [queryParams]="{category: 'Marroquineria'}" (click)="filterByCategory('Marroquineria')">Todo en Marroquineria</a>
-                <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']" [queryParams]="{category: 'Billeteras'}" (click)="filterByCategory('Billeteras')"> Billeteras</a>
-                <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']" [queryParams]="{category: 'Mochilas'}" (click)="filterByCategory('Mochilas')"> Mochilas</a>
-              </div>
-            </div>
-          </div>
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed focus-ring focus-ring-light" type="button" data-bs-toggle="collapse"
-                data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                Tecnologia
-              </button>
-            </h2>
-            <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-              <div class="list-group">
-                <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']" [queryParams]="{category: 'Tecnologia'}" (click)="filterByCategory('Tecnologia')">Todo en Tecnologia</a>
-                <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']" [queryParams]="{category: 'Parlantes'}" (click)="filterByCategory('Parlantes')"> Parlantes</a>
-              </div>
-            </div>
-          </div>
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed focus-ring focus-ring-light" type="button" data-bs-toggle="collapse"
-                data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
-                Deportes
-              </button>
-            </h2>
-            <div id="flush-collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-              <div class="list-group">
-                <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']" [queryParams]="{category: 'Deportes'}" (click)="filterByCategory('Deportes')">Todo en Deportes</a>
-                <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']" [queryParams]="{category: 'Pelotas'}" (click)="filterByCategory('Pelotas')"> Pelotas</a>
-              </div>
-            </div>
-          </div>
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed focus-ring focus-ring-light" type="button" data-bs-toggle="collapse"
-                data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFour">
-                Bazar
-              </button>
-            </h2>
-            <div id="flush-collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-              <div class="list-group">
-                <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']" [queryParams]="{category: 'Bazar'}" (click)="filterByCategory('Bazar')">Todo en Bazar</a>
-                <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']" [queryParams]="{category: 'Termos'}" (click)="filterByCategory('Termos')"> Termos</a>
-              </div>
-            </div>
-          </div>
-        </div> -->
       </div>
       <div class="mb-5 mt-5 ps-4 pe-4">
         <h5 class="fw-light fs-4 text-center mb-3"><i class="bi bi-funnel"></i> Marcas</h5>
         <div class="list-group text-center list-group-flush" *ngFor="let brand of brands">
           <a class="list-group-item list-group-item-action" [routerLink]="['/products']"
-            [queryParams]="{category: brand.brand}" (click)="filterByBrand(brand.brand)"> {{brand.brand}}</a>
+            [queryParams]="{category: brand.brand}" (click)="filterByBrand(brand.brand)"> {{brand.brand | titlecase}}</a>
         </div>
       </div>
     </div>

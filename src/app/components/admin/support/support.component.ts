@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Brand } from 'src/app/models/brand';
+import { Category } from 'src/app/models/category';
+import { SubCategory } from 'src/app/models/subCategory';
 import { User } from 'src/app/models/user';
+import { BrandService } from 'src/app/services/brand.service';
+import { CategoryService } from 'src/app/services/category.service';
+import { SubCategoryService } from 'src/app/services/subCategory.service';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 
@@ -12,8 +18,16 @@ import Swal from 'sweetalert2';
 })
 export class SupportComponent implements OnInit {
 
-  constructor(private router: Router, private userService: UserService) { }
+  constructor(private router: Router, 
+    private userService: UserService,
+    private categoryService: CategoryService,
+    private brandService: BrandService,
+    private subCategoryService: SubCategoryService) { }
   user:User = new User();
+  categories: Category[] = [];
+  brands: Brand[] = [];
+  subCategories: SubCategory[] = [];
+  subCategoriesByCategory: SubCategory[] = [];
   private suscripciones = new Subscription();
   ngOnInit() {
     this.suscripciones.add(
@@ -21,6 +35,52 @@ export class SupportComponent implements OnInit {
         this.user = data;
       })
     )
+    this.loadBrands();
+    this.loadCategories();
+    this.loadSubCategories();
+  }
+
+  loadBrands() {
+    this.suscripciones.add(
+      this.brandService.getBrands().subscribe(
+        (data) => {
+          this.brands = data;
+        },
+        (error) => {
+          console.log(error);
+        }
+      )
+    );
+  }
+
+  loadCategories() {
+    this.suscripciones.add(
+      this.categoryService.getCategories().subscribe(
+        (data) => {
+          this.categories = data;
+        },
+        (error) => {
+          console.log(error);
+        }
+      )
+    );
+  }
+
+  loadSubCategories() {
+    this.suscripciones.add(
+      this.subCategoryService.getSubCategories().subscribe(
+        (data) => {
+          this.subCategories = data;
+        },
+        (error) => {
+          console.log(error);
+        }
+      )
+    )
+  }
+
+  ngOnDestroy(): void {
+    this.suscripciones.unsubscribe();
   }
 
   logout() {
@@ -41,4 +101,78 @@ export class SupportComponent implements OnInit {
       }
     });
   }
+
+  editBrand(brand: Brand) {
+    brand.editable = true;
+  }
+  
+  editCategory(category: Category) {
+    category.editable = true;
+  }
+
+  updateBrand(brand: Brand){
+    this.brandService.updateBrand(brand.id, brand.brand).subscribe(
+      (data) => {
+        console.log(data);
+        alert("Se actulizo la marca: " + brand.brand);
+        this.loadBrands();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    brand.editable = false;
+  }
+
+  updateCategory(category: Category){
+    this.categoryService.updateCategory(category.id, category.category).subscribe(
+      (data) => {
+        console.log(data);
+        alert("Se actualizo la categoria: " + category.category);
+        this.loadCategories();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    category.editable = false;
+  }
+
+  updateSubCategory(subCategory: SubCategory){
+    this.subCategoryService.updateSubCategory(subCategory.id, subCategory.subcategory).subscribe(
+      (data) => {
+        console.log(data);
+        alert("Se actualizo la sub categoria: " + subCategory.subcategory);
+        this.loadSubCategories();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    subCategory.editable = false;
+  }
+
+  cancelBrand(brand: Brand) {
+    brand.editable = false;
+  }
+
+  cancelCategory(category: Category) {
+    category.editable = false;
+  }
+
+  cancelSubCategory(subCategory: SubCategory) {
+    subCategory.editable = false;
+  }
+
+  loadModal(category: string){
+    this.subCategoryService.getSubCategoriesByCategory(category).subscribe(
+      (data) => {
+      this.subCategoriesByCategory = data;
+    })
+  }
+
+  editSubCategory(subCategory: SubCategory) {
+    subCategory.editable = true;
+  }
+
 }

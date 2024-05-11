@@ -48,7 +48,7 @@ export class ProductsAdminComponent implements OnInit {
       this.validateToyCode.bind(this),
     ]),
     category: new FormControl('', [Validators.required]),
-    sub_category: new FormControl('', [Validators.required]),
+    subcategory: new FormControl('', [Validators.required]),
     description: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
@@ -71,7 +71,7 @@ export class ProductsAdminComponent implements OnInit {
   formEditToy = new FormGroup({
     nameEdit: new FormControl('', [Validators.required, Validators.minLength(3)]),
     categoryEdit: new FormControl('', [Validators.required]),
-    sub_categoryEdit: new FormControl('', [Validators.required]),
+    subcategoryEdit: new FormControl('', [Validators.required]),
     descriptionEdit: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
@@ -370,12 +370,12 @@ export class ProductsAdminComponent implements OnInit {
           .find((brand) => brand.brand === data.brand)
           ?.id.toString();
         const subCategoryId = this.subCategoriesEdit
-          .find((sub) => sub.sub_category === data.sub_category)
+          .find((sub) => sub.subcategory === data.subcategory)
           ?.id.toString();
         this.formEditToy.patchValue({
           nameEdit: data.name,
           categoryEdit: categoryId,
-          sub_categoryEdit: subCategoryId,
+          subcategoryEdit: subCategoryId,
           descriptionEdit: data.description,
           brandEdit: brandId,
           priceEdit: data.price,
@@ -402,7 +402,7 @@ export class ProductsAdminComponent implements OnInit {
       const toyData = {
         name: this.formEditToy.value.nameEdit,
         category: this.formEditToy.value.categoryEdit,
-        sub_category: this.formEditToy.value.sub_categoryEdit,
+        sub_category: this.formEditToy.value.subcategoryEdit,
         description: this.formEditToy.value.descriptionEdit,
         brand: this.formEditToy.value.brandEdit,
         price: this.formEditToy.value.priceEdit,

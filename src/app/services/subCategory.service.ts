@@ -20,4 +20,12 @@ export class SubCategoryService {
     return this.httpClient.get<SubCategory[]>(this.urlSubCategories + '/' + category);
   }
 
+  updateSubCategory(id: number, subCategory: string){
+    return this.httpClient.put(this.urlSubCategories + "/edit/" + id, subCategory);
+  }
+
+  createSubCategory(subCategory: any){
+    return this.httpClient.post(this.urlSubCategories + "/new", subCategory);
+  }
+
 }

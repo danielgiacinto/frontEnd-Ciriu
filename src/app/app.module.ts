@@ -26,6 +26,9 @@ import { ReportAdminComponent } from './components/admin/reportAdmin/reportAdmin
 import { StockAdminComponent } from './components/admin/stockAdmin/stockAdmin.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SupportComponent } from './components/admin/support/support.component';
+import { NewBrandComponent } from './components/admin/support/newBrand/newBrand.component';
+import { NewCategoryComponent } from './components/admin/support/newCategory/newCategory.component';
+import { NewSubcategoryComponent } from './components/admin/support/newSubcategory/newSubcategory.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +51,10 @@ import { SupportComponent } from './components/admin/support/support.component';
     ReportAdminComponent,
     StockAdminComponent,
     FooterComponent,
-    SupportComponent
+    SupportComponent,
+    NewBrandComponent,
+    NewCategoryComponent,
+    NewSubcategoryComponent
   ],
   imports: [
     BrowserModule,

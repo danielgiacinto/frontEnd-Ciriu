@@ -1,5 +1,6 @@
 export class SubCategory {
     id:number = 0;
-    sub_category = '';
+    subcategory = '';
     category:string = '';
+    editable:boolean = false;
 }

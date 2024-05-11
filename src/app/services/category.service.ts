@@ -15,4 +15,12 @@ export class CategoryService {
   getCategories():Observable<Category[]> {
     return this.httpClient.get<Category[]>(this.urlCategories);
   }
+
+  createCategory(category: any){
+    return this.httpClient.post(this.urlCategories + "/new", category);
+  }
+
+  updateCategory(id: number, category: String){
+    return this.httpClient.put(this.urlCategories + "/edit/" + id, category);
+  }
 }

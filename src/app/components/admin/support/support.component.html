@@ -14,14 +14,15 @@
         <div class="d-grid gap-2 mb-5">
           <button class="btn btn-primary btn-lg boton p-3" routerLink="/admin/orders"><i
               class="bi bi-file-earmark-text"> Pedidos</i></button>
-          <button class="btn btn-primary btn-lg boton p-3" routerLink="/admin/products"><i class="bi bi-boxes"> Productos</i>
-            </button>
+          <button class="btn btn-primary btn-lg boton p-3" routerLink="/admin/products"><i class="bi bi-boxes">
+              Productos</i>
+          </button>
           <button class="btn btn-primary btn-lg boton p-3" routerLink="/admin/stock"><i class="bi bi-box">
               Stock</i></button>
           <button class="btn btn-primary btn-lg boton p-3" routerLink="/admin/report"><i class="bi bi-bar-chart-line">
               Reportes</i></button>
           <a class="btn btn-primary btn-lg boton p-3" routerLink="/admin/support"><i class="bi bi-gear-wide-connected">
-                Soporte</i></a>
+              Soporte</i></a>
           <button class="btn btn-primary btn-lg boton p-3" (click)="logout()"><i class="bi bi-box-arrow-right"> Cerrar
               sesion</i></button>
         </div>
@@ -35,7 +36,119 @@
               </h4>
             </div>
           </div>
+          <div class="row pb-3 text-center">
+            <div class="col-md-5">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <h4 class="text-muted fw-bold text-body-tertiary">
+                        <span class="rounded-5"> Marcas</span>
+                      </h4>
+                    </div>
+                    <div class="col-md-12">
+                      <!-- Tabla de marcas -->
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">Marca</th>
+                            <th scope="col">Editar</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let brand of brands; let i = index">
+                          <td> <input type="text" class="form-control text-center" [readOnly]="!brand.editable" [(ngModel)]="brand.brand"></td>
+                          <td><button type="button" class="btn border-0 p-2 rounded-3 me-2" (click)="editBrand(brand)">
+                            <i class="bi bi-pencil-fill"></i>
+                            </button>
+                            <button *ngIf="brand.editable" type="button" class="btn btn-success border-0 p-2 rounded-3 me-2" (click)="updateBrand(brand)">
+                              <i class="bi bi-check-circle"></i>
+                            </button>
+                            <button *ngIf="brand.editable" class="btn btn-danger border-0 p-2 rounded-3 me-2" (click)="cancelBrand(brand)"><i class="bi bi-x-circle"></i></button>
+                          </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <app-newBrand></app-newBrand>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-7">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <h4 class="text-muted fw-bold text-body-tertiary">
+                        <span class="rounded-5"> Categorias</span>
+                      </h4>
+                    </div>
+                    <!--Tabla de Categorias-->
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Categoria</th>
+                          <th scope="col">Editar</th>
+                          <th>Sub categoria</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let category of categories; let i = index">
+                          <td><input type="text" class="form-control text-center" [readOnly]="!category.editable" [(ngModel)]="category.category"></td>
+                          <td><button type="button" class="btn border-0 p-2 rounded-3 me-2" (click)="editCategory(category)"><i class="bi bi-pencil-fill"></i></button>
+                            <button *ngIf="category.editable" type="button" class="btn btn-success border-0 p-2 rounded-3 me-2" (click)="updateCategory(category)">
+                              <i class="bi bi-check-circle"></i>
+                            </button>
+                            <button *ngIf="category.editable" class="btn btn-danger border-0 p-2 rounded-3 me-2" (click)="cancelCategory(category)"><i class="bi bi-x-circle"></i></button>
+                          </td>
+                          <td>
+                            <button type="button" class="btn border-0 p-2 rounded-3 me-2" (click)="loadModal(category.category)"><i class="bi bi-eye" data-bs-toggle="modal" data-bs-target="#exampleModal"></i></button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <app-newCategory></app-newCategory>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Modal de Sub categorias -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Sub categorias</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <table class="table text-center">
+          <thead>
+            <tr>
+              <th scope="col">Categoria</th>
+              <th scope="col">Sub categorias</th>
+              <th scope="col">Editar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let sub of subCategoriesByCategory">
+              <td>{{sub.category}}</td>
+              <td><input type="text" class="form-control text-center" [readOnly]="!sub.editable" [(ngModel)]="sub.subcategory"></td>
+              <td><button type="button" class="btn border-0 p-2 rounded-3 me-2" (click)="editSubCategory(sub)"><i class="bi bi-pencil-fill"></i></button>
+                <button *ngIf="sub.editable" type="button" class="btn btn-success border-0 p-2 rounded-3 me-2" (click)="updateSubCategory(sub)">
+                  <i class="bi bi-check-circle"></i>
+                </button>
+                <button *ngIf="sub.editable" class="btn btn-danger border-0 p-2 rounded-3 me-2" (click)="cancelSubCategory(sub)"><i class="bi bi-x-circle"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <app-newSubcategory></app-newSubcategory>
       </div>
     </div>
   </div>

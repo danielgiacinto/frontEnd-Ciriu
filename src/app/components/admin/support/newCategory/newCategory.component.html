@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <form action="" [formGroup]="formNewCategory" (ngSubmit)="createCategory()">
+        <div class="input-group">
+          <label class="input-group-text" for="inputGroupSelect01"><i class="bi bi-tag-fill"></i></label>
+          <input type="text" class="form-control" placeholder="Nueva categoria" formControlName="category">
+          <button class="btn btn-outline-success border-0 p-2 rounded-1" type="submit"><i class="bi bi-plus-circle">
+              Añadir</i></button>
+        </div>
+        <div class="text-start" *ngIf="formNewCategory.get('category')?.invalid && (formNewCategory.get('category')?.dirty || formNewCategory.get('category')?.touched)">
+          <p class="text-danger"> Debe ingresar una marca</p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-12 align-self-start mt-5 ms-5">
       <a class="display-6 text-decoration-none fs-5" routerLink="/products">Ver todos </a>
-      <a class="display-6 text-decoration-none fs-5 text-muted">/ {{toy.category}} / {{toy.sub_category}} </a>
+      <a class="display-6 text-decoration-none fs-5 text-muted">/ {{toy.category | titlecase}} / {{toy.subcategory | titlecase}} </a>
     </div>
     <div class="col-md-12">
       <div class="card mt-3 m-2 rounded-5 shadow border-0">
