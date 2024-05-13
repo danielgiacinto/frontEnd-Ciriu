@@ -1,55 +1,50 @@
 <div class="container" style="font-family: Montserrat;">
-  <div class="row">
+  <div class="row mb-5">
     <div class="col-md-12 align-self-start mt-5 ms-5">
       <a class="display-6 text-decoration-none fs-5" routerLink="/products">Ver todos </a>
-      <a class="display-6 text-decoration-none fs-5 text-muted">/ {{toy.category | titlecase}} / {{toy.subcategory | titlecase}} </a>
+      <a class="display-6 text-decoration-none fs-5 text-muted">/ {{toy.category | titlecase}} / {{toy.subcategory |
+        titlecase}} </a>
     </div>
     <div class="col-md-12">
-      <div class="card mt-3 m-2 rounded-5 shadow border-0">
+      <div class="card mt-2 m-2 rounded-5 shadow border-0">
         <div class="row">
-          <div class="col-md-6 col-sm-4 align-items-center justify-content-center d-flex zoom-effect">
-            <img src={{toy.image[0]}} class="p-2" style="width: 400px; height: 400px;" id="imageHome">
+          <div class="col-md-1 ps-4 pt-3">
+            <!-- Imagenes secundarias -->
+            <div class="m-1" *ngFor="let image of toy.image">
+                <img src={{image}} class="img-fluid img-thumbnail" style="cursor: pointer; width: 100%;"
+                (click)="changeImage(image)">
+            </div>
           </div>
-          <!-- Imágenes secundarias -->
-          <div class="col-md-6 col-sm-8">
+          <div class="col-md-5 col-sm-4 mt-3 me-0">
+            <!-- Imagen principal -->
+            <img src={{toy.image[0]}} class="card-img" style="width: 100%; height: 100%; max-width: 500px; max-height: 500px" id="imageHome">
+          </div>
+          <div class="col-md-6 col-sm-8 ms-0">
             <div class="card-body">
               <h5 class="card-title display-6">{{toy.name.toUpperCase()}}</h5>
               <p class="text-muted opacity-50">{{code}}</p>
-              <hr>
-              <p class="card-text text-muted fs-5"><i class="bi bi-tags"> Marca: </i> {{toy.brand}}</p>
+              <hr class="border border-secondary border-1 opacity-50 rounded-5">
+              <p class="card-text text-muted fs-5"><i class="bi bi-tags"> Marca: </i> {{toy.brand | titlecase}}</p>
               <p class="text-muted fs-5"><i class="bi bi-box-seam"> Stock:</i> {{toy.stock}}</p>
-              <p class="card-text text-muted fw-bold fs-3 text-center">{{toy.price | currency}} <span class="fw-light">c/u</span></p>
+              <p class="card-text text-muted fw-bold fs-3 text-center">{{toy.price | currency}} <span
+                  class="fw-light">c/u</span></p>
             </div>
             <div class="card-footer border-0 bg-transparent mb-3">
               <ng-container *ngIf="toy.stock > 0; else noStockButton">
-                <button href="#" class="btn btn-primary boton border-0 p-2 rounded-3 w-100 fw-semibold" (click)="addToCart(toy)"><i class="bi bi-bag"></i> Agregar</button>
+                <button href="#" class="btn btn-primary boton border-0 p-2 rounded-3 w-100 fw-semibold"
+                  (click)="addToCart(toy)"><i class="bi bi-bag"></i> Agregar</button>
               </ng-container>
               <ng-template #noStockButton>
-                <button class="btn btn-warning rounded-4 border-0 p-2 rounded-3 w-100 fw-semibold" disabled><i class="bi bi-bag-x"></i> Sin Stock</button>
+                <button class="btn btn-warning rounded-4 border-0 p-2 rounded-3 w-100 fw-semibold" disabled><i
+                    class="bi bi-bag-x"></i> Sin Stock</button>
               </ng-template>
             </div>
           </div>
-        </div>
-        <div class="row mt-3">
-          <div class="col-md-12">
-              <div class="row">
-                  <div class="col-md-2 mb-3" *ngFor="let image of toy.image">
-                      <img src={{image}} class="img-fluid img-thumbnail" style="cursor: pointer; width: 100%;" (click)="changeImage(image)">
-                  </div>
-              </div>
-          </div>
-      </div>
-      </div>
-    </div>
-    <div class="col-md-12">
-      <div class="card mt-3 m-5 rounded-5 border-0">
-        <div class="row">
-          <div class="col-md-12">
-            <h5 class="card-title display-6">Caracteristicas</h5>
-            <hr>
+          <div class="col-md-12 mt-5 text-center">
+            <h5 class="text-muted fs-4 fw-semibold ps-4 text-nowrap bg-body-secondary">Descripción del producto</h5>
           </div>
           <div class="col-md-12">
-            <p class="card-text text-muted fs-5"><i class="bi bi-chat-right-text"> Descripcion:</i> {{toy.description}}</p>
+            <pre class="card-text text-muted fs-5 p-4 pre-container" style="font-family: Montserrat;"><i class="bi bi-chat-right-text"></i> {{toy.description}}</pre>
           </div>
         </div>
       </div>

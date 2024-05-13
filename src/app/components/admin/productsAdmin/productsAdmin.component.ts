@@ -52,7 +52,7 @@ export class ProductsAdminComponent implements OnInit {
     description: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
-      Validators.maxLength(100),
+      Validators.maxLength(500),
     ]),
     price: new FormControl('', [
       Validators.required,
@@ -75,7 +75,7 @@ export class ProductsAdminComponent implements OnInit {
     descriptionEdit: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
-      Validators.maxLength(100),
+      Validators.maxLength(500),
     ]),
     priceEdit: new FormControl(1, [
       Validators.required,

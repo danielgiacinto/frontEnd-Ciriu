@@ -26,3 +26,9 @@ body{
 .zoom-effect:hover img {
     transform: scale(1.1);
 }
+
+.pre-container {
+    overflow: hidden;
+    white-space: pre-wrap;
+}
+  

@@ -180,10 +180,5 @@ export class ProductsComponent implements OnInit {
     this.loadToys();
   }
 
-  changeImage(toy: any, index: number) {
-    if (toy.image.length > 1) {
-        toy.image[0] = toy.image[index];
-    }
-  }
 
 }

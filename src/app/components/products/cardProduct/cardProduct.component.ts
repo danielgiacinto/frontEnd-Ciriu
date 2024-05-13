@@ -45,6 +45,7 @@ export class CardProductComponent implements OnInit {
     const img = document.getElementById('imageHome') as HTMLImageElement;
     img.src = image;
   }
+
   
 
 }
