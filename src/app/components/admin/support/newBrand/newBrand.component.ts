@@ -24,6 +24,11 @@ export class NewBrandComponent implements OnInit {
           console.log(data);
           alert("Marca añadida");
           this.formNewBrand.reset();
+          window.location.reload();
+        },
+        error => {
+          alert("La marca ya existe");
+          this.formNewBrand.reset();
         }
       )
     }

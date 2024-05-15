@@ -19,5 +19,9 @@ export class OrderService {
     return this.httpClient.get(`${this.urlOrder}?fromDate=${fromDate}&toDate=${toDate}&status=${status}`);
   }
 
+  consultReport(fromDate: String, toDate: String): Observable<any> {
+    return this.httpClient.get(`${this.urlOrder}/report?fromDate=${fromDate}&toDate=${toDate}`);
+  }
+
   
 }

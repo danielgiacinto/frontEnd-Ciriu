@@ -38,6 +38,7 @@ export class CartService {
     } else {
       product.quantity = 1;
       cart.push(product);
+      this.openCart();
     }
     localStorage.setItem('cart', JSON.stringify(cart));
     // Emitir el nuevo estado del carrito

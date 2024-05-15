@@ -15,20 +15,13 @@ body{
     font-family: 'Montserrat', sans-serif;
 }
 
-.zoom-effect {
-    overflow: hidden;
-}
-  
-.zoom-effect img {
-    transition: transform 0.3s ease;
-}
-  
-.zoom-effect:hover img {
-    transform: scale(1.1);
-}
 
 .pre-container {
     overflow: hidden;
     white-space: pre-wrap;
+    text-align: justify;
+    text-indent: -5px;
 }
+
+
   

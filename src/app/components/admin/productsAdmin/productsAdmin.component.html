@@ -129,9 +129,23 @@
                             <p class="text-danger"> Debe seleccionar una categoria</p>
                           </div>
                         </div>
-                        <div class="col-md-1">
-                          <button class="btn btn-outline-success border-0 p-2 rounded-1" type="button"><i class="bi bi-plus-circle"></i></button>
+                        <div class="col-md-1 mb-2">
+                          <p class="d-inline-flex gap-1">
+                            <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#categoria" aria-expanded="false" aria-controls="collapseWidthExample">
+                              <i class="bi bi-plus-circle text-success"></i>
+                            </button>
+                          </p>
+                          <div class="row">
+                            <div class="col">
+                              <div class="collapse multi-collapse" id="categoria">
+                                <div class="card card-body" style="width: 350px;">
+                                  <app-newCategory></app-newCategory>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
+                        
                         <!--Sub Categoria-->
                         <div class="col-md-5 mb-4">
                           <div class="input-group">
@@ -150,21 +164,20 @@
                             <p class="text-danger"> Debe seleccionar una sub categoria</p>
                           </div>
                         </div>
-                        <div class="col-md-1">
-                          <button class="btn btn-outline-success border-0 p-2 rounded-1" type="button"><i class="bi bi-plus-circle"></i></button>
-                        </div>
-                        <!--Precio-->
-                        <div class="col-md-4 mb-4">
-                          <div class="input-group">
-                            <span class="input-group-text" id="basic-addon1"><i
-                                class="bi bi-currency-dollar"></i></span>
-                            <input type="number" class="form-control" formControlName="price" placeholder="Precio"
-                              [ngClass]="{'is-invalid': formNewToy.get('price')?.errors 
-                            && (formNewToy.get('price')?.dirty || formNewToy.get('price')?.touched) && 'is-invalid'}">
-                          </div>
-                          <div
-                            *ngIf="formNewToy.get('price')?.invalid && (formNewToy.get('price')?.dirty || formNewToy.get('price')?.touched)">
-                            <p class="text-danger"> Debe definir un precio</p>
+                        <div class="col-md-1 mb-2">
+                          <p class="d-inline-flex gap-1">
+                            <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#subcategoria" aria-expanded="false" aria-controls="collapseWidthExample">
+                              <i class="bi bi-plus-circle text-success"></i>
+                            </button>
+                          </p>
+                          <div class="row">
+                            <div class="col">
+                              <div class="collapse multi-collapse" id="subcategoria">
+                                <div class="card card-body" style="width: 350px;">
+                                  <app-newSubcategory></app-newSubcategory>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                         <!-- Marca -->
@@ -184,9 +197,37 @@
                             <p class="text-danger"> Seleccione una marca</p>
                           </div>
                         </div>
-                        <div class="col-md-1">
-                          <button class="btn btn-outline-success border-0 p-2 rounded-1" type="button" data-bs-toggle="modal" data-bs-target="#Brand"><i class="bi bi-plus-circle"></i></button>
+                        <div class="col-md-1 mb-2">
+                          <p class="d-inline-flex gap-1">
+                            <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#marca" aria-expanded="false" aria-controls="collapseWidthExample">
+                              <i class="bi bi-plus-circle text-success"></i>
+                            </button>
+                          </p>
+                          <div class="row">
+                            <div class="col">
+                              <div class="collapse multi-collapse" id="marca">
+                                <div class="card card-body" style="width: 350px;">
+                                  <app-newBrand></app-newBrand>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
+                        <!--Precio-->
+                        <div class="col-md-4 mb-4">
+                          <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1"><i
+                                class="bi bi-currency-dollar"></i></span>
+                            <input type="number" class="form-control" formControlName="price" placeholder="Precio"
+                              [ngClass]="{'is-invalid': formNewToy.get('price')?.errors 
+                            && (formNewToy.get('price')?.dirty || formNewToy.get('price')?.touched) && 'is-invalid'}">
+                          </div>
+                          <div
+                            *ngIf="formNewToy.get('price')?.invalid && (formNewToy.get('price')?.dirty || formNewToy.get('price')?.touched)">
+                            <p class="text-danger"> Debe definir un precio</p>
+                          </div>
+                        </div>
+                        
                         <!-- Stock -->
                         <div class="col-md-3 mb-4">
                           <div class="input-group">
@@ -240,31 +281,6 @@
                             </div>
                           </div>
                         </div>
-
-                        <!-- <div class="col-md-5 mb-4">
-                          <div class="card border-2 rounded-5">
-                            <div class="card-body text-center">
-                              <ng-container *ngIf="!previewUrl">
-                                <img src="https://cdn-icons-png.freepik.com/512/3082/3082060.png" style="opacity: 25%;" width="180px" height="180px">
-                              </ng-container>
-                              <div *ngIf="previewUrl">
-                                <img [src]="previewUrl" width="180px" height="180px" alt="Vista previa de la imagen">
-                              </div>                     
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-7 align-self-end mb-4">
-                          <div class="input-group">
-                            <label class="input-group-text" for="inputGroupFile01"><i class="bi bi-file-earmark-plus"></i></label>
-                            <input type="file" class="form-control" id="inputGroupFile01" formControlName="image" accept="image/png, image/jpeg"
-                              (change)="showPreview($event)" (change)="uploadFile($event)" [ngClass]="{'is-invalid': formNewToy.get('image')?.errors 
-                              && (formNewToy.get('image')?.dirty || formNewToy.get('image')?.touched) && 'is-invalid'}">
-                          </div>
-                          <div
-                            *ngIf="formNewToy.get('image')?.invalid && (formNewToy.get('image')?.dirty || formNewToy.get('image')?.touched)">
-                            <p class="text-danger"> Debe seleccionar una foto</p>
-                          </div>
-                        </div> -->
                       </div>
 
                       <div class="modal-footer">
@@ -319,7 +335,7 @@
                       <p>Precio: {{toy.price | currency}}</p>
                       <p>Stock: {{toy.stock}}</p>
                     </td>
-                    <td scope="row mt-5" class="align-middle">
+                    <td scope="row mt-5" class="align-middle pe-0">
                       <div class="col mb-2">
                         <button type="button" class="btn btn-primary border-0 p-2 rounded-3 me-2"
                           style="background-color: #FFD27C;" data-bs-toggle="modal" data-bs-target="#exampleModal"
@@ -327,8 +343,11 @@
                           <i class="bi bi-pencil-fill"></i>
                         </button>
                         <button type="button" (click)="deleteProduct(toy.code)"
-                          class="btn btn-primary border-0 p-2 rounded-3" style="background-color: #FF8383;"><i
-                            class="bi bi-trash"></i></button>
+                          class="btn btn-primary border-0 p-2 rounded-3 me-2" style="background-color: #FF8383;"><i
+                            class="bi bi-trash"></i>
+                        </button>
+                      <Button type="button" class="btn btn-primary border-0 p-2 rounded-3" routerLink="/admin/stock" 
+                      style="background-color: rgb(160, 137, 92);"><i class="bi bi-box2"></i></Button>
                       </div>
                     </td>
                   </tr>
@@ -399,6 +418,22 @@
                           <p class="text-danger"> Debe seleccionar una categoria</p>
                         </div>
                       </div>
+                      <div class="col-md-1 mb-2">
+                        <p class="d-inline-flex gap-1">
+                          <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#categoria" aria-expanded="false" aria-controls="collapseWidthExample">
+                            <i class="bi bi-plus-circle text-success"></i>
+                          </button>
+                        </p>
+                        <div class="row">
+                          <div class="col">
+                            <div class="collapse multi-collapse" id="categoria">
+                              <div class="card card-body" style="width: 350px;">
+                                <app-newCategory></app-newCategory>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                       <!--Sub Categoria-->
                       <div class="col-md-4 mb-4">
                         <div class="input-group">
@@ -418,6 +453,22 @@
                           <p class="text-danger"> Debe seleccionar una sub categoria</p>
                         </div>
                       </div>
+                      <div class="col-md-1 mb-2">
+                        <p class="d-inline-flex gap-1">
+                          <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#subcategoria" aria-expanded="false" aria-controls="collapseWidthExample">
+                            <i class="bi bi-plus-circle text-success"></i>
+                          </button>
+                        </p>
+                        <div class="row">
+                          <div class="col">
+                            <div class="collapse multi-collapse" id="subcategoria">
+                              <div class="card card-body" style="width: 350px;">
+                                <app-newSubcategory></app-newSubcategory>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                       <!-- Marca -->
                       <div class=" col-md-4 mb-4">
                         <div class="input-group">
@@ -433,6 +484,22 @@
                         <div
                           *ngIf="formEditToy.get('brandEdit')?.invalid && (formEditToy.get('brandEdit')?.dirty || formEditToy.get('brandEdit')?.touched)">
                           <p class="text-danger"> Seleccione una marca</p>
+                        </div>
+                      </div>
+                      <div class="col-md-1 mb-2">
+                        <p class="d-inline-flex gap-1">
+                          <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#marca" aria-expanded="false" aria-controls="collapseWidthExample">
+                            <i class="bi bi-plus-circle text-success"></i>
+                          </button>
+                        </p>
+                        <div class="row">
+                          <div class="col">
+                            <div class="collapse multi-collapse" id="marca">
+                              <div class="card card-body" style="width: 350px;">
+                                <app-newBrand></app-newBrand>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
                       <!--Descripcion-->
@@ -475,30 +542,6 @@
                           </div>
                         </div>
                       </div>
-                      <!-- <div class="col-md-5 mb-4">
-                        <div class="card border-2 rounded-5">
-                          <div class="card-body text-center">
-                            <ng-container *ngIf="!previewUrl">
-                              <img src="https://cdn-icons-png.freepik.com/512/3082/3082060.png" style="opacity: 25%;" width="180px" height="180px">
-                            </ng-container>
-                            <div *ngIf="previewUrl">
-                              <img [src]="previewUrl" width="180px" height="180px" alt="Vista previa de la imagen">
-                            </div>                     
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-7 align-self-end mb-4">
-                        <div class="input-group">
-                          <label class="input-group-text" for="inputGroupFile01"><i class="bi bi-file-earmark-plus"></i></label>
-                          <input type="file" class="form-control" id="inputGroupFile01" formControlName="image" accept="image/png, image/jpeg"
-                            (change)="showPreview($event)" (change)="uploadFile($event)" [ngClass]="{'is-invalid': formEditToy.get('imageEdit')?.errors 
-                            && (formEditToy.get('imageEdit')?.dirty || formEditToy.get('imageEdit')?.touched) && 'is-invalid'}">
-                        </div>
-                        <div
-                          *ngIf="formEditToy.get('imageEdit')?.invalid && (formEditToy.get('imageEdit')?.dirty || formEditToy.get('imageEdit')?.touched)">
-                          <p class="text-danger"> Debe seleccionar una foto</p>
-                        </div>
-                      </div> -->
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary rounded-5" (click)="clearForm()"
@@ -538,20 +581,6 @@
                   </li>
                 </ul>
               </nav>
-            </div>
-          </div>
-          <!-- Marcas -->
-          <div class="modal fade" id="Brand" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalLabel">Nueva marca</h1>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <app-newBrand></app-newBrand>
-                </div>
-              </div>
             </div>
           </div>
         </div>

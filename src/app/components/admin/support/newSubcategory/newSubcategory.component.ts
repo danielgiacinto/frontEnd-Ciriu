@@ -39,7 +39,8 @@ export class NewSubcategoryComponent implements OnInit {
           this.formNewSubCategory.reset();
         },
         error => {
-          console.log(error);
+          alert("La subcategoría ya existe");
+          this.formNewSubCategory.reset();
         }
       )
     }

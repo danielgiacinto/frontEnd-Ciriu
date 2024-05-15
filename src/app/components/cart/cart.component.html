@@ -67,7 +67,7 @@
       <button *ngIf="cart.length > 0" type="button" class="btn btn-primary boton-comprar fs-4" [disabled]="cart.length === 0"
         (click)="goToCheckout()" data-bs-dismiss="modal">Continuar compra
       </button>
-      <button type="button" *ngIf="cart.length === 0" disabled class="btn btn-primary boton-comprar fs-4">Agrega productos para comprar</button>
+      <button type="button" (click)="closeCart()" routerLink="/products" *ngIf="cart.length === 0" class="btn btn-primary boton-comprar fs-4">Agrega productos para comprar</button>
     </div>
   </div>
 </div>

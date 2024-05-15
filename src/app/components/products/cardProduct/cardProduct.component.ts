@@ -31,6 +31,7 @@ export class CardProductComponent implements OnInit {
         }
       )
     )
+
   }
 
   ngOnDestroy(): void {
@@ -46,6 +47,8 @@ export class CardProductComponent implements OnInit {
     img.src = image;
   }
 
+
+  
   
 
 }

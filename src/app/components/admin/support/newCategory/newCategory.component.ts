@@ -26,7 +26,8 @@ export class NewCategoryComponent implements OnInit {
           this.formNewCategory.reset();
         },
         error => {
-          console.log(error);
+          alert("La categoría ya existe");
+          this.formNewCategory.reset();
         }
       )
     }

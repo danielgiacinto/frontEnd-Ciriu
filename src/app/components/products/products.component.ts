@@ -40,6 +40,7 @@ export class ProductsComponent implements OnInit {
   brands: Brand[] = [];
   subcategories: SubCategory[] = [];
   categories: Category[] = [];
+  originalImage: string = '';
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -52,6 +53,7 @@ export class ProductsComponent implements OnInit {
       this.loadCategories();
       this.loadSubCategories();
       this.loadToys();
+      this.viewClearFilter = this.existFilters();
     });
   }
 
@@ -82,6 +84,14 @@ export class ProductsComponent implements OnInit {
         }
       )
     );
+  }
+
+  existFilters() : boolean {
+    if(this.category != '' || this.brand != '' || this.searchTerm != '') {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   loadCategories(): void {
@@ -143,6 +153,7 @@ export class ProductsComponent implements OnInit {
     this.viewClearFilter = true;
   }
 
+
   filterByBrand(brand: string){
     this.router.navigate(['/products'], { queryParams: { brand: brand } });
     this.brand = brand;
@@ -180,5 +191,17 @@ export class ProductsComponent implements OnInit {
     this.loadToys();
   }
 
+  changeToNextImage(toy: Toy): void {
+    if(toy.image.length > 1){
+      this.originalImage = toy.image[0];
+      toy.image[0] = toy.image[1];
+    }
+  }
 
+  changeResetImage(toy: Toy): void {
+    if (this.originalImage !== '') {
+      toy.image[0] = this.originalImage;
+      this.originalImage = '';
+    }
+  }
 }

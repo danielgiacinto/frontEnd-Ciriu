@@ -34,6 +34,84 @@
                 <span class="rounded-5"><i class="bi bi-bar-chart-line"></i> Reportes</span>
               </h4>
             </div>
+            <div class="col-md-12 mb-1 mt-4">
+              <div class="row align-items-start d-flex justify-content-start">
+                <form action="#" class="col-md-12 row p-3 rounded-5" (ngSubmit)="getReport()" [formGroup]="formReport">
+                  <div class="col-md-5">
+                    <div class="form-floating mb-3">
+                      <input type="datetime-local" class="form-control" id="floatingInput" formControlName="fromDate">
+                      <label for="floatingInput">Fecha desde</label>
+                    </div>
+                  </div>
+                  <div class="col-md-5">
+                    <div class="form-floating mb-3">
+                      <input type="datetime-local" class="form-control" id="floatingInput" formControlName="toDate">
+                      <label for="floatingInput">Fecha hasta</label>
+                    </div>
+                  </div>
+                  <div class="col-md-2 d-flex align-items-center">
+                    <button class="btn btn-primary border-0 p-2 ps-3 pe-3 rounded-5"
+                      style="background-color: #86BB3C; opacity: 0.9;" type="submit"> Consultar </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="col-md-12 mb-4">
+              <p class="text-muted fs-5">La consulta de los reportes es desde {{this.formReport.value.fromDate | date}} hasta {{this.formReport.value.toDate | date}}.</p>
+            </div>
+            <!--Ventas totales-->
+            <div class="col-md-6">
+              <div class="card border-0 rounded-4 shadow">
+                <div class="card-body align-items-center">
+                  <div class="col-md-12">
+                    <p class="display-6 text-success fw-bold"> {{totalSales | currency}}</p>
+                    <h5 class="card-title text-body-tertiary fs-3 fw-light">Total facturado</h5>
+                  </div>
+                  <hr class="border border-secondary border-2 opacity-25 rounded-5">
+                  <div class="col-md-12 d-flex align-items-center">
+                    <div class="row">
+                      <div class="col-md-4 text-center align-self-center">
+                        <img src="{{toy.image[0]}}" style="width: 100%; height: 100%;" alt="">
+                      </div>
+                      <div class="col-md-8">
+                        <p class="text-body-tertiary fw-light fs-5 mb-1"><i class="bi bi-stars"></i> Producto más vendido</p>
+                        <p class="text-body-tertiary fs-4 fw-semibold mb-0">{{toy.name}}</p>
+                        <p class="text-body-tertiary fs-5 fw-light">({{quantity}} veces)</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer border-0 rounded-4 p-0 pt-2 text-center">
+                  <!--Ordenes totales-->
+                  <p class="display-6 text-body-tertiary fw-semibold"><i class="bi bi-card-checklist"></i> {{totalOrders}}
+                    <span class="text-body-tertiary fw-semibold fs-2">Ventas</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!--Porcentaje de metodos de pago-->
+            <div class="col-md-6">
+              <div class="card border-0 rounded-4 shadow">
+                <div class="card-body">
+                  <h5 class="card-title fs-2 fw-light text-body-tertiary">Métodos de pago</h5>
+                  <div id="payment"></div>
+                </div>
+              </div>
+            </div>
+            <!--Ventas totales anuales-->
+            <div class="col-md-4 mt-5">
+              <div class="form-floating mb-3">
+                <input type="input" class="form-control" type="number" min="1900" max="2100" step="1">
+                <label for="floatingInput">Año</label>
+              </div>
+            </div>
+            <div class="col-md-4 mt-5">
+              <button class="btn btn-primary border-0 p-2 ps-3 pe-3 rounded-5" style="background-color: #86BB3C; opacity: 0.9;">Consultar</button>
+            </div>
+            <div class="col-md-12 mt-3">
+              <p class="text-muted fs-5 text-center">Ventas totales durante el año.</p>
+              <div id="chart"></div>
+            </div>
           </div>
         </div>
       </div>
