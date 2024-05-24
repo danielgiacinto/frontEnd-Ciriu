@@ -53,6 +53,7 @@ export class StockAdminComponent implements OnInit {
     const fromDate = this.formSearchStock.value.fromDateSearch ? this.formSearchStock.value.fromDateSearch : this.formatDate(new Date(today.getFullYear(), today.getMonth(), today.getDate() - 30));
     const toDate = this.formSearchStock.value.toDateSearch ? this.formSearchStock.value.toDateSearch : this.formatDate(today, true);
     const movement = this.formSearchStock.value.movementSearch ?? '';
+    this.formSearchStock.patchValue({ fromDateSearch: fromDate, toDateSearch: toDate, movementSearch: movement });
     console.log(fromDate, toDate, movement);
     this.stockService.getMovements(fromDate, toDate, movement).subscribe(data => {
       this.movements = data;

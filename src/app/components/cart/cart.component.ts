@@ -26,9 +26,6 @@ export class CartComponent implements OnInit {
     });
   }
 
-  closeCart(): void {
-    this.cartService.closeCart();
-  }
 
   removeItem(item: Toy) {
     Swal.fire({

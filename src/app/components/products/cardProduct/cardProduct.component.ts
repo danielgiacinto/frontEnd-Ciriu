@@ -14,6 +14,7 @@ export class CardProductComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private toyService: ToyService, private cartService: CartService) { }
   code: string = '';
+  idImagenModal: number = 0;
   toy: Toy = new Toy();
   private suscripciones = new Subscription();
 
@@ -42,13 +43,21 @@ export class CardProductComponent implements OnInit {
     this.cartService.addToCart(toy);
   }
 
-  changeImage(image: string) {
-    const img = document.getElementById('imageHome') as HTMLImageElement;
-    img.src = image;
+  setImage(i: number) {
+    console.log(i);
+    this.idImagenModal = i;
   }
 
+  prevImage(i : number) {
+    if(i > 0){
+      this.idImagenModal = i - 1;
+    }
+  }
 
-  
-  
+  nextImage(i : number) {
+    if(i < this.toy.image.length - 1){
+      this.idImagenModal = i + 1;
+    }
+  }
 
 }

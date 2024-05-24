@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/user';
@@ -25,7 +25,6 @@ export class ReportAdminComponent implements OnInit {
   user: User = new User();
   totalOrders: number = 0;
   totalSales: number = 0;
-  methodPayment: any | null;
   toy: Toy = new Toy();
   quantity: number = 0;
   private suscripciones = new Subscription();
@@ -33,6 +32,9 @@ export class ReportAdminComponent implements OnInit {
     fromDate: new FormControl(''),
     toDate: new FormControl(''),
   });
+  formBar = new FormGroup({
+    year: new FormControl(new Date().getFullYear(), [Validators.required, Validators.min(1900), Validators.max(2100)]),
+  })
   ngOnInit() {
     this.suscripciones.add(
       this.userService.getInfo().subscribe((data) => {
@@ -40,6 +42,7 @@ export class ReportAdminComponent implements OnInit {
       })
     );
     this.getReport();
+    this.getReportBar();
   }
 
   logout() {
@@ -79,14 +82,22 @@ export class ReportAdminComponent implements OnInit {
       console.log(data);
       this.totalSales = data.sales;
       this.totalOrders = data.totalOrders;
-      this.methodPayment = data.methodpayment;
       this.quantity = data.productTop.quantity;
-      this.porcentMethodPayment();
-      this.viewBar();
+      this.porcentMethodPayment(data.methodpayment);
       this.toyService.getToyByCode(data.productTop.code).subscribe((data) => {
         this.toy = data;
       })
     });
+  }
+
+  getReportBar() {
+    const today = new Date();
+    const year = this.formBar.value.year ? this.formBar.value.year : today.getFullYear();
+    if(this.formBar.valid) {
+      this.orderService.consultReportMonth(year).subscribe((data) => {
+        this.viewBar(data);
+      })
+    }
   }
   formatDate(date: Date, endOfDay: boolean = false): string {
     const year = date.getFullYear();
@@ -103,95 +114,10 @@ export class ReportAdminComponent implements OnInit {
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   }
 
-  viewBar() {
-    var options = {
-      series: [
-        {
-          name: 'Ventas',
-          data: [
-            150000, 150000, 120000, 100000, 35000, 100000, 50000, 100000,
-            100000, 25000, 100000, 100000
-          ],
-        },
-      ],
-      chart: {
-        height: 350,
-        type: 'bar',
-      },
-      plotOptions: {
-        bar: {
-          borderRadius: 10,
-          dataLabels: {
-            position: 'top',
-          },
-        },
-      },
-      dataLabels: {
-        enabled: true,
-        offsetY: -20,
-        style: {
-          fontSize: '12px',
-          colors: ['82E0AA'],
-        },
-      },
-      xaxis: {
-        categories: [
-          'Ene',
-          'Feb',
-          'Mar',
-          'Abr',
-          'May',
-          'Jun',
-          'Jul',
-          'Ago',
-          'Sep',
-          'Oct',
-          'Nov',
-          'Dic',
-        ],
-        position: 'start',
-        axisBorder: {
-          show: false,
-        },
-        axisTicks: {
-          show: false,
-        },
-        crosshairs: {
-          fill: {
-            type: 'gradient',
-            gradient: {
-              colorFrom: '#85C1E9',
-              colorTo: '#85C1E9',
-              stops: [0, 100],
-              opacityFrom: 0.4,
-              opacityTo: 0.5,
-            },
-          },
-        },
-        tooltip: {
-          enabled: true,
-        },
-      },
-      yaxis: {
-        axisBorder: {
-          show: false,
-        },
-        axisTicks: {
-          show: false,
-        },
-        labels: {
-          show: false,
-        },
-      },
-    };
 
-    var chart = new ApexCharts(document.querySelector('#chart'), options);
-    chart.render();
-  }
-
-  porcentMethodPayment() {
-    const values = Object.values(this.methodPayment);
-    const labels = Object.keys(this.methodPayment);
+  porcentMethodPayment(data: any) {
+    const values = Object.values(data);
+    const labels = Object.keys(data);
     var options = {
       series: values,
       chart: {
@@ -199,6 +125,13 @@ export class ReportAdminComponent implements OnInit {
       type: 'pie',
     },
     labels: labels,
+    tooltip: {
+      y: {
+        formatter: function (val: any) {
+          return `$${val}`;
+        }
+      }
+    },
     responsive: [{
       breakpoint: 480,
       options: {
@@ -215,4 +148,63 @@ export class ReportAdminComponent implements OnInit {
     var chart = new ApexCharts(document.querySelector("#payment"), options);
     chart.render();
   }
+
+  viewBar(data: any) {
+    console.log(data);
+    var seriesData = [];
+
+    for (let key in data) {
+        if (data.hasOwnProperty(key)) {
+            seriesData.push({
+                name: key.charAt(0).toUpperCase() + key.slice(1),
+                data: data[key]
+            });
+        }
+    }
+    var options = {
+      series: seriesData,
+      chart: {
+      type: 'bar',
+      height: 350
+    },
+    plotOptions: {
+      bar: {
+        horizontal: false,
+        columnWidth: '55%',
+        endingShape: 'rounded'
+      },
+    },
+    dataLabels: {
+      enabled: false
+    },
+    stroke: {
+      show: true,
+      width: 2,
+      colors: ['transparent']
+    },
+    xaxis: {
+      categories: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+    },
+    // yaxis: {
+    //   title: {
+    //     text: '$ (pesos)'
+    //   }
+    // },
+    fill: {
+      opacity: 1
+    },
+    tooltip: {
+      y: {
+        formatter: function (val : any) {
+          return "$ " + val + " pesos"
+        }
+      }
+    }
+    };
+
+    var chart = new ApexCharts(document.querySelector("#ventas"), options);
+    chart.render();
+  }
+
+  
 }

@@ -1,57 +1,145 @@
 <div class="container" style="font-family: Montserrat;">
   <div class="row mb-5">
-    <div class="col-md-12 align-self-start mt-5 ms-5">
+    <div class="col-md-12 align-self-start mt-5 ms-4">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a class="display-6 text-decoration-none fs-5 text-muted" routerLink="/products">Ver todos</a></li>
-          <li class="breadcrumb-item"><a class="display-6 text-decoration-none fs-5 text-muted" [routerLink]="['/products']"
-            [queryParams]="{ category: toy.category }">{{toy.category | titlecase}}</a></li>
-            <li class="breadcrumb-item"><a class="display-6 text-decoration-none fs-5 text-muted" [routerLink]="['/products']"
-              [queryParams]="{ category: toy.subcategory }">{{toy.subcategory | titlecase}}</a></li>
+          <li class="breadcrumb-item"><a class="display-6 text-decoration-none fs-6 text-muted"
+              routerLink="/products">Ver todos</a></li>
+          <li class="breadcrumb-item"><a class="display-6 text-decoration-none fs-6 text-muted"
+              [routerLink]="['/products']" [queryParams]="{ category: toy.category }">{{toy.category | titlecase}}</a>
+          </li>
+          <li class="breadcrumb-item"><a class="display-6 text-decoration-none fs-6 text-muted"
+              [routerLink]="['/products']" [queryParams]="{ category: toy.subcategory }">{{toy.subcategory |
+              titlecase}}</a></li>
         </ol>
       </nav>
     </div>
     <div class="col-md-12">
-      <div class="card mt-2 m-2 rounded-5 shadow border-0">
+      <div class="card mt-0 m-2 rounded-0 shadow border-0">
         <div class="row">
-
-          <div class="col-md-1 ps-4 pt-4">
-            <!-- Imagenes secundarias -->
-            <div class="m-1" *ngFor="let image of toy.image">
-                <img src={{image}} class="img-fluid img-thumbnail" style="cursor: pointer; width: 100%;"
-                (click)="changeImage(image)">
+          <div class="col-md-6 col-sm-4 m-0 align-items-center mx-auto">
+            <!-- Imagen principal -->
+            <div id="carouselPrincipal" class="carousel slide" data-bs-touch="true">
+              <div class="carousel-inner">
+                <div *ngFor="let image of toy.image; let i = index" [ngClass]="{'carousel-item': true, 'active': i === 0}">
+                  <img [src]="image" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="setImage(i)" class="d-block card-img rounded-0 mx-auto" style="width: 100%; height: 100%; max-width: 500px; max-height: 500px; cursor: pointer;">
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselPrincipal" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon custom-carousel-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselPrincipal" data-bs-slide="next">
+                <span class="carousel-control-next-icon custom-carousel-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
             </div>
           </div>
-
-          <div class="col-md-5 col-sm-4 mt-3 me-0" id="zoomContainer">
-              <!-- Imagen principal -->
-              <img src={{toy.image[0]}} class="card-img" style="width: 100%; height: 100%;" id="imageHome">
-          </div>
-
           <div class="col-md-6 col-sm-8 m-0 mt-2">
             <div class="card-body">
-              <h5 class="card-title display-6">{{toy.name.toUpperCase()}}</h5>
-              <p class="text-muted opacity-50">{{code}}</p>
-              <p class="card-text text-muted fs-5"><i class="bi bi-tags"> Marca: </i> {{toy.brand | titlecase}}</p>
-              <p class="text-muted fs-5"><i class="bi bi-box-seam"> Stock:</i> {{toy.stock}}</p>
-              <p class="card-text text-muted fw-bold fs-3 text-center">{{toy.price | currency}} <span
-                  class="fw-light">c/u</span></p>
+              <h5 class="card-title display-6 text-muted">{{toy.name.toUpperCase()}}</h5>
+              <p class="mt-3 fs-3 text-muted fw-semibold"> {{toy.price | currency}} <span class="fw-light">c/u</span></p>
+              <p class="card-text text-muted fs-5"><i class="bi bi-tag"></i> {{toy.brand | titlecase}}</p>
+              <p class="card-text text-muted fs-5"> <i class="bi bi-cash-coin"></i> Medios de pago</p>
+              <button class="btn border-0 rounded-4" data-bs-toggle="modal" data-bs-target="#medioPago">
+                <img class="img-fluid float-start"
+                  src="https://d26lpennugtm8s.cloudfront.net/assets/common/img/logos/payment/new_logos_payment/visa@2x.png"
+                  alt="visa" style="max-width: 40px; max-height: 40px">
+                <img class="img-fluid float-start"
+                  src="https://d26lpennugtm8s.cloudfront.net/assets/common/img/logos/payment/new_logos_payment/mastercard@2x.png"
+                  alt="mastercard" style="max-width: 40px; max-height: 40px">
+                <img class="img-fluid float-start"
+                  src="https://d26lpennugtm8s.cloudfront.net/assets/common/img/logos/payment/new_logos_payment/amex@2x.png"
+                  alt="americanexpress" style="max-width: 40px; max-height: 40px">
+                <img class="img-fluid float-start ms-1 pb-2"
+                  src="https://d26lpennugtm8s.cloudfront.net/assets/common/img/logos/payment/new_logos_payment/cash@2x.png" alt=""
+                  style="max-width: 40px; max-height: 40px;">
+              </button>
             </div>
-            <div class="card-footer mt-2 border-0 bg-transparent mb-3">
+            <div class="card-footer border-0 bg-transparent">
               <ng-container *ngIf="toy.stock > 0; else noStockButton">
-                <button href="#" class="btn btn-primary boton border-0 p-2 rounded-3 w-100 fw-semibold"
-                  (click)="addToCart(toy)"><i class="bi bi-bag"></i> Agregar</button>
+                <button href="#" class="btn btn-primary boton border-0 p-2 rounded-4 w-100 fw-semibold"
+                  (click)="addToCart(toy)"><i class="bi bi-bag"></i> Agregar al carrito</button>
               </ng-container>
               <ng-template #noStockButton>
-                <button class="btn btn-warning rounded-4 border-0 p-2 rounded-3 w-100 fw-semibold" disabled><i
+                <button class="btn btn-warning rounded-4 border-0 p-2 rounded-4 w-100 fw-semibold" disabled><i
                     class="bi bi-bag-x"></i> Sin Stock</button>
               </ng-template>
             </div>
+            <div class="col-md-12 d-flex mt-3 ms-4">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> 
+                <path d="M7 10.0288C7.47142 10 8.05259 10 8.8 10H15.2C15.9474 10 16.5286 10 17 10.0288M7 10.0288C6.41168 10.0647 5.99429 10.1455 5.63803 10.327C5.07354 10.6146 4.6146 11.0735 4.32698 11.638C4 12.2798 4 13.1198 4 14.8V16.2C4 17.8802 4 18.7202 4.32698 19.362C4.6146 19.9265 5.07354 20.3854 5.63803 20.673C6.27976 21 7.11984 21 8.8 21H15.2C16.8802 21 17.7202 21 18.362 20.673C18.9265 20.3854 19.3854 19.9265 19.673 19.362C20 18.7202 20 17.8802 20 16.2V14.8C20 13.1198 20 12.2798 19.673 11.638C19.3854 11.0735 18.9265 10.6146 18.362 10.327C18.0057 10.1455 17.5883 10.0647 17 10.0288M7 10.0288V8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8V10.0288" stroke="#86bb3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g>
+              </svg>
+              <p class="ms-1 me-4" style="color: #86bb3c;">Compra protegida.</p>
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M1 6C1 4.89543 1.89543 4 3 4H14C15.1046 4 16 4.89543 16 6V7H19C21.2091 7 23 8.79086 23 11V12V15V17C23.5523 17 24 17.4477 24 18C24 18.5523 23.5523 19 23 19H22H18.95C18.9828 19.1616 19 19.3288 19 19.5C19 20.8807 17.8807 22 16.5 22C15.1193 22 14 20.8807 14 19.5C14 19.3288 14.0172 19.1616 14.05 19H7.94999C7.98278 19.1616 8 19.3288 8 19.5C8 20.8807 6.88071 22 5.5 22C4.11929 22 3 20.8807 3 19.5C3 19.3288 3.01722 19.1616 3.05001 19H2H1C0.447715 19 0 18.5523 0 18C0 17.4477 0.447715 17 1 17V6ZM16.5 19C16.2239 19 16 19.2239 16 19.5C16 19.7761 16.2239 20 16.5 20C16.7761 20 17 19.7761 17 19.5C17 19.2239 16.7761 19 16.5 19ZM16.5 17H21V15V13H19C18.4477 13 18 12.5523 18 12C18 11.4477 18.4477 11 19 11H21C21 9.89543 20.1046 9 19 9H16V17H16.5ZM14 17H5.5H3V6H14V8V17ZM5 19.5C5 19.2239 5.22386 19 5.5 19C5.77614 19 6 19.2239 6 19.5C6 19.7761 5.77614 20 5.5 20C5.22386 20 5 19.7761 5 19.5Z" fill="#86bb3c"></path> </g>
+              </svg>
+              <p class="ms-1" style="color: #86bb3c;">Envíos a todo el país.</p>
+            </div>
           </div>
-        
+
           <div class="col-md-12 mt-5">
-            <h5 class="card-title fs-3 fw-light text-center mb-3"><i class="bi bi-chat-right-text"></i> Descripción</h5>
-            <pre class="card-text text-muted fs-5 ps-5 pe-5 pb-5 pre-container" style="font-family: Montserrat;"> {{toy.description}}</pre>
+            <h5 class="text-muted fs-3 fw-light ps-5 text-start mb-3"><i class="bi bi-chat-right-text"></i> Descripción
+            </h5>
+            <pre class="card-text text-muted fs-5 ps-5 pe-5 pb-5 pre-container"
+              style="font-family: Montserrat;"> {{toy.description}}</pre>
+          </div>
+
+          <!-- Modal Medios de pago -->
+          <div class="modal fade" id="medioPago" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" style="color: #86bb3c;" id="exampleModalLabel">Mercado pago</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p class="text-muted">Aceptamos los siguientes medios de pago con la integración de mercado pago.</p>
+                  <p> <i class="bi bi-credit-card"></i> Tarjetas de crédito</p>
+                  <p> <i class="bi bi-credit-card"></i> Tarjetas de débito</p>
+                  <p> <i class="bi bi-credit-card"></i> Efectivo</p>
+                  <p> <i class="bi bi-credit-card"></i> Dinero en cuenta de Mercado Pago</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">Volver al producto</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Modal Foto grande -->
+          <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+              <div class="modal-content bg-dark bg-opacity-75">
+                <div class="modal-header row border-0 m-0 align-items-center">
+                  <div class="col-md-4"></div>
+                  <div class="col-md-4 text-center">
+                    <p class="text-white fw-light">{{idImagenModal + 1}} / {{toy.image.length}}</p>
+                  </div>
+                  <div class="col-md-4 text-end justify-content-end d-flex">
+                    <button type="button" class="btn-close me-4 mt-2 color-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                </div>
+                <div class="modal-body">
+                  <div class="row m-0 p-0">
+                    <div class="col-md-12">
+                      <div id="idFotoGrande" class="carousel slide" data-bs-touch="true" *ngFor="let image of toy.image; let i = index" [ngClass]="{'carousel-item': true, 'active': i === idImagenModal}">
+                        <div class="carousel-inner">
+                          <img [src]="image" class="d-block card-img rounded-0 mx-auto" style="max-width: 550px; max-height: 550px;">
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#idFotoGrande" data-bs-slide="prev" (click)="prevImage(i)">
+                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#idFotoGrande" data-bs-slide="next" (click)="nextImage(i)">
+                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Next</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -1,6 +1,4 @@
-<app-cart *ngIf="viewCart"></app-cart>
-
-<nav class="navbar navbar-expand-lg" style="background-color: #86bb3c">
+<nav class="navbar navbar-expand-lg sticky-top navbar-custom" id="navbar">
   <div class="container-fluid">
     <a class="navbar-brand" class="logo" routerLink="/home">
       <img src="assets/logoCiriu2.png" alt="logo">
@@ -10,6 +8,9 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-center align-items-center mx-auto">
+        <li class="nav-item">
+          <a class="nav-link" class="letras" routerLink="/home">INICIO</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" class="letras" routerLink="/products">PRODUCTOS</a>
         </li>
@@ -21,10 +22,9 @@
         </li>
       </ul>
       <ul class="navbar-nav">
-        <!-- Carrito de compras-->
         <li class="nav-item" *ngIf="!isCheckoutRoute()">
-          <!-- Boton-->
-          <button type="button" class="btn position-relative p-1 nav-link" (click)="openCart()">
+          <!-- Boton de carrito-->
+          <button class="btn position-relative p-1 nav-link" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-bag" viewBox="0 0 16 16">
               <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
             </svg>
@@ -49,7 +49,20 @@
 
 <router-outlet></router-outlet>
 
+<!-- Carrito de compras-->
+<div class="offcanvas offcanvas-end custom-offcanvas" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title text-muted display-6" id="offcanvasExampleLabel"> <i class="bi bi-cart2"></i> Mi Carrito</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div>
+      <app-cart></app-cart>
+    </div>
+  </div>
+</div>
 
+<!--Footer-->
 <app-footer></app-footer>
 
 

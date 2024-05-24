@@ -324,7 +324,7 @@
                 <tbody>
                   <tr *ngFor="let toy of toys">
                     <th scope="row" class="align-middle">
-                      <img src="{{toy.image}}" width="100px" height="100px" alt="producto">
+                      <img src="{{toy.image}}" width="100px" class="img-fluid" style="cursor: pointer;" height="100px" alt="producto" routerLink="/products/{{toy.code}}">
                     </th>
                     <td scope="row" class="align-middle">
                       <p>Codigo: {{toy.code}}</p>

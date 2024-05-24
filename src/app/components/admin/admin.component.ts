@@ -90,9 +90,10 @@ export class AdminComponent implements OnInit {
     const fromDate = this.formOrders.value.fromDate ? this.formOrders.value.fromDate : this.formatDate(new Date(today.getFullYear(), today.getMonth(), today.getDate() - 30));
     const toDate = this.formOrders.value.toDate ? this.formOrders.value.toDate : this.formatDate(today, true);
     const status = this.formOrders.value.status ?? 0;
-    
-    console.log(fromDate, toDate, status);
-    
+    this.formOrders.patchValue({
+      fromDate: fromDate,
+      toDate: toDate
+    })
     this.orderService.getAllOrders(fromDate, toDate, status).subscribe(
       (data) => {
         console.log(data);

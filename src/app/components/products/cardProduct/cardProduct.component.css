@@ -24,4 +24,24 @@ body{
 }
 
 
+.boton-inferior {
+    background: rgb(73, 73, 73);
+    border: none;
+    border-radius: 50%; 
+    padding: 0; 
+    width: 15px; 
+    height: 15px;
+}
+.custom-carousel-icon {
+    filter: invert(50%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(0%) contrast(50%);
+}
+
+.color-close {
+    filter: brightness(0) invert(1) contrast(10000%) saturate(10000%);
+}
+
+  
+
+
+
   

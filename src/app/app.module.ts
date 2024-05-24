@@ -11,9 +11,6 @@ import { LogsComponent } from './components/login/logs.component';
 import { ProductsComponent } from './components/products/products.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminComponent } from './components/admin/admin.component';
-import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFireStorageModule } from '@angular/fire/compat/storage';
-import { environment } from '../environments/environment';
 import { UserComponent } from './components/user/user.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { VerifyComponent } from './components/verify/createAccount.component';
@@ -62,8 +59,6 @@ import { NewSubcategoryComponent } from './components/admin/support/newSubcatego
     FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireStorageModule
   ],
   providers: [],
   bootstrap: [AppComponent]

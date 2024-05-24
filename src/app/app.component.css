@@ -1,8 +1,16 @@
-
+.navbar-custom {
+    background-color: #86bb3c;
+    transition: background-color 0.5s ease;
+}
+  
+.navbar-scrolled {
+    background-color: #86bb3c;
+    opacity: 0.9;
+}
 
 .logo {
-    width: 70px;
-    height: 70px;
+    width: 65px;
+    height: 65px;
 }
 
 .logo img {
@@ -37,6 +45,14 @@
 .nav-item {
     margin: 0 10px;
 }
+
+.custom-offcanvas {
+    width: 450px; /* Ajusta este valor según tus necesidades, puedes usar 50%, 75%, etc. */
+    max-width: 100%; /* Asegura que no exceda el ancho de la pantalla */
+}
+
+
+  
 
 
 

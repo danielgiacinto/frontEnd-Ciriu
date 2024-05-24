@@ -172,6 +172,8 @@ export class ProductsComponent implements OnInit {
     this.category = '';
     this.brand = '';
     this.searchTerm = '';
+    var search = document.getElementById('searchProducts') as HTMLInputElement;
+    search.value = '';
     this.router.navigate(['/products']);
     this.loadToys();
     this.viewClearFilter = false;

@@ -1,119 +1,166 @@
-<div class="container-fluid pt-5" style="font-family: 'Montserrat'; color: #515151;">
-
-  <div class="row">
-    <div class="col-md-3 col-sm-12">
-      <a class="text-center ps-4 text-body-tertiary text-decoration-none" routerLink="/home"><i
-          class="bi bi-arrow-left-circle fs-4"> Inicio</i></a>
+<div class="container-fluid pt-4" style="font-family: 'Montserrat'; color: #515151;">
+  <div class="row ps-5 pe-5">
+    <div class="col-md-12 col-sm-12 mb-3 ps-5 pe-5">
+      <nav style="--bs-breadcrumb-divider: '';" aria-label="breadcrumb">
+        <ol class="breadcrumb m-1">
+          <li class="breadcrumb-item"><a class="text-center text-body-tertiary text-decoration-none" routerLink="/home">Inicio</a></li>
+          <ng-container *ngIf="category; else showProducts">
+            <li class="breadcrumb-item active" aria-current="page">{{category | titlecase}}</li>
+          </ng-container>
+          <ng-template #showProducts>
+            <li class="breadcrumb-item active" aria-current="page">Productos</li>
+          </ng-template>
+        </ol>
+      </nav>
     </div>
-
-    <div class="col-md-5 col-sm-6 pe-4">
+  </div>
+  <div class="row ps-5 pe-5">
+    <div class="col-md-12 ps-5 pe-5">
+      <p class="display-6" style="color: #a7c957;">Productos</p>
+    </div>
+  </div>
+  <div class="row align-items-center mb-1 ps-5 pe-5">
+    <div class="col-md-6 col-sm-12 ps-5">
       <div class="input-group mb-3 rounded-5 bg-secondary-subtle">
         <button class="btn btn-link-light text-white border-0"><i class="bi bi-search"></i></button>
-        <input type="text" class="form-control rounded-end-5" placeholder="Buscar productos, marcas y más..."
+        <input type="text" id="searchProducts" class="form-control rounded-end-5" placeholder="Buscar productos, marcas y más..."
           aria-describedby="button-addon2" (change)="searchProducts($event)">
       </div>
     </div>
-    <div class="col-md-1 d-none d-md-block">
-    </div>
-    <div class="col-md-1 d-none d-md-block">
-    </div>
-    <div class="col-md-2 pe-5 col-sm-4">
-      <select class="form-select rounded-5" (change)="orderProducts($event)">
-        <option class="form-select text-muted" selected disabled>Ordenar por</option>
-        <option value="default" class="form-select text-muted">Por defecto</option>
-        <option class="form-select text-muted" value="asc">Menor precio</option>
-        <option class="form-select text-muted" value="desc">Mayor precio</option>
-      </select>
-    </div>
-  </div>
-  <div class="row mt-2">
-    <div class="col-md-3"></div>
-    <div class="col-md-2 text-start">
-      <h6 class="fw-light">{{totalElements}} Resultados</h6>
-    </div>
-    <div class="col-md-3 text-start">
+    <div class="col-md-6 col-xs-12 pe-5 ps-5 col-sm-12 d-flex justify-content-end">
       <div *ngIf="viewClearFilter">
-        <a class="link-danger link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
-          routerLink="/products" (click)="clearFilters()">
-          <i class="bi bi-x-lg"> Limpiar filtros de búsqueda</i>
-        </a>
+        <button class="btn text-danger btn-lg" type="button" (click)="clearFilters()"><i class="bi bi-x-lg"> Borrar filtros</i></button>
+      </div>
+      <div>
+        <button class="btn btn-lg" type="button" data-bs-toggle="offcanvas" data-bs-target="#filtros"
+          aria-controls="staticBackdrop" style="color: #a7c957;">
+          <i class="bi bi-sliders"></i> Filtrar
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="filtros" aria-labelledby="staticBackdropLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title fs-2 fw-light" id="staticBackdropLabel">Filtrar</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <div>
+              <h5 class="fw-light fs-4 text-center mb-3"><i class="bi bi-filter-left"></i> Categorías</h5>
+              <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="accordion-item" *ngFor="let category of categories">
+                  <h2 class="accordion-header">
+                    <button class="accordion-button collapsed focus-ring focus-ring-light" type="button"
+                      data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + category.id" aria-expanded="false"
+                      [attr.aria-controls]="'collapse' + category.id">
+                      {{ category.category | titlecase }}
+                    </button>
+                  </h2>
+                  <div [id]="'collapse' + category.id" class="accordion-collapse collapse"
+                    [attr.aria-labelledby]="'heading' + category.id" data-bs-parent="#accordionFlushExample">
+                    <div class="list-group">
+                      <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']"
+                        [queryParams]="{ category: category.category }"
+                        (click)="filterByCategory(category.category)">Todo
+                        en
+                        {{ category.category }}</a>
+                      <a *ngFor="let subCategory of getSubCategoriesByCategory(category.category)"
+                        class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']"
+                        [queryParams]="{ category: subCategory.subcategory}"
+                        (click)="filterByCategory(subCategory.subcategory)">{{ subCategory.subcategory | titlecase
+                        }}</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-5 mt-5 ps-4 pe-4">
+                <h5 class="fw-light fs-4 text-center mb-3"><i class="bi bi-funnel"></i> Marcas</h5>
+                <div class="list-group text-center list-group-flush" *ngFor="let brand of brands">
+                  <a class="list-group-item list-group-item-action" [routerLink]="['/products']"
+                    [queryParams]="{category: brand.brand}" (click)="filterByBrand(brand.brand)"> {{brand.brand |
+                    titlecase}}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <button class="btn btn-lg" type="button" data-bs-toggle="offcanvas" data-bs-target="#ordenar"
+          aria-controls="staticBackdrop" style="color: #a7c957;">
+          <i class="bi bi-arrow-down-up"></i> Ordenar
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="ordenar" aria-labelledby="staticBackdropLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title fs-2 fw-light" id="staticBackdropLabel">Ordenar por</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <div class="col-md-12 pe-5 col-sm-4 align-self-center">
+              <div class="col-md-12 pe-5 col-sm-4 fs-5">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="orderBy" id="orderByDefault" value="default"
+                    (change)="orderProducts($event)" checked>
+                  <label class="form-check-label" for="orderByDefault">Por defecto</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="orderBy" id="orderByAsc" value="asc"
+                    (change)="orderProducts($event)">
+                  <label class="form-check-label" for="orderByAsc">Precio: Menor a Mayor</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="orderBy" id="orderByDesc" value="desc"
+                    (change)="orderProducts($event)">
+                  <label class="form-check-label" for="orderByDesc">Precio: Mayor a menor</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-3 d-none d-md-block">
-      <div class="mt-4 ps-4 pe-4">
-        <h5 class="fw-light fs-4 text-center mb-3"><i class="bi bi-filter-left"></i> Categorías</h5>
-        <!--Categorias-->
-        <div class="accordion accordion-flush" id="accordionFlushExample">
-          <div class="accordion-item" *ngFor="let category of categories">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed focus-ring focus-ring-light" type="button"
-                data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + category.id" aria-expanded="false"
-                [attr.aria-controls]="'collapse' + category.id">
-                {{ category.category | titlecase }}
-              </button>
-            </h2>
-            <div [id]="'collapse' + category.id" class="accordion-collapse collapse"
-              [attr.aria-labelledby]="'heading' + category.id" data-bs-parent="#accordionFlushExample">
-              <div class="list-group">
-                <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']"
-                  [queryParams]="{ category: category.category }" (click)="filterByCategory(category.category)">Todo en
-                  {{ category.category }}</a>
-                <a *ngFor="let subCategory of getSubCategoriesByCategory(category.category)"
-                  class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']"
-                  [queryParams]="{ category: subCategory.subcategory}"
-                  (click)="filterByCategory(subCategory.subcategory)">{{ subCategory.subcategory | titlecase }}</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-      <div class="mb-5 mt-5 ps-4 pe-4">
-        <h5 class="fw-light fs-4 text-center mb-3"><i class="bi bi-funnel"></i> Marcas</h5>
-        <div class="list-group text-center list-group-flush" *ngFor="let brand of brands">
-          <a class="list-group-item list-group-item-action" [routerLink]="['/products']"
-            [queryParams]="{category: brand.brand}" (click)="filterByBrand(brand.brand)"> {{brand.brand | titlecase}}</a>
-        </div>
-      </div>
-    </div>
-
+  <div class="row ps-5 pe-5">
     <!--Productos-->
-    <div class="col-md-9">
-      <div class="row">
-        <div class="col-md-6 col-sm-12 col-lg-4" *ngFor="let toy of toys">
-          <div class="card mb-3 mt-3 rounded-0 border-0" style="width: 20rem;">
-            <a routerLink="{{toy.code}}">
-              <img src={{toy.image[0]}} class="card-img-top mx-auto d-block mt-2 mb-2"
-                style="width: 250px; height: 250px;" alt="imagen" (mouseenter)="changeToNextImage(toy)" (mouseleave)="changeResetImage(toy)">
-            </a>
-            <div class="card-body text-center">
-              <h5 class="card-title" style="text-transform: capitalize;">{{toy.name}}</h5>
-            </div>
-            <div class="card-footer border-0 rounded-0 p-3" style="background-color: #ededed;">
-              <div class="row">
-                <div class="col-md-6 m-auto">
-                  <p class="card-text fw-bold text-muted">{{toy.price | currency}}</p>
-                </div>
-                <div class="col-md-6 text-end">
-                  <ng-container *ngIf="toy.stock > 0; else noStockButton">
-                    <button href="#" class="btn btn-primary boton me-2 fw-semibold" (click)="addToCart(toy)"><i
-                        class="bi bi-bag"></i> Agregar</button> 
-                  </ng-container>
-                  <ng-template #noStockButton>
-                    <button class="btn btn-warning text-dark rounded-4 me-2 fw-semibold" disabled><i
-                        class="bi bi-bag-x"></i> Sin Stock</button>
-                  </ng-template>
+    <div class="col-md-12 ps-5">
+      <div class="row row-cols-1 row-cols-md-3 ps-1 pe-4">
+        <ng-container *ngIf="toys.length > 0; else noResults">
+          <div class="col col-md-6 col-sm-12 col-xs-12 col-lg-4 col-xl-3 g-3" *ngFor="let toy of toys">
+            <div class="card rounded-0 border-0" style="width: 19rem;">
+              <a routerLink="{{toy.code}}">
+                <img src={{toy.image[0]}} class="card-img-top rounded-0 mx-auto d-block"
+                  style="width: 250px; height: 250px;" alt="imagen" (mouseenter)="changeToNextImage(toy)"
+                  (mouseleave)="changeResetImage(toy)">
+              </a>
+              <div class="card-body text-center">
+                <h5 class="card-title" style="text-transform: capitalize;">{{toy.name}}</h5>
+              </div>
+              <div class="card-footer border-0 rounded-0 p-3">
+                <div class="row">
+                  <div class="col-md-6 m-auto">
+                    <p class="card-text fw-bold text-muted">{{toy.price | currency}}</p>
+                  </div>
+                  <div class="col-md-6 text-end">
+                    <ng-container *ngIf="toy.stock > 0; else noStockButton">
+                      <button class="btn btn-primary boton fw-semibold" (click)="addToCart(toy)"><i
+                          class="bi bi-bag"></i> Agregar</button>
+                    </ng-container>
+                    <ng-template #noStockButton>
+                      <button class="btn btn-warning text-dark rounded-4 fw-semibold btn-sm" disabled><i
+                          class="bi bi-bag-x"></i> Sin Stock</button>
+                    </ng-template>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </ng-container>
+        <ng-template #noResults>
+          <div class="col-md-12 text-center mt-5 mb-5 align-self-center" style="min-height: 40vh;">
+            <p class="fs-3 text-muted">Ups, no hay resultados para esta búsqueda.</p>
+          </div>
+        </ng-template>
       </div>
 
       <!--Navegacion-->
-      <div class="row mt-3 mb-5">
+      <div class="row mt-5 mb-5" *ngIf="totalElements > 8">
         <div class="col-md-12 mb-3">
           <h6 class="text-center"> ¿Queres seguir viendo más productos?</h6>
         </div>

@@ -16,6 +16,7 @@ body{
 }
 
 .card {
+    width: 100%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease-in-out;
 }
@@ -23,5 +24,11 @@ body{
 .card:hover {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Incrementar la sombra al pasar el mouse */
 }
+
+.card-img-top {
+    width: 100%;
+    height: auto;
+}
+  
 
 

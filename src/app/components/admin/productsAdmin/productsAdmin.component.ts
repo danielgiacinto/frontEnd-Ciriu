@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription, finalize } from 'rxjs';
@@ -91,7 +90,6 @@ export class ProductsAdminComponent implements OnInit {
     private brandService: BrandService,
     private categoryService: CategoryService,
     private subCategoryService: SubCategoryService,
-    private storage: AngularFireStorage,
     private userService: UserService,
     private router: Router,
     private route: ActivatedRoute,
@@ -235,22 +233,6 @@ export class ProductsAdminComponent implements OnInit {
         }
       );
       this.guardandoCambios = false;
-      // const file = this.selectedImage;
-      // if (!file) {
-      //   console.error('No se ha seleccionado ningún archivo.');
-      //   return;
-      // }
-
-      // const fileName = Date.now().toString() + '_' + file.name;
-      // const fileRef = this.storage.ref(fileName);
-
-      // try {
-      //   const uploadTask = await fileRef.put(file);
-      //   const downloadURL = await uploadTask.ref.getDownloadURL();
-      //   this.saveToy(downloadURL); // Guardar detalles del juguete y URL de la imagen
-      // } catch (error) {
-      //   console.error('Error al subir la imagen:', error);
-      // }
     }
   }
 
@@ -426,11 +408,6 @@ export class ProductsAdminComponent implements OnInit {
     }
   }
 
-  deleteImageFromStorage(imageUrl: string): Promise<void> {
-    const filename = this.getFileName(imageUrl);
-    const fileRef = this.storage.refFromURL(filename);
-    return fileRef.delete().toPromise();
-  }
 
   getFileName(url: string): string {
     const indiceSignoPregunta = url.indexOf('?');
@@ -439,29 +416,6 @@ export class ProductsAdminComponent implements OnInit {
     } else {
       return url;
     }
-  }
-
-  uploadNewImage(image: File): Promise<string> {
-    const fileName = Date.now().toString() + '_' + image.name;
-    const fileRef = this.storage.ref(fileName);
-    const uploadTask = fileRef.put(image);
-    return new Promise<string>((resolve, reject) => {
-      uploadTask
-        .snapshotChanges()
-        .pipe(
-          finalize(() => {
-            fileRef.getDownloadURL().subscribe(
-              (url) => {
-                resolve(url);
-              },
-              (error) => {
-                reject(error);
-              }
-            );
-          })
-        )
-        .subscribe();
-    });
   }
 
   updateProductAndReload(code: string, toyData: any) {

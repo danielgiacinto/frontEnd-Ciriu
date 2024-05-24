@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { CartService } from './services/cart.service';
@@ -17,6 +17,7 @@ export class AppComponent implements OnInit {
   constructor(private router: Router, private cartService: CartService) {}
 
   ngOnInit(): void {
+    this.onWindowScroll();
     this.cartService.cart$.subscribe(cart => {
       this.quantityCart = cart.length
     })
@@ -24,9 +25,15 @@ export class AppComponent implements OnInit {
       this.viewCart = isOpen;
     });
   }
-
-  openCart(): void {
-    this.cartService.openCart();
+  
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const navbar = document.getElementById('navbar') as HTMLElement;
+    if (window.scrollY > 50) {
+      navbar.classList.add('navbar-scrolled');
+    } else {
+      navbar.classList.remove('navbar-scrolled');
+    }
   }
 
   isCheckoutRoute(): boolean {
@@ -43,5 +50,6 @@ export class AppComponent implements OnInit {
       this.router.navigate(['/login']);
     }
   }
+
   
 }

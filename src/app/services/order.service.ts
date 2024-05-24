@@ -23,5 +23,9 @@ export class OrderService {
     return this.httpClient.get(`${this.urlOrder}/report?fromDate=${fromDate}&toDate=${toDate}`);
   }
 
+  consultReportMonth(year: number) {
+    return this.httpClient.get(`${this.urlOrder}/report/month/${year}`);
+  }
+
   
 }
