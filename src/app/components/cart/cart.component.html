@@ -33,7 +33,7 @@
                 </div>
               </div>
               <div class="col-md-6 align-items-center text-center justify-content-center d-flex">
-                <p class="text-muted fw-semibold mb-0 pe-3">Subtotal {{ item.price * item.quantity | currency }}</p>
+                <p class="text-muted fw-semibold mb-0 pe-3">Subtotal {{ '$ ' +  (item.price * item.quantity | number : '1.2-2' )}}</p>
               </div>
             </div>
           </div>
@@ -45,7 +45,7 @@
           <h4 class="text-muted fw-bold">Total</h4>
         </div>
         <div class="col-md-6 align-items-end d-flex justify-content-end pe-5">
-          <h4 class="fw-bold text-muted"> {{ getTotal() | currency }}</h4>
+          <h4 class="fw-bold text-muted"> {{ '$ ' + (getTotal() | number : '1.2-2' )}}</h4>
         </div>
       </div>
     </div>

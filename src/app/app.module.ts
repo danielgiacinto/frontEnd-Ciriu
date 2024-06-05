@@ -26,6 +26,11 @@ import { SupportComponent } from './components/admin/support/support.component';
 import { NewBrandComponent } from './components/admin/support/newBrand/newBrand.component';
 import { NewCategoryComponent } from './components/admin/support/newCategory/newCategory.component';
 import { NewSubcategoryComponent } from './components/admin/support/newSubcategory/newSubcategory.component';
+import { ConditionsComponent } from './components/conditions/conditions.component';
+import { QuestionsComponent } from './components/questions/questions.component';
+import { LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
 
 @NgModule({
   declarations: [
@@ -51,7 +56,9 @@ import { NewSubcategoryComponent } from './components/admin/support/newSubcatego
     SupportComponent,
     NewBrandComponent,
     NewCategoryComponent,
-    NewSubcategoryComponent
+    NewSubcategoryComponent,
+    ConditionsComponent,
+    QuestionsComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,7 +67,11 @@ import { NewSubcategoryComponent } from './components/admin/support/newSubcatego
     AppRoutingModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'es' }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+registerLocaleData(localeEs);

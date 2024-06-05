@@ -28,6 +28,7 @@ export class SignupComponent implements OnInit {
     emailSignUp: new FormControl('', [Validators.required, Validators.email]),
     passwordSignUp: new FormControl('', [Validators.required, Validators.minLength(8)]),
     repeatPasswordSignUp: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    acceptTerms: new FormControl(false, [Validators.requiredTrue]),
   })
 
   signUp() {

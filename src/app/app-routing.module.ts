@@ -23,6 +23,8 @@ import { ProductsAdminComponent } from './components/admin/productsAdmin/product
 import { ReportAdminComponent } from './components/admin/reportAdmin/reportAdmin.component';
 import { StockAdminComponent } from './components/admin/stockAdmin/stockAdmin.component';
 import { SupportComponent } from './components/admin/support/support.component';
+import { ConditionsComponent } from './components/conditions/conditions.component';
+import { QuestionsComponent } from './components/questions/questions.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -36,6 +38,8 @@ const routes: Routes = [
   {path: 'checkout/payment', component: PaymentComponent, canActivate: [checkoutUserGuard, checkoutCartGuard, checkoutPaymentGuard]},
   {path: 'login/verify', component: VerifyComponent},
   {path: 'signup', component: SignupComponent},
+  {path: 'terms', component: ConditionsComponent},
+  {path: 'faq', component: QuestionsComponent},
   {path: 'admin/orders', component: AdminComponent, canActivate: [adminGuard]},
   {path: 'admin/products', component: ProductsAdminComponent, canActivate: [adminGuard]},
   {path: 'admin/report', component: ReportAdminComponent, canActivate: [adminGuard]},

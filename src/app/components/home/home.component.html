@@ -1,15 +1,16 @@
-<div class="container">
-  <div class="row">
+<div class="container-fluid">
+  <div class="row mb-5 ms-5 me-5">
     <div class="col-md-12 rounded-5">
       <div id="carouselExample" class="carousel slide">
         <div class="carousel-indicators">
-          <li type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active boton-inferior" aria-current="true" aria-label="Slide 1"></li>
+          <li type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active boton-inferior"
+            aria-current="true" aria-label="Slide 1"></li>
           <li type="button" data-bs-target="#carouselExample" data-bs-slide-to="1" class="boton-inferior"></li>
           <li type="button" data-bs-target="#carouselExample" data-bs-slide-to="2" class="boton-inferior"></li>
         </div>
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img src="assets/portada1.jpeg" class="d-block w-100 rounded-5" alt="...">
+            <img src="assets/portada1.jpeg" class="d-block w-100 rounded-5 img-fluid" alt="...">
           </div>
           <div class="carousel-item">
             <img src="assets/portada2.jpeg" class="d-block w-100 rounded-5" alt="...">
@@ -26,6 +27,69 @@
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Next</span>
         </button>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid d-flex justify-content-center align-items-center">
+    <div class="row row-cols-1 row-cols-md-3 g-4 d-flex justify-content-center align-items-center p-5 mb-5">
+      <div class="col">
+        <div class="card border-0 pintar">
+          <div class="card-body text-center user-select-none pt-0">
+            <i class="bi bi-truck fs-1" style="color: #86bb3c;"></i>
+            <h6 class="fs-6 fw-semibold card-title" style="color: #86bb3c;">HACEMOS ENVÍOS A TODO EL PAÍS</h6>
+            <p class="card-text" style="color: #86bb3c;">Por Correo Argentino, OCA o transporte de tu preferencia.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card border-0 pintar">
+          <div class="card-body text-center user-select-none pt-0">
+            <i class="bi bi-credit-card fs-1" style="color: #86bb3c;"></i>
+            <h6 class="card-title" style="color: #86bb3c;">ACEPTAMOS TODAS LAS TARJETAS</h6>
+            <p class="card-text" style="color: #86bb3c;">Increíbles descuentos y cuotas sin interés.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card border-0 pintar">
+          <div class="card-body text-center user-select-none pt-0">
+            <i class="bi bi-whatsapp fs-1" style="color: #86bb3c;"></i>
+            <h6 class="card-title" style="color: #86bb3c;">CONTACTANOS POR WHATSAPP</h6>
+            <p class="card-text" style="color: #86bb3c;">Comunicate con nosotros, haciendo click acá.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row p-3" style="background-color: #f8f6f5;">
+    <div class="col-md-8">
+      <p class="text-success text-start display-6">Mirá las categorias de nuestros juguetes</p>
+    </div>
+    <div class="col-md-4 mb-2 align-self-end text-end">
+      <button class="btn btn-success rounded-5 me-2" (click)="prevSlide()" type="button"><i
+          class="bi bi-caret-left-fill"></i></button>
+      <button class="btn btn-success rounded-5" type="button" (click)="nextSlide()"><i
+          class="bi bi-caret-right-fill"></i></button>
+    </div>
+    <div class="carousel" (mousedown)="onDragStart($event)" (mouseup)="onDragEnd()" (mouseleave)="onDragEnd()"
+      (mousemove)="onDrag($event)" (touchstart)="onDragStart($event)" (touchend)="onDragEnd()"
+      (touchmove)="onDrag($event)">
+      <div class="d-flex w-100">
+        <div class="carousel-track" [style.transform]="transform">
+          <div class="m-1" *ngFor="let card of cards; let i = index">
+            <div class="card border-0 bg-transparent user-select-none" style="width: 15rem;">
+              <div class="card-body zoom">
+                <a [routerLink]="['/products']" [queryParams]="{ category: card.title }">
+                  <img src="{{card.image}}" class="card-img-top user-select-none" alt="...">
+                </a>
+              </div>
+              <div class="card-footer text-center border-0 bg-transparent">
+                <h5 class="card-title">{{card.title}}</h5>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

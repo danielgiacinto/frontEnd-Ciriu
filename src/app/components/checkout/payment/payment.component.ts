@@ -14,16 +14,14 @@ declare var MercadoPago: any;
 export class PaymentComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
-    private orderService: OrderService,
     private mercadoPagoService: MercadoPagoService,
-    private router: Router
   ) {}
   cart: Toy[] = [];
   order: Order = new Order();
   paymentForm: FormGroup = new FormGroup({});
   hiddenButton: boolean = true;
   hiddenSpinner: boolean = false;
-  mp = new MercadoPago('TEST-70a83815-9177-42fc-8feb-5bc8c835d4a5', { locale: 'es-AR' });
+  mp = new MercadoPago('APP_USR-4daa2c91-0e00-48ab-83b0-6ab3f2f031ce', { locale: 'es-AR' });
 
   ngOnInit() {
     const cart = localStorage.getItem('cart') || '[]';

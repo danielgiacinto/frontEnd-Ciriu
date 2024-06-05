@@ -1,7 +1,28 @@
 <div class="container" style="font-family: Montserrat;">
-  <div class="card mx-auto shadow-lg border mt-5 mb-5 border-0 rounded-5 p-3">
+  <div class="card mx-auto shadow-lg border mt-5 mb-5 border-0 rounded-5 p-4">
     <div class="row">
-      <div class="col-md-12 ps-5 pt-3">
+      <div class="col-md-1 col-sm-1 col-xs-1 text-center d-block d-lg-none">
+        <button class="btn btn-lg text-muted" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
+          <i class="bi bi-list"></i>
+        </button>
+        <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title display-6 text-body-tertiary" id="offcanvasWithBothOptionsLabel">Menu</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <div class="d-grid gap-2">
+              <a class="btn btn-primary btn-lg boton p-3" routerLink="/user/info"><i class="bi bi-info-circle">
+                Información</i></a>
+             <a class="btn btn-primary btn-lg boton p-3" routerLink="/user/orders"><i class="bi bi-file-text"> Mis
+                 pedidos</i></a>
+             <a class="btn btn-primary btn-lg boton p-3" (click)="logout()"><i class="bi bi-box-arrow-right"> Cerrar
+                 sesion</i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-11 col-lg-11 col-sm-11 col-xs-11">
         <h4 class="display-6 text-muted">
           <span class="text-body-tertiary"><i class="bi bi-person"></i> Bienvenido, </span>
           {{user.name.toLowerCase() | titlecase}}
@@ -10,19 +31,19 @@
     </div>
     <hr>
     <div class="row">
-      <div class="col-md-3 ps-5 pe-4 pt-4">
+      <div class="col-md-2 pt-4 col-sm-1 col-xs-1 d-none d-lg-block">
         <div class="d-grid gap-2 mb-5">
-          <button class="btn btn-primary btn-lg boton p-3" routerLink="/user/info"><i class="bi bi-info-circle">
-              Informacion</i></button>
-          <button class="btn btn-primary btn-lg boton p-3" routerLink="/user/orders"><i class="bi bi-file-text"> Mis
-              pedidos</i></button>
-          <button class="btn btn-primary btn-lg boton p-3" (click)="logout()"><i class="bi bi-box-arrow-right"> Cerrar
-              sesion</i></button>
+          <a class="btn btn-primary btn-lg boton p-3" routerLink="/user/info"><i class="bi bi-info-circle">
+             Información</i></a>
+          <a class="btn btn-primary btn-lg boton p-3" routerLink="/user/orders"><i class="bi bi-file-text"> Mis
+              pedidos</i></a>
+          <a class="btn btn-primary btn-lg boton p-3" (click)="logout()"><i class="bi bi-box-arrow-right"> Cerrar
+              sesion</i></a>
         </div>
       </div>
       <!--Mostrar informacion-->
-      <div class="col-md-9">
-        <div class="m-3 p-3">
+      <div class="col-md-10 col-sm-12 col-xs-12">
+        <div class="m-4">
           <div class="row pb-3">
             <div class="col-md-12 text-center">
               <h4 class="text-muted fw-bold text-body-tertiary fs-3">

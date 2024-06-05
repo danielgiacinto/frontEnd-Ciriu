@@ -9,6 +9,10 @@ import { OrderService } from 'src/app/services/order.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToyService } from 'src/app/services/toy.service';
 import { Toy } from 'src/app/models/Toy';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-reportAdmin',
@@ -27,14 +31,20 @@ export class ReportAdminComponent implements OnInit {
   totalSales: number = 0;
   toy: Toy = new Toy();
   quantity: number = 0;
+  totalMethodPayment: [] = [];
+  totalMonthYear: any = [];
   private suscripciones = new Subscription();
   formReport = new FormGroup({
     fromDate: new FormControl(''),
     toDate: new FormControl(''),
   });
   formBar = new FormGroup({
-    year: new FormControl(new Date().getFullYear(), [Validators.required, Validators.min(1900), Validators.max(2100)]),
-  })
+    year: new FormControl(new Date().getFullYear(), [
+      Validators.required,
+      Validators.min(1900),
+      Validators.max(2100),
+    ]),
+  });
   ngOnInit() {
     this.suscripciones.add(
       this.userService.getInfo().subscribe((data) => {
@@ -68,35 +78,38 @@ export class ReportAdminComponent implements OnInit {
     const today = new Date();
     const fromDate = this.formReport.value.fromDate
       ? this.formReport.value.fromDate
-      : this.formatDate(
-          new Date(today.getFullYear(), 0, 1)
-        );
+      : this.formatDate(new Date(today.getFullYear(), 0, 1));
     const toDate = this.formReport.value.toDate
       ? this.formReport.value.toDate
       : this.formatDate(today, true);
-      this.formReport.patchValue({
-        fromDate: fromDate,
-        toDate: toDate
-      })
+    this.formReport.patchValue({
+      fromDate: fromDate,
+      toDate: toDate,
+    });
     this.orderService.consultReport(fromDate, toDate).subscribe((data) => {
       console.log(data);
       this.totalSales = data.sales;
       this.totalOrders = data.totalOrders;
       this.quantity = data.productTop.quantity;
       this.porcentMethodPayment(data.methodpayment);
+      this.totalMethodPayment = data.methodpayment;
       this.toyService.getToyByCode(data.productTop.code).subscribe((data) => {
         this.toy = data;
-      })
+      });
     });
   }
 
   getReportBar() {
     const today = new Date();
-    const year = this.formBar.value.year ? this.formBar.value.year : today.getFullYear();
-    if(this.formBar.valid) {
+    const year = this.formBar.value.year
+      ? this.formBar.value.year
+      : today.getFullYear();
+    if (this.formBar.valid) {
       this.orderService.consultReportMonth(year).subscribe((data) => {
+        this.totalMonthYear = data;
         this.viewBar(data);
-      })
+        console.log(this.totalMonthYear);
+      });
     }
   }
   formatDate(date: Date, endOfDay: boolean = false): string {
@@ -114,38 +127,39 @@ export class ReportAdminComponent implements OnInit {
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   }
 
-
   porcentMethodPayment(data: any) {
     const values = Object.values(data);
     const labels = Object.keys(data);
     var options = {
       series: values,
       chart: {
-      width: 400,
-      type: 'pie',
-    },
-    labels: labels,
-    tooltip: {
-      y: {
-        formatter: function (val: any) {
-          return `$${val}`;
-        }
-      }
-    },
-    responsive: [{
-      breakpoint: 480,
-      options: {
-        chart: {
-          width: 200
+        width: 400,
+        type: 'pie',
+      },
+      labels: labels,
+      tooltip: {
+        y: {
+          formatter: function (val: any) {
+            return `$${val}`;
+          },
         },
-        legend: {
-          position: 'bottom'
-        }
-      }
-    }]
+      },
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200,
+            },
+            legend: {
+              position: 'bottom',
+            },
+          },
+        },
+      ],
     };
 
-    var chart = new ApexCharts(document.querySelector("#payment"), options);
+    var chart = new ApexCharts(document.querySelector('#payment'), options);
     chart.render();
   }
 
@@ -154,57 +168,143 @@ export class ReportAdminComponent implements OnInit {
     var seriesData = [];
 
     for (let key in data) {
-        if (data.hasOwnProperty(key)) {
-            seriesData.push({
-                name: key.charAt(0).toUpperCase() + key.slice(1),
-                data: data[key]
-            });
-        }
+      if (data.hasOwnProperty(key)) {
+        seriesData.push({
+          name: key.charAt(0).toUpperCase() + key.slice(1),
+          data: data[key],
+        });
+      }
     }
     var options = {
       series: seriesData,
       chart: {
-      type: 'bar',
-      height: 350
-    },
-    plotOptions: {
-      bar: {
-        horizontal: false,
-        columnWidth: '55%',
-        endingShape: 'rounded'
+        type: 'bar',
+        height: 350,
       },
-    },
-    dataLabels: {
-      enabled: false
-    },
-    stroke: {
-      show: true,
-      width: 2,
-      colors: ['transparent']
-    },
-    xaxis: {
-      categories: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-    },
-    // yaxis: {
-    //   title: {
-    //     text: '$ (pesos)'
-    //   }
-    // },
-    fill: {
-      opacity: 1
-    },
-    tooltip: {
-      y: {
-        formatter: function (val : any) {
-          return "$ " + val + " pesos"
-        }
-      }
-    }
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '55%',
+          endingShape: 'rounded',
+        },
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        show: true,
+        width: 2,
+        colors: ['transparent'],
+      },
+      xaxis: {
+        categories: [
+          'Ene',
+          'Feb',
+          'Mar',
+          'Abr',
+          'May',
+          'Jun',
+          'Jul',
+          'Ago',
+          'Sep',
+          'Oct',
+          'Nov',
+          'Dic',
+        ],
+      },
+      fill: {
+        opacity: 1,
+      },
+      tooltip: {
+        y: {
+          formatter: function (val: any) {
+            return '$ ' + val + ' pesos';
+          },
+        },
+      },
     };
 
-    var chart = new ApexCharts(document.querySelector("#ventas"), options);
+    var chart = new ApexCharts(document.querySelector('#ventas'), options);
     chart.render();
   }
 
+  exportToPDF(): void {
+    const pdfName = 'reporte.pdf';
+
+    const element = document.getElementById('content-to-export');
+
+    if (element) {
+      html2canvas(element).then((canvas) => {
+          const imgData = canvas.toDataURL('image/png');
+          const pdf = new jsPDF('p', 'mm', 'a4');
+          pdf.addImage(imgData, 'PNG', 10, 10, 180, 200);
+          pdf.save(pdfName);
+        });
+      } else {
+        console.error(
+          'El elemento con ID "content-to-export" no se encontró en el DOM.'
+        );
+      }
+  }
   
+
+  exportToExcel(): void {
+    const categories = Object.keys(this.totalMonthYear);
+    const salesData = [
+      ['Categoría', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+    ];
+
+    categories.forEach(category => {
+      const monthlySales = this.totalMonthYear[category];
+      if (Array.isArray(monthlySales) && monthlySales.length === 12) {
+        salesData.push([category, ...monthlySales]);
+      } else {
+        console.warn(`Datos incompletos o incorrectos para la categoría: ${category}`);
+        salesData.push([category, ...Array(12).fill(0)]);
+      }
+    });
+    const method = Object.keys(this.totalMethodPayment);
+    const methodData = Object.values(this.totalMethodPayment);
+    const methodPaymentData: { Descripción: string; Valor: number }[] = [];
+    for (let i = 0; i < method.length; i++) {
+      methodPaymentData.push({
+        Descripción: method[i],
+        Valor: methodData[i] as number,
+      });
+    }
+    const generalData: { Descripción: string; Valor: number | string }[] = [
+      { Descripción: 'Ordenes totales', Valor: this.totalOrders },
+      { Descripción: 'Total vendido', Valor: this.totalSales },
+      { Descripción: 'Producto más vendido', Valor: `${this.toy.name} ${this.quantity} unidades` },
+      { Descripción: '', Valor: '' },
+      { Descripción: 'Método de pago', Valor: 'Importe' },
+      ...methodPaymentData,
+    ];
+
+
+    const worksheetGeneral: XLSX.WorkSheet = XLSX.utils.json_to_sheet(generalData);
+    const worksheetSales: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(salesData);
+   
+    const workbook: XLSX.WorkBook = {
+      Sheets: { 
+        'Datos Generales': worksheetGeneral,
+        'Datos de Ventas': worksheetSales
+      },
+      SheetNames: ['Datos Generales', 'Datos de Ventas'],
+    };
+
+    const excelBuffer: any = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+
+    this.saveAsExcelFile(excelBuffer, 'Reporte Ciriu ');
+  }
+
+  private saveAsExcelFile(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([buffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8',
+    });
+    saveAs(data, `${fileName}${new Date().getFullYear()}.xlsx`);
+  }
 }

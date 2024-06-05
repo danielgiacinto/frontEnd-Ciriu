@@ -58,6 +58,10 @@
                 <p class="text-danger">Las contraseñas deben coincidir</p>
               </div>
             </div>
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="exampleCheck1" formControlName="acceptTerms">
+              <label class="form-check-label text-muted" for="exampleCheck1">Aceptar los términos y condiciones</label>
+            </div>
 
             <div class="text-center d-grid gap-2 col-6 mx-auto">
               <div class="loader" [ngClass]="{'show': loading}"></div>

@@ -136,9 +136,14 @@ export class ProductsComponent implements OnInit {
       this.loadToys();
     }
   }
+  onPageChange(event: any) {
+    const selectedPage = parseInt(event.target.value, 10);
+    this.goToPage(selectedPage);
+  }
 
   goToPage(pageNumber: number): void {
     this.currentPage = pageNumber;
+    this.router.navigate(['/products'], { queryParams: { page: this.currentPage} });
     this.loadToys();
   }
 

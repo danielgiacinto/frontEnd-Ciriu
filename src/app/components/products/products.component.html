@@ -1,6 +1,6 @@
-<div class="container-fluid pt-4" style="font-family: 'Montserrat'; color: #515151;">
-  <div class="row ps-5 pe-5">
-    <div class="col-md-12 col-sm-12 mb-3 ps-5 pe-5">
+<div class="container pt-4" style="font-family: 'Montserrat'; color: #515151;">
+  <div class="row">
+    <div class="col-md-12 col-sm-12 mb-3">
       <nav style="--bs-breadcrumb-divider: '';" aria-label="breadcrumb">
         <ol class="breadcrumb m-1">
           <li class="breadcrumb-item"><a class="text-center text-body-tertiary text-decoration-none" routerLink="/home">Inicio</a></li>
@@ -14,20 +14,20 @@
       </nav>
     </div>
   </div>
-  <div class="row ps-5 pe-5">
-    <div class="col-md-12 ps-5 pe-5">
+  <div class="row">
+    <div class="col-md-12">
       <p class="display-6" style="color: #a7c957;">Productos</p>
     </div>
   </div>
-  <div class="row align-items-center mb-1 ps-5 pe-5">
-    <div class="col-md-6 col-sm-12 ps-5">
+  <div class="row align-items-center mb-1">
+    <div class="col-md-6 col-sm-12">
       <div class="input-group mb-3 rounded-5 bg-secondary-subtle">
         <button class="btn btn-link-light text-white border-0"><i class="bi bi-search"></i></button>
-        <input type="text" id="searchProducts" class="form-control rounded-end-5" placeholder="Buscar productos, marcas y más..."
+        <input type="text" id="searchProducts" class="form-control rounded-end-5 focus-ring focus-ring-light" placeholder="Buscar productos, marcas y más..."
           aria-describedby="button-addon2" (change)="searchProducts($event)">
       </div>
     </div>
-    <div class="col-md-6 col-xs-12 pe-5 ps-5 col-sm-12 d-flex justify-content-end">
+    <div class="col-md-6 col-xs-12 col-sm-12 d-flex justify-content-end">
       <div *ngIf="viewClearFilter">
         <button class="btn text-danger btn-lg" type="button" (click)="clearFilters()"><i class="bi bi-x-lg"> Borrar filtros</i></button>
       </div>
@@ -117,33 +117,33 @@
       </div>
     </div>
   </div>
-  <div class="row ps-5 pe-5">
+  <div class="row">
     <!--Productos-->
-    <div class="col-md-12 ps-5">
-      <div class="row row-cols-1 row-cols-md-3 ps-1 pe-4">
+    <div class="col-md-12">
+      <div class="row row-cols-1 row-cols-md-3 align-items-center">
         <ng-container *ngIf="toys.length > 0; else noResults">
-          <div class="col col-md-6 col-sm-12 col-xs-12 col-lg-4 col-xl-3 g-3" *ngFor="let toy of toys">
-            <div class="card rounded-0 border-0" style="width: 19rem;">
+          <div class="col col-md-6 col-sm-12 col-xs-12 col-lg-4 col-xl-3 g-4" *ngFor="let toy of toys">
+            <div class="card rounded-0 border-0 p-0" style="width: 18rem;">
               <a routerLink="{{toy.code}}">
-                <img src={{toy.image[0]}} class="card-img-top rounded-0 mx-auto d-block"
-                  style="width: 250px; height: 250px;" alt="imagen" (mouseenter)="changeToNextImage(toy)"
+                <img src={{toy.image[0]}} class="card-img-top rounded-0 mx-auto d-block p-0"
+                  style="width: 100%; height: 250px;" alt="imagen" (mouseenter)="changeToNextImage(toy)"
                   (mouseleave)="changeResetImage(toy)">
               </a>
-              <div class="card-body text-center">
-                <h5 class="card-title" style="text-transform: capitalize;">{{toy.name}}</h5>
+              <div class="card-body text-center text-muted p-1 pt-2">
+                <h5 class="fw-light" style="text-transform: capitalize;">{{toy.name}}</h5>
               </div>
-              <div class="card-footer border-0 rounded-0 p-3">
+              <div class="card-footer border-0 bg-transparent rounded-0 p-3 pt-2">
                 <div class="row">
                   <div class="col-md-6 m-auto">
-                    <p class="card-text fw-bold text-muted">{{toy.price | currency}}</p>
+                    <p class="card-text fw-bold text-muted">{{'$ ' + (toy.price | number:'1.2-2')}}</p>
                   </div>
                   <div class="col-md-6 text-end">
                     <ng-container *ngIf="toy.stock > 0; else noStockButton">
-                      <button class="btn btn-primary boton fw-semibold" (click)="addToCart(toy)"><i
+                      <button class="btn btn-primary boton fw-normal btn-sm rounded-0" (click)="addToCart(toy)"><i
                           class="bi bi-bag"></i> Agregar</button>
                     </ng-container>
                     <ng-template #noStockButton>
-                      <button class="btn btn-warning text-dark rounded-4 fw-semibold btn-sm" disabled><i
+                      <button class="btn btn-warning text-dark fw-normal btn-sm rounded-0" disabled><i
                           class="bi bi-bag-x"></i> Sin Stock</button>
                     </ng-template>
                   </div>
@@ -168,16 +168,17 @@
           <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
               <li class="page-item" [class.disabled]="currentPage === 0">
-                <a class="page-link" [routerLink]="['/products']" [queryParams]="{ page: currentPage - 1}"
-                  (click)="prevPage()"><i class="bi bi-chevron-left"> Atrás</i></a>
-              </li>
-              <li class="page-item" *ngFor="let pageNumber of getPageNumbers()">
-                <a class="page-link" [routerLink]="['/products']" [queryParams]="{ page: pageNumber }"
-                  (click)="goToPage(pageNumber)">{{ pageNumber + 1 }}</a>
+                <a class="page-link border-0 text-dark"[routerLink]="['/products']" [queryParams]="{ page: currentPage - 1}"
+                  (click)="prevPage()"><i class="bi bi-chevron-left"> </i></a>
               </li>
               <li class="page-item">
-                <a class="page-link" [routerLink]="['/products']" [queryParams]="{ page: currentPage + 1 }"
-                  (click)="nextPage()">Siguiente <i class="bi bi-chevron-right"> </i></a>
+                <select class="form-select border-0 ms-1 focus-ring focus-ring-light" [(ngModel)]="currentPage" (change)="onPageChange($event)">
+                  <option *ngFor="let pageNumber of getPageNumbers()" [ngValue]="pageNumber">{{ pageNumber + 1 }}</option>
+                </select>
+              </li>
+              <li class="page-item">
+                <a class="page-link border-0 text-dark" [routerLink]="['/products']" [queryParams]="{ page: currentPage + 1 }"
+                  (click)="nextPage()"> <i class="bi bi-chevron-right"> </i></a>
               </li>
             </ul>
           </nav>

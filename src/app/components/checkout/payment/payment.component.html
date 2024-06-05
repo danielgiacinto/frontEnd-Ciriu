@@ -35,13 +35,13 @@
                 <td>
                   <p class="fw-bold">{{product.name.toUpperCase()}} </p>
                   <p>
-                    Cantidad: {{product.quantity}} <span class="fw-light ps-4"> {{product.price | currency}} c/u</span>
+                    Cantidad: {{product.quantity}} <span class="fw-light ps-4"> {{'$ ' + (product.price | number:'1.2-2')}} c/u</span>
                   </p>
-                  <p>Subtotal: <span class="ps-5 fw-semibold">{{product.price * product.quantity | currency}}</span></p>
+                  <p>Subtotal: <span class="ps-5 fw-semibold">{{'$ '+ (product.price * product.quantity | number:'1.2-2')}}</span></p>
                 </td>
               </tr>
               <tr>
-                <td colspan="2" class="text-center fs-4"><strong>Total: {{getTotal() | currency}}</strong></td>
+                <td colspan="2" class="text-center fs-4"><strong>Total: {{'$ ' + (getTotal() | number:'1.2-2')}}</strong></td>
               </tr>
             </tbody>
           </table>

@@ -17,6 +17,8 @@ import { ProvinceService } from 'src/app/services/province.service';
 import { ToyService } from 'src/app/services/toy.service';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-admin',
@@ -141,7 +143,61 @@ export class AdminComponent implements OnInit {
     const province = this.provinces.find(data => data.id === provinceId);
     return province ? province.province : '';
   }
+
+  exportToExcel() {
+    // Pedidos 
+    const dataToExport = this.orders.map(order => ({
+      'ID Pago': order.id_payment,
+      'Estado': order.status,
+      'Fecha': order.date,
+      'Cliente': `${order.user.name} ${order.user.lastname}`,
+      'Teléfono': order.user.phone,
+      'Email': order.user.email,
+      'Dirección': `${order.user.address}, ${this.getProvince(order.user.province)}, ${order.user.city}`,
+      'Piso': order.user.floor,
+      'Departamento': order.user.departament,
+      'Envío': order.shipping,
+      'Método de Pago': order.format_payment + ' | ' + order.format_method,
+      'Total': this.getTotal(this.orders.indexOf(order))
+    }));
+
+    // Productos vendidos
+    const productsToExport: any[] = [];
+    this.orders.forEach(order => {
+      order.orderDetails.forEach((detail: any) => {
+        productsToExport.push({
+          'ID Pago': order.id_payment,
+          'Cliente': `${order.user.name} ${order.user.lastname}`,
+          'Producto': detail.product.name,
+          'Código': detail.product.code,
+          'Categoría': detail.product.category,
+          'Marca': detail.product.brand,
+          'Cantidad': detail.quantity,
+          'Precio': detail.price,
+          'Total': detail.quantity * detail.price,
+        });
+      });
+    });
+
+    const worksheetOrders: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataToExport);
+    const worksheetProducts: XLSX.WorkSheet = XLSX.utils.json_to_sheet(productsToExport);
+
+    const workbook: XLSX.WorkBook = {
+      Sheets: { 'Pedidos': worksheetOrders, 'Productos': worksheetProducts },
+      SheetNames: ['Pedidos', 'Productos']
+    };
+
+    // Generar archivo Excel
+    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    this.saveAsExcelFile(excelBuffer, 'Pedidos_y_Productos_Vendidos');
+  }
   
+  private saveAsExcelFile(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([buffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8',
+    });
+    saveAs(data, `${fileName}${new Date().getFullYear()}.xlsx`);
+  }
 
   
 }
