@@ -83,7 +83,7 @@
                     <option value="2">Pendiente</option>
                     <option value="4">En proceso</option>
                   </select>
-                  <label for="validationCustom01" class="form-label"> Estado</label>
+                  <label for="validationCustom01" class="form-label"> Estado de pago</label>
                 </div>
               </div>
               <div class="col-md-3 align-self-center mb-3">
@@ -94,7 +94,7 @@
           </div>
           <div class="row mb-3">
             <div class="col-md-4 ps-4">
-              <p class="text-muted">{{orders.length}} Resultados</p> 
+              <p class="text-muted">{{totalElements}} Resultados</p> 
             </div>
             <div class="col-md-5 text-end mb-2">
               <!--Boton de exportar a EXCEL -->
@@ -117,7 +117,7 @@
                 <div class="accordion-item bg-primary-subtle bg-opacity-50 rounded-5"
                   *ngFor="let order of orders; let i = index">
                   <h5 class="accordion-header">
-                    <button class="accordion-button collapsed btn" type="button" data-bs-toggle="collapse"
+                    <button class="accordion-button collapsed btn focus-ring focus-ring-light" type="button" data-bs-toggle="collapse"
                       [attr.data-bs-target]="'#collapse-' + order.id" aria-expanded="false"
                       [attr.aria-controls]="'collapse-' + order.id">
                       <div class="row mb-0">
@@ -154,13 +154,31 @@
                     [attr.data-bs-parent]="'#accordionFlushExample'">
                     <div class="accordion-body">
                       <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
+                          <p class="text-muted">ID de pago</p>
                           <p><i class="bi bi-hash"></i> {{order.id_payment}}</p>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
+                          <p class="text-muted">Estado de entrega</p>
+                          <div *ngIf="order.delivery_status === 'Entregado'">
+                            <p><i class="bi bi-bag-check-fill text-success"> Entregado</i></p>
+                          </div>
+                          <div *ngIf="order.delivery_status === 'En camino'">
+                            <p><i class="bi bi-truck text-primary"> En camino</i></p>
+                          </div>
+                          <div *ngIf="order.delivery_status === 'En preparación'">
+                            <p><i class="bi bi-box2-fill text-secondary"> En preparación</i></p>
+                          </div>
+                          <div *ngIf="order.delivery_status === 'Cancelado'">
+                            <p><i class="bi bi-x-circle-fill text-danger"> Cancelado</i></p>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <p class="text-muted">Forma de envío</p>
                           <p><i class="bi bi-truck text-secondary"></i> {{order.shipping}} </p>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
+                          <p class="text-muted">Método de pago</p>
                           <p><i class="bi bi-wallet2 text-success"></i> {{order.format_payment | titlecase}} |  {{order.format_method | titlecase}} </p>
                         </div>
                       </div>
@@ -211,7 +229,12 @@
                           </div>
                         </div>
                         <hr>
-                        <div class="col-md-12">
+                        <div class="col-md-6 text-start">
+                          <button class="btn btn-warning rounded-4" (click)="openModalOrder(order.id)" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">
+                            Actualizar pedido
+                          </button>
+                        </div>
+                        <div class="col-md-6 text-end">
                           <p class="text-end fs-6 fw-bold">Total: {{'$ ' + (getTotal(i) | number:'1.2-2')}}</p>
                         </div>
                       </div>
@@ -226,7 +249,76 @@
               </ng-template>
             </div>
           </div>
+          <!--Navegacion-->
+          <div class="row mt-3">
+            <div class="col-md-12">
+              <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                  <li class="page-item" [class.disabled]="currentPage === 0">
+                    <a class="page-link border-0 text-dark" style="cursor: pointer;" (click)="prevPage()"><i class="bi bi-chevron-left"> </i></a>
+                  </li>
+                  <li class="page-item">
+                    <select class="form-select border-0 ms-1 focus-ring focus-ring-light" [(ngModel)]="currentPage" (change)="onPageChange($event)">
+                      <option *ngFor="let pageNumber of getPageNumbers()" [ngValue]="pageNumber">{{ pageNumber + 1 }}</option>
+                    </select>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link border-0 text-dark" style="cursor:pointer" (click)="nextPage()"><i class="bi bi-chevron-right"></i></a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para actualizar estados -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-5 border-0 p-2">
+      <div class="modal-header border-0">
+        <h1 class="modal-title fs-5 text-muted" id="exampleModalLabel">Actualizar estados del pedido</h1>
+        <button type="button" class="btn-close focus-ring focus-ring-light" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formStatus">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-floating mb-3">
+                <select formControlName="status" class="form-select" [ngClass]="{'is-invalid': formStatus.get('status')?.errors 
+                && (formStatus.get('status')?.dirty || formStatus.get('status')?.touched) && 'is-invalid'}">
+                  <option *ngFor="let s of status" value="{{s.id}}">{{s.status}}</option>
+                </select>
+                <label for="floatingInput">Estado de pago</label>
+                <div
+                *ngIf="formStatus.get('status')?.invalid && (formStatus.get('status')?.dirty || formStatus.get('status')?.touched)">
+                <p class="text-danger"> El estado de pago es obligatorio</p>
+              </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-floating mb-3">
+                <select formControlName="delivery_status" class="form-select" [ngClass]="{'is-invalid': formStatus.get('delivery_status')?.errors 
+                && (formStatus.get('delivery_status')?.dirty || formStatus.get('delivery_status')?.touched) && 'is-invalid'}">
+                  <option selected disabled value="">Seleccione un estado de entrega</option>
+                  <option *ngFor="let d of deliveryStatus" value="{{d.id}}">{{d.delivery_status}}</option>
+                </select>
+                <label for="floatingInput">Estado de entrega</label>
+                <div
+                *ngIf="formStatus.get('delivery_status')?.invalid && (formStatus.get('delivery_status')?.dirty || formStatus.get('delivery_status')?.touched)">
+                <p class="text-danger"> El estado de entrega es obligatorio</p>
+              </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-secondary rounded-4" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-info rounded-4" (click)="updateOrder()">Guardar cambios</button>
       </div>
     </div>
   </div>

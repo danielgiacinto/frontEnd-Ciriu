@@ -39,8 +39,8 @@ export class UserService {
     return of(this.checkout);
   }
 
-  getOrdersByIdUser(id: string): Observable<any> {
-    return this.httpClient.get<any>(this.urlOrder + '/user/' + id);
+  getOrdersByIdUser(page:number, id: string): Observable<any> {
+    return this.httpClient.get<any>(this.urlOrder + '/user/' + id + '?page=' + page);
   }
 
 }

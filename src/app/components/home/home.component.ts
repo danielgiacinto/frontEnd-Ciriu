@@ -54,32 +54,4 @@ export class HomeComponent implements OnInit {
     this.prevTranslate = this.currentTranslate;
   }
 
-  onDragStart(event: MouseEvent | TouchEvent) {
-    this.dragging = true;
-    this.startX = event instanceof MouseEvent ? event.pageX : event.touches[0].clientX;
-    this.prevTranslate = this.currentTranslate;
-  }
-  
-  onDrag(event: MouseEvent | TouchEvent) {
-    if (this.dragging) {
-      const currentX = event instanceof MouseEvent ? event.pageX : event.touches[0].clientX;
-      const diff = currentX - this.startX;
-      const cardWidth = 15; // 15rem
-      const gap = 1; // 0.5rem on each side
-      const totalCardWidth = cardWidth + 2 * gap; // total width per card including margin
-      const maxTranslate = -(this.cards.length) * totalCardWidth; // Limit to the last card set
-      const minTranslate = 0; // Limit to the first card set
-      this.currentTranslate = Math.min(minTranslate, Math.max(maxTranslate, this.prevTranslate + diff));
-      this.transform = `translateX(${this.currentTranslate}px)`;
-    }
-  }
-  
-  onDragEnd() {
-    if (this.dragging) {
-      this.dragging = false;
-      this.prevTranslate = this.currentTranslate;
-    }
-  }
-
-
 }

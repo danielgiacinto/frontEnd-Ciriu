@@ -28,7 +28,6 @@ export class UserComponent implements OnInit {
   countries: Country[] = [];
   provinces: Province[] = [];
   mostrarBoton:boolean = false;
-  orders: any[] = [];
   userForm: FormGroup = new FormGroup({});
 
   ngOnInit() {
@@ -68,11 +67,6 @@ export class UserComponent implements OnInit {
     this.suscripciones.add(
       this.provinceService.getProvinces().subscribe(data => {
         this.provinces = data;
-      })
-    )
-    this.suscripciones.add(
-      this.userService.getOrdersByIdUser(localStorage.getItem('user') || '').subscribe(data => {
-        this.orders = data;
       })
     )
   }

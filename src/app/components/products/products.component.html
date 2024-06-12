@@ -22,7 +22,7 @@
   <div class="row align-items-center mb-1">
     <div class="col-md-6 col-sm-12">
       <div class="input-group mb-3 rounded-5 bg-secondary-subtle">
-        <button class="btn btn-link-light text-white border-0"><i class="bi bi-search"></i></button>
+        <button class="btn btn-link-light text-white border-0" style="cursor:default;"><i class="bi bi-search"></i></button>
         <input type="text" id="searchProducts" class="form-control rounded-end-5 focus-ring focus-ring-light" placeholder="Buscar productos, marcas y más..."
           aria-describedby="button-addon2" (change)="searchProducts($event)">
       </div>
@@ -130,12 +130,12 @@
                   (mouseleave)="changeResetImage(toy)">
               </a>
               <div class="card-body text-center text-muted p-1 pt-2">
-                <h5 class="fw-light" style="text-transform: capitalize;">{{toy.name}}</h5>
+                <h5 class="fw-light user-select-none" style="text-transform: capitalize;">{{toy.name}}</h5>
               </div>
               <div class="card-footer border-0 bg-transparent rounded-0 p-3 pt-2">
                 <div class="row">
                   <div class="col-md-6 m-auto">
-                    <p class="card-text fw-bold text-muted">{{'$ ' + (toy.price | number:'1.2-2')}}</p>
+                    <p class="card-text fw-bold text-muted user-select-none">{{'$ ' + (toy.price | number:'1.2-2')}}</p>
                   </div>
                   <div class="col-md-6 text-end">
                     <ng-container *ngIf="toy.stock > 0; else noStockButton">

@@ -1,24 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, Subscription, finalize } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Toy } from 'src/app/models/Toy';
 import { Brand } from 'src/app/models/brand';
 import { Category } from 'src/app/models/category';
 import { Country } from 'src/app/models/country';
 import { Province } from 'src/app/models/province';
 import { User } from 'src/app/models/user';
-import { BrandService } from 'src/app/services/brand.service';
-import { CategoryService } from 'src/app/services/category.service';
 import { CountryService } from 'src/app/services/country.service';
 import { OrderService } from 'src/app/services/order.service';
 import { ProvinceService } from 'src/app/services/province.service';
-import { ToyService } from 'src/app/services/toy.service';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import { StatusService } from 'src/app/services/status.service';
+import { DeliveryStatusService } from 'src/app/services/deliveryStatus.service';
 
 @Component({
   selector: 'app-admin',
@@ -31,18 +30,31 @@ export class AdminComponent implements OnInit {
   orders: any[] = [];
   provinces: Province[] = [];
   countrys: Country[] = [];
+  status: any[] = [];
+  deliveryStatus: any[] = [];
+  currentPage: number = 0;
+  totalPages: number = 0;
+  totalElements: number = 0;
   formOrders = new FormGroup({
     fromDate: new FormControl(''),
     toDate: new FormControl(''),
     status: new FormControl(0),
   });
+  formStatus = new FormGroup({
+    id: new FormControl(null, [Validators.required]),
+    status: new FormControl(null, [Validators.required]),
+    delivery_status : new FormControl(null, [Validators.required]),
+  });
+
 
   constructor(
     private userService: UserService,
     private orderService: OrderService,
     private router: Router,
     private provinceService: ProvinceService,
-    private countryService: CountryService
+    private countryService: CountryService,
+    private statusService: StatusService,
+    private deliveryStatusService: DeliveryStatusService
   ) {}
 
   ngOnInit() {
@@ -61,7 +73,9 @@ export class AdminComponent implements OnInit {
         this.countrys = data;
       })
     )
-    this.getOrders();
+    this.suscripciones.add(
+      this.getOrders()
+    )
   }
 
   ngOnDestroy(): void {
@@ -96,10 +110,12 @@ export class AdminComponent implements OnInit {
       fromDate: fromDate,
       toDate: toDate
     })
-    this.orderService.getAllOrders(fromDate, toDate, status).subscribe(
+    this.orderService.getAllOrders(this.currentPage, fromDate, toDate, status).subscribe(
       (data) => {
         console.log(data);
-        this.orders = data;
+        this.orders = data.content;
+        this.totalElements = data.totalElements;
+        this.totalPages = data.totalPages;
       },
       (error) => {
         console.log(error);
@@ -199,5 +215,76 @@ export class AdminComponent implements OnInit {
     saveAs(data, `${fileName}${new Date().getFullYear()}.xlsx`);
   }
 
+  nextPage(): void {
+    if(this.currentPage + 1 < this.totalPages){
+      this.currentPage++;
+      this.getOrders();
+    }
+    
+  }
+
+  prevPage(): void {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.getOrders();
+    }
+  }
+  onPageChange(event: any) {
+    const selectedPage = parseInt(event.target.value, 10);
+    this.goToPage(selectedPage);
+  }
+  goToPage(pageNumber: number): void {
+    this.currentPage = pageNumber;
+    this.getOrders();
+  }
+
+  getPageNumbers(): number[] {
+    return Array(this.totalPages)
+      .fill(0)
+      .map((x, i) => i);
+  }
+
+  openModalOrder(id: number) {
+    this.loadStatusAndDeliveryStatus().then(() => {
+      const order = this.orders.find(order => order.id === id);
+      if (order) {
+        const id_status = this.status.find(status => status.status === order.status).id.toString();
+        const id_delivery_status = this.deliveryStatus.find(status => status.delivery_status === order.delivery_status).id.toString();
+        this.formStatus.patchValue({
+          id: order.id,
+          status: id_status,
+          delivery_status: id_delivery_status
+        });
+      }
+    });
+  }
+
+  updateOrder() {
+    const id = this.formStatus.value.id ? this.formStatus.value.id : '';
+    const id_status = this.formStatus.value.status ? this.formStatus.value.status : 0;
+    const id_delivery_status = this.formStatus.value.delivery_status ? this.formStatus.value.delivery_status : 0;
+    if(this.formStatus.valid && id_status > 0 && id_delivery_status > 0 && id !== '') {
+      this.orderService.updateOrder(id, id_status, id_delivery_status).subscribe(data => {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Pedido actualizado correctamente",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        this.getOrders();
+      })  
+    }
+  }
   
+  loadStatusAndDeliveryStatus() {
+    return Promise.all([
+      this.statusService.getStatus().toPromise().then(data => {
+        this.status = data;
+      }),
+      this.deliveryStatusService.getDeliveryStatus().toPromise().then(data => {
+        this.deliveryStatus = data;
+      })
+    ]);
+  }
 }

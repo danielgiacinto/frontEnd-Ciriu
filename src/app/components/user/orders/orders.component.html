@@ -94,13 +94,31 @@
                     [attr.data-bs-parent]="'#accordionFlushExample'">
                     <div class="accordion-body">
                       <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
+                          <p class="text-muted">ID de pago</p>
                           <p><i class="bi bi-hash"></i> {{order.id_payment}}</p>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
+                          <p class="text-muted">Estado de entrega</p>
+                          <div *ngIf="order.delivery_status === 'Entregado'">
+                            <p><i class="bi bi-bag-check-fill text-success"> Entregado</i></p>
+                          </div>
+                          <div *ngIf="order.delivery_status === 'En camino'">
+                            <p><i class="bi bi-truck text-primary"> En camino</i></p>
+                          </div>
+                          <div *ngIf="order.delivery_status === 'En preparación'">
+                            <p><i class="bi bi-box2-fill text-secondary"> En preparación</i></p>
+                          </div>
+                          <div *ngIf="order.delivery_status === 'Cancelado'">
+                            <p><i class="bi bi-x-circle-fill text-danger"> Cancelado</i></p>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <p class="text-muted">Forma de envío</p>
                           <p><i class="bi bi-truck text-secondary"></i> {{order.shipping}} </p>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
+                          <p class="text-muted">Método de pago</p>
                           <p><i class="bi bi-wallet2 text-success"></i> {{order.format_payment | titlecase}} |  {{order.format_method | titlecase}} </p>
                         </div>
                       </div>
@@ -145,8 +163,27 @@
               </ng-template>
             </div>
           </div>
+          <!--Navegacion-->
+          <div class="row mt-3">
+            <div class="col-md-12">
+              <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                  <li class="page-item" [class.disabled]="currentPage === 0">
+                    <a class="page-link border-0 text-dark" style="cursor: pointer;" (click)="prevPage()"><i class="bi bi-chevron-left"> </i></a>
+                  </li>
+                  <li class="page-item">
+                    <select class="form-select border-0 ms-1 focus-ring focus-ring-light" [(ngModel)]="currentPage" (change)="onPageChange($event)">
+                      <option *ngFor="let pageNumber of getPageNumbers()" [ngValue]="pageNumber">{{ pageNumber + 1 }}</option>
+                    </select>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link border-0 text-dark" style="cursor:pointer" (click)="nextPage()"><i class="bi bi-chevron-right"></i></a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
         </div>
-
       </div>
     </div>
   </div>

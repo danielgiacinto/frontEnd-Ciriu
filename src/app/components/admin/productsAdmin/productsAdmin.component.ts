@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription, finalize } from 'rxjs';
 import { Toy } from 'src/app/models/Toy';
@@ -68,7 +74,10 @@ export class ProductsAdminComponent implements OnInit {
   });
 
   formEditToy = new FormGroup({
-    nameEdit: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    nameEdit: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3),
+    ]),
     categoryEdit: new FormControl('', [Validators.required]),
     subcategoryEdit: new FormControl('', [Validators.required]),
     descriptionEdit: new FormControl('', [
@@ -92,15 +101,13 @@ export class ProductsAdminComponent implements OnInit {
     private subCategoryService: SubCategoryService,
     private userService: UserService,
     private router: Router,
-    private route: ActivatedRoute,
     private formBuilder: FormBuilder
   ) {}
 
   ngOnInit() {
-    this.route.queryParams.subscribe((params) => {
-      this.currentPage = parseInt(params['page'] || '0', 10);
-      this.loadToys();
-    });
+    this.suscripciones.add(
+      this.loadToys()
+    )
     this.suscripciones.add(
       this.categoryService.getCategories().subscribe(
         (data) => {
@@ -136,13 +143,22 @@ export class ProductsAdminComponent implements OnInit {
   loadToys(): void {
     this.suscripciones.add(
       this.toyService
-        .getToys(this.currentPage, this.sortBy, this.searchTerm, this.nonStock, '', '')
+        .getToys(
+          this.currentPage,
+          this.sortBy,
+          this.searchTerm,
+          this.nonStock,
+          '',
+          ''
+        )
         .subscribe(
           (response) => {
             console.log(response);
             this.totalPages = response.totalPages;
             this.toys = response.content;
             this.totalElements = response.totalElements;
+            console.log(this.totalPages);
+            console.log(this.currentPage);
           },
           (error) => {
             console.log(error);
@@ -152,8 +168,10 @@ export class ProductsAdminComponent implements OnInit {
   }
 
   nextPage(): void {
-    this.currentPage++;
-    this.loadToys();
+    if (this.currentPage + 1 < this.totalPages) {
+      this.currentPage++;
+      this.loadToys();
+    }
   }
 
   prevPage(): void {
@@ -168,7 +186,9 @@ export class ProductsAdminComponent implements OnInit {
   }
   goToPage(pageNumber: number): void {
     this.currentPage = pageNumber;
-    this.router.navigate(['/admin/products'], { queryParams: { page: this.currentPage} });
+    this.router.navigate(['/admin/products'], {
+      queryParams: { page: this.currentPage },
+    });
     this.loadToys();
   }
 
@@ -371,8 +391,6 @@ export class ProductsAdminComponent implements OnInit {
         data.image.forEach((imageUrl: string) => {
           imagesArray.push(new FormControl(imageUrl));
         });
-        //this.previewUrl = data.image;
-        //this.oldImage = data.image;
         this.codeUpdate = data.code;
       },
       (error) => {
@@ -392,7 +410,7 @@ export class ProductsAdminComponent implements OnInit {
         description: this.formEditToy.value.descriptionEdit,
         brand: this.formEditToy.value.brandEdit,
         price: this.formEditToy.value.priceEdit,
-        image: this.formEditToy.value.imageEdit
+        image: this.formEditToy.value.imageEdit,
       };
       this.toyService.updateProduct(this.codeUpdate, toyData).subscribe(
         (data) => {
@@ -411,7 +429,6 @@ export class ProductsAdminComponent implements OnInit {
       this.guardandoCambios = false;
     }
   }
-
 
   getFileName(url: string): string {
     const indiceSignoPregunta = url.indexOf('?');
@@ -448,26 +465,23 @@ export class ProductsAdminComponent implements OnInit {
     return this.formEditToy.get('imageEdit') as FormArray;
   }
 
-
-  addImage(){
+  addImage() {
     this.images.push(this.formBuilder.control(''));
   }
 
-  addImageEdit(){
+  addImageEdit() {
     this.imagesEdit.push(this.formBuilder.control(''));
   }
 
-
   removeImage(index: number) {
-    if(this.images.length > 1){
+    if (this.images.length > 1) {
       this.images.removeAt(index);
     }
   }
 
   removeImageEdit(index: number) {
-    if(this.imagesEdit.length > 1){
+    if (this.imagesEdit.length > 1) {
       this.imagesEdit.removeAt(index);
     }
   }
-
 }

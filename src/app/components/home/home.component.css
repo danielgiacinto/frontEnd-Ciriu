@@ -12,11 +12,8 @@
 .carousel {
     overflow: hidden;
     width: 100%;
-    cursor: grab;
 }
-.carousel:active {
-    cursor: grabbing;
-}
+
   
 .carousel-track {
     display: flex;
@@ -45,4 +42,48 @@
     border-radius: 30px;
 }
 
+
+.card {
+    overflow: hidden;
+  }
+  
+.img-container {
+    height: 300px; /* Ajusta la altura según sea necesario */
+    overflow: hidden;
+    position: relative;
+}
+  
+.card-img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover; /* Mantiene el aspecto de la imagen mientras se ajusta al contenedor */
+    transition: transform 0.5s ease;
+}
+  
+.card:hover .card-img {
+    transform: scale(1.1);
+}
+@keyframes colorChange {
+    0% {
+      color: #000000;
+    }
+    25% {
+      color: #555;
+    }
+    50% {
+      color: #777;
+    }
+    75% {
+      color: #999;
+    }
+    100% {
+      color: #53c936;
+    }
+}
+
+.category-text {
+    animation: colorChange 5s infinite;
+}
+
+  
 

@@ -10,8 +10,8 @@ export class StockService {
   constructor(private httpClient: HttpClient) { }
   urlStocks = 'http://localhost:8081/stock';
 
-  getMovements(fromDate: String, toDate: String, movement: String): Observable<any> {
-    return this.httpClient.get<any>(`${this.urlStocks}/all?fromDate=${fromDate}&toDate=${toDate}&movement=${movement}`);
+  getMovements(page:number, fromDate: String, toDate: String, movement: String): Observable<any> {
+    return this.httpClient.get<any>(`${this.urlStocks}/all?page=${page}&fromDate=${fromDate}&toDate=${toDate}&movement=${movement}`);
   }
 
   createMovement(movement: any): Observable<any> {

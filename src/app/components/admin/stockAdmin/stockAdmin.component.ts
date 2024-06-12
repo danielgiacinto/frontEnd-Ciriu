@@ -23,6 +23,9 @@ export class StockAdminComponent implements OnInit {
 
   user:User = new User();
   movements:any = [];
+  currentPage: number = 0;
+  totalPages: number = 0;
+  totalElements: number = 0;
   product = new Toy();
   private suscripciones = new Subscription();
   formMovements = new FormGroup({
@@ -55,8 +58,10 @@ export class StockAdminComponent implements OnInit {
     const movement = this.formSearchStock.value.movementSearch ?? '';
     this.formSearchStock.patchValue({ fromDateSearch: fromDate, toDateSearch: toDate, movementSearch: movement });
     console.log(fromDate, toDate, movement);
-    this.stockService.getMovements(fromDate, toDate, movement).subscribe(data => {
-      this.movements = data;
+    this.stockService.getMovements(this.currentPage, fromDate, toDate, movement).subscribe(data => {
+      this.movements = data.content;
+      this.totalElements = data.totalElements;
+      this.totalPages = data.totalPages;
     })
   }
   formatDate(date: Date, endOfDay: boolean = false): string {
@@ -143,6 +148,35 @@ export class StockAdminComponent implements OnInit {
     const hours = now.getHours().toString().padStart(2, '0');
     const minutes = now.getMinutes().toString().padStart(2, '0');
     return `${year}-${month}-${day}T${hours}:${minutes}`;
+  }
+
+  nextPage(): void {
+    if(this.currentPage + 1 < this.totalPages){
+      this.currentPage++;
+      this.loadMovements();
+    }
+    
+  }
+
+  prevPage(): void {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.loadMovements();
+    }
+  }
+  onPageChange(event: any) {
+    const selectedPage = parseInt(event.target.value, 10);
+    this.goToPage(selectedPage);
+  }
+  goToPage(pageNumber: number): void {
+    this.currentPage = pageNumber;
+    this.loadMovements();
+  }
+
+  getPageNumbers(): number[] {
+    return Array(this.totalPages)
+      .fill(0)
+      .map((x, i) => i);
   }
 
 }

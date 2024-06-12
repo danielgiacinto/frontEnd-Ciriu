@@ -17,20 +17,28 @@ export class OrdersComponent implements OnInit {
   
   private suscripciones = new Subscription();
   user: User = new User();
+  currentPage: number = 0;
+  totalPages: number = 0;
+  totalElements: number = 0;
   orders: any[] = [];
 
   ngOnInit() {
-
     this.suscripciones.add(
       this.userService.getInfo().subscribe(data => {
         this.user = data;
       })
     )
     this.suscripciones.add(
-      this.userService.getOrdersByIdUser(localStorage.getItem('user') || '').subscribe(data => {
-        this.orders = data;
-      })
+      this.loadOrdersUser()
     )
+  }
+
+  loadOrdersUser(): void {
+    this.userService.getOrdersByIdUser(this.currentPage, localStorage.getItem('user') || '').subscribe(data => {
+      this.orders = data.content;
+      this.totalElements = data.totalElements;
+      this.totalPages = data.totalPages;
+    })
   }
 
   ngOnDestroy(): void {
@@ -64,6 +72,33 @@ export class OrdersComponent implements OnInit {
       }
     });
   }
+  nextPage(): void {
+    if(this.currentPage + 1 < this.totalPages){
+      this.currentPage++;
+      this.loadOrdersUser();
+    }
+    
+  }
 
+  prevPage(): void {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.loadOrdersUser();
+    }
+  }
+  onPageChange(event: any) {
+    const selectedPage = parseInt(event.target.value, 10);
+    this.goToPage(selectedPage);
+  }
+  goToPage(pageNumber: number): void {
+    this.currentPage = pageNumber;
+    this.loadOrdersUser();
+  }
+
+  getPageNumbers(): number[] {
+    return Array(this.totalPages)
+      .fill(0)
+      .map((x, i) => i);
+  }
 
 }

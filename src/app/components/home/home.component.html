@@ -1,6 +1,6 @@
-<div class="container-fluid">
-  <div class="row mb-5 ms-5 me-5">
-    <div class="col-md-12 rounded-5">
+<div class="container" style="font-family: 'Montserrat';">
+  <div class="row mb-5">
+    <div class="col-md-12 rounded-0">
       <div id="carouselExample" class="carousel slide">
         <div class="carousel-indicators">
           <li type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active boton-inferior"
@@ -10,21 +10,21 @@
         </div>
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img src="assets/portada1.jpeg" class="d-block w-100 rounded-5 img-fluid" alt="...">
+            <img src="assets/port1.jpg" class="d-block w-100 rounded-0 img-fluid" alt="...">
           </div>
           <div class="carousel-item">
-            <img src="assets/portada2.jpeg" class="d-block w-100 rounded-5" alt="...">
+            <img src="assets/port2.jpg" class="d-block w-100 rounded-0" alt="...">
           </div>
           <div class="carousel-item">
-            <img src="assets/portada3.jpeg" class="d-block w-100 rounded-5" alt="...">
+            <img src="assets/port3.jpg" class="d-block w-100 rounded-0" alt="...">
           </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="carousel-control-prev-icon bg-dark rounded-5" aria-hidden="true"></span>
           <span class="visually-hidden">Previous</span>
         </button>
         <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="carousel-control-next-icon bg-dark rounded-5" aria-hidden="true"></span>
           <span class="visually-hidden">Next</span>
         </button>
       </div>
@@ -61,7 +61,8 @@
       </div>
     </div>
   </div>
-
+</div>
+<div class="container-fluid">
   <div class="row p-3" style="background-color: #f8f6f5;">
     <div class="col-md-8">
       <p class="text-success text-start display-6">Mirá las categorias de nuestros juguetes</p>
@@ -72,9 +73,7 @@
       <button class="btn btn-success rounded-5" type="button" (click)="nextSlide()"><i
           class="bi bi-caret-right-fill"></i></button>
     </div>
-    <div class="carousel" (mousedown)="onDragStart($event)" (mouseup)="onDragEnd()" (mouseleave)="onDragEnd()"
-      (mousemove)="onDrag($event)" (touchstart)="onDragStart($event)" (touchend)="onDragEnd()"
-      (touchmove)="onDrag($event)">
+    <div class="carousel">
       <div class="d-flex w-100">
         <div class="carousel-track" [style.transform]="transform">
           <div class="m-1" *ngFor="let card of cards; let i = index">
@@ -91,6 +90,58 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row mt-5 mb-5 row-cols-1 row-cols-md-2 g-4">
+    <div class="col">
+      <a href="/products?category=juguetería">
+        <div class="card rounded-5 border-0 overflow-hidden">
+          <div class="img-container">
+            <img src="https://i0.wp.com/universal.org.mx/wp-content/uploads/2021/11/juguetes-seguros.jpg?fit=860%2C525&ssl=1" class="card-img rounded-5 opacity-25" alt="...">
+          </div>
+          <div class="card-img-overlay text-center d-flex justify-content-center align-items-center">
+            <h5 class="text-muted opacity-50 display-6 text-center fw-bold">TODO EN JUGUETERÍA</h5>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col">
+      <a href="/products?category=marroquinería">
+        <div class="card rounded-5 border-0 overflow-hidden">
+          <div class="img-container">
+            <img src="https://cdn.pinkermoda.com/pinkermoda/2023/06/marroquineria.png" class="card-img rounded-5 opacity-25" alt="...">
+          </div>
+          <div class="card-img-overlay text-center d-flex justify-content-center align-items-center">
+            <h5 class="text-muted opacity-50 display-6 text-center fw-bold">TODO EN MARROQUINERÍA</h5>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col">
+      <a href="/products?category=estética">
+        <div class="card rounded-5 border-0 overflow-hidden">
+          <div class="img-container">
+            <img src="https://img.baba-blog.com/2024/03/makeup-and-tools.jpg?x-oss-process=style%2Ffull" class="card-img rounded-5 opacity-25" alt="...">
+          </div>
+          <div class="card-img-overlay text-center d-flex justify-content-center align-items-center">
+            <h5 class="text-muted opacity-50 display-6 text-center fw-bold">TODO EN ESTÉTICA</h5>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col">
+      <a href="/products?category=bazar">
+        <div class="card rounded-5 border-0 overflow-hidden">
+          <div class="img-container">
+            <img src="https://www.delbazar.com/wp-content/uploads/2022/07/set-platos-sakura-borde-negro-1.jpg" class="card-img rounded-5 opacity-25" alt="...">
+          </div>
+          <div class="card-img-overlay text-center d-flex justify-content-center align-items-center">
+            <h5 class="text-muted opacity-50 display-6 text-center fw-bold">TODO EN BAZAR</h5>
+          </div>
+        </div>
+      </a>
     </div>
   </div>
 </div>

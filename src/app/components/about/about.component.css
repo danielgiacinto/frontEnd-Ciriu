@@ -1,0 +1,9 @@
+.pintar {
+    background-color: transparent;
+    transition: background-color 0.5s ease, border-radius 0.5s ease;
+}
+
+.pintar:hover {
+    background-color: #f8f6f5;
+    border-radius: 30px;
+}

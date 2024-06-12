@@ -15,8 +15,12 @@ export class OrderService {
     return this.httpClient.post(this.urlOrder + '/new', order);
   }
 
-  getAllOrders(fromDate : String, toDate: String, status: number): Observable<any> {
-    return this.httpClient.get(`${this.urlOrder}?fromDate=${fromDate}&toDate=${toDate}&status=${status}`);
+  updateOrder(id:string, id_status: number, id_delivery_status: number): Observable<any> {
+    return this.httpClient.put(`${this.urlOrder}/update/${id}/${id_status}/${id_delivery_status}`, null);
+  }
+
+  getAllOrders(page:number, fromDate : String, toDate: String, status: number): Observable<any> {
+    return this.httpClient.get(`${this.urlOrder}?page=${page}&fromDate=${fromDate}&toDate=${toDate}&status=${status}`);
   }
 
   consultReport(fromDate: String, toDate: String): Observable<any> {

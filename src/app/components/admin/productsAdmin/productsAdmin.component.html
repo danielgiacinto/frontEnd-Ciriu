@@ -64,7 +64,7 @@
             <div class="col-md-5">
               <div class="input-group mb-3">
                 <button class="btn btn-light rounded-left border-1"
-                  style="background-color: #86BB3C; border-color: #86BB3C;"><i
+                  style="background-color: #86BB3C; border-color: #86BB3C; cursor: default;"><i
                     class="bi bi-search text-white"></i></button>
                 <input type="text" class="form-control rounded-right text-muted border-start-0 border-1"
                   style="border-color: #86BB3C;" placeholder="Buscar productos, marcas y más..."
@@ -94,8 +94,8 @@
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
               aria-labelledby="staticBackdropLabel" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content container-fluid">
-                  <div class="modal-header">
+                <div class="modal-content container-fluid border-0 rounded-5 p-2">
+                  <div class="modal-header border-0">
                     <h1 class="modal-title fs-4 text-success" id="staticBackdropLabel"><i
                         class="bi bi-folder-plus fs-4 pe-2"></i> Nuevo producto</h1>
                     <button type="button" class="btn-close" (click)="clearForm()" data-bs-dismiss="modal"
@@ -105,7 +105,7 @@
                     <form [formGroup]="formNewToy" class="text-center" (ngSubmit)="newToy()">
                       <div class="row">
                         <div class="col-md-12">
-                          <p class="text-muted">Complete los siguientes campos para crear un nuevo producto</p>
+                          <p class="text-muted text-start">Complete los siguientes campos para crear un nuevo producto</p>
                         </div>
                         <!-- Codigo-->
                         <div class="col-md-5 mb-4">
@@ -306,7 +306,7 @@
                         </div>
                       </div>
 
-                      <div class="modal-footer">
+                      <div class="modal-footer border-0">
                         <button type="button" class="btn btn-secondary rounded-5" (click)="clearForm()"
                           data-bs-dismiss="modal"><i class="bi bi-x-circle-fill text-white"></i> Cancelar</button>
                         <button type="submit" class="btn btn-primary boton"
@@ -381,9 +381,9 @@
           <!-- Editar producto -->
           <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-              <div class="modal-content">
-                <div class="modal-header">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content rounded-5 border-0 p-2">
+                <div class="modal-header border-0">
                   <h1 class="modal-title fs-4 text-warning" id="staticBackdropLabel"><i class="bi bi-pencil-fill"></i>
                     Editar producto</h1>
                   <button type="button" class="btn-close" (click)="clearForm()" data-bs-dismiss="modal"
@@ -565,7 +565,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="modal-footer">
+                    <div class="modal-footer border-0">
                       <button type="button" class="btn btn-secondary rounded-5" (click)="clearForm()"
                         data-bs-dismiss="modal"><i class="bi bi-x-circle-fill text-white"></i> Cancelar</button>
                       <button type="submit" class="btn btn-primary boton"

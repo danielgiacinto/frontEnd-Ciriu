@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
 export class SignupComponent implements OnInit {
   
   loading: boolean = false;
-
+  acceptTerms: boolean = false;
   constructor(private loginService: LoginService, private router: Router) { }
 
   ngOnInit() {
@@ -28,11 +28,10 @@ export class SignupComponent implements OnInit {
     emailSignUp: new FormControl('', [Validators.required, Validators.email]),
     passwordSignUp: new FormControl('', [Validators.required, Validators.minLength(8)]),
     repeatPasswordSignUp: new FormControl('', [Validators.required, Validators.minLength(8)]),
-    acceptTerms: new FormControl(false, [Validators.requiredTrue]),
   })
 
   signUp() {
-    if(this.signUpForm.valid) {
+    if(this.signUpForm.valid && this.acceptTerms) {
       this.loading = true;
       this.loginService.createAccount(this.signUpForm.value).subscribe(
         (response: any) => {
@@ -67,6 +66,12 @@ export class SignupComponent implements OnInit {
         }
       );
     }
+  }
+
+  changeTerms(){
+    this.acceptTerms = !this.acceptTerms;
+    console.log(this.acceptTerms);
+
   }
 
   passwordMatchValidator(control: AbstractControl) {
