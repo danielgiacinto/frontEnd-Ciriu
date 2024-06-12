@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
+import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -13,7 +14,7 @@ export class LogsComponent implements OnInit {
 
   loading: boolean = false;
 
-  constructor(private loginService: LoginService, private router: Router) {}
+  constructor(private loginService: LoginService, private router: Router, private userService: UserService) {}
 
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -30,6 +31,7 @@ export class LogsComponent implements OnInit {
         (response: any) => {
           localStorage.setItem('user', response.id);
           localStorage.setItem('rol', response.rol);
+          this.userService.setRole(response.rol);
           if (response.rol === 'Administrador') {
             this.router.navigate(['/admin/orders']);
           } else if (response.rol === 'Usuario') {

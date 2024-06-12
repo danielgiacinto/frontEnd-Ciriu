@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { User } from '../models/user';
 
 @Injectable({
@@ -12,6 +12,8 @@ export class UserService {
   urlUsers = 'http://localhost:8081/users';
   urlOrder = 'http://localhost:8081/orders';
   checkout: boolean = false;
+  private roleSubject = new BehaviorSubject<string | null>(localStorage.getItem('rol'));
+  role$ = this.roleSubject.asObservable();
 
   getInfo():Observable<User> {
     const id = localStorage.getItem('user') || '';
@@ -41,6 +43,19 @@ export class UserService {
 
   getOrdersByIdUser(page:number, id: string): Observable<any> {
     return this.httpClient.get<any>(this.urlOrder + '/user/' + id + '?page=' + page);
+  }
+
+  setRole(role: string | null) {
+    if (role) {
+      localStorage.setItem('rol', role);
+    } else {
+      localStorage.removeItem('rol');
+    }
+    this.roleSubject.next(role);
+  }
+
+  getRole(): string | null {
+    return this.roleSubject.value;
   }
 
 }

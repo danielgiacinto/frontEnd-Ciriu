@@ -3,6 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { CartService } from './services/cart.service';
 import { UserService } from './services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,8 @@ export class AppComponent implements OnInit {
   viewCart: boolean = false;
   rutaActual = '';
   quantityCart = 0;
-  constructor(private router: Router, private cartService: CartService) {}
+  rol: string | null = '';
+  constructor(private router: Router, private cartService: CartService, private userService: UserService) {}
 
   ngOnInit(): void {
     this.onWindowScroll();
@@ -23,6 +25,9 @@ export class AppComponent implements OnInit {
     })
     this.cartService.isCartOpen().subscribe(isOpen => {
       this.viewCart = isOpen;
+    });
+    this.userService.role$.subscribe(role => {
+      this.rol = role;
     });
   }
   
@@ -40,15 +45,28 @@ export class AppComponent implements OnInit {
     return this.router.url.includes('/checkout') || this.router.url.includes('/checkout/payment');
   }
 
-  redirectToRoleSpecificComponent() {
-    const rol = localStorage.getItem('rol');
-    if (rol === 'Administrador') {
-      this.router.navigate(['/admin/orders']); 
-    } else if (rol === 'Usuario') {
-      this.router.navigate(['/user/info']);
-    } else {
-      this.router.navigate(['/login']);
-    }
+  checkRol() {
+    this.rol = localStorage.getItem('rol') || '';
+    console.log(this.rol);
+  }
+
+  logout() {
+    Swal.fire({
+      title: 'Atencion',
+      text: '¿Estás seguro de que deseas cerrar sesion?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Cerrar sesion',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.clear();
+        window.location.reload();
+        this.router.navigate(['/home']);
+      }
+    });
   }
 
   

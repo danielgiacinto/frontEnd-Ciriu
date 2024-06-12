@@ -33,15 +33,53 @@
             </span>
           </button>
         </li>
-        <!--Inicar sesion -->
-        <li class="nav-item">
-          <button type="button" class="btn position-relative p-1 nav-link" (click)="redirectToRoleSpecificComponent()">
+
+        <!--Administrador-->
+        <div *ngIf="rol === 'Administrador'" class="btn-group">
+          <button type="button" class="btn position-relative p-1 nav-link dropdown-toggle text-light" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-person-circle" viewBox="0 0 16 16">
               <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
               <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
             </svg>
           </button>
-        </li>
+          <ul class="dropdown-menu dropdown-menu-lg-end border-0 rounded-4 p-2 shadow">
+            <li><a class="dropdown-item rounded-4 text-muted"  routerLink="/admin/orders"><i class="bi bi-file-earmark-text"></i> Pedidos</a></li>
+            <li><a class="dropdown-item rounded-4 text-muted" routerLink="/admin/products"><i class="bi bi-boxes"></i> Productos</a></li>
+            <li><a class="dropdown-item rounded-4 text-muted" routerLink="/admin/stock"><i class="bi bi-box"></i> Stock</a></li>
+            <li><a class="dropdown-item rounded-4 text-muted" routerLink="/admin/report"><i class="bi bi-bar-chart-line"></i> Reportes</a></li>
+            <li><a class="dropdown-item rounded-4 text-muted" routerLink="/admin/support"><i class="bi bi-gear-wide-connected"></i> Soporte</a></li>
+            <li><hr class="dropdown-divider text-muted rounded-4"></li>
+            <li><button class="dropdown-item rounded-4 text-danger" (click)="logout()"><i class="bi bi-box-arrow-right"></i> Cerrar sesion</button></li>
+          </ul>
+        </div>
+        <!--Usuario-->
+        <div *ngIf="rol === 'Usuario'" class="btn-group">
+          <button type="button" class="btn position-relative p-1 nav-link dropdown-toggle text-light" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-person-circle" viewBox="0 0 16 16">
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+            </svg>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-lg-end border-0 rounded-4 p-2 shadow">
+            <li><a class="dropdown-item rounded-4 text-muted" routerLink="/user/info"><i class="bi bi-info-circle"></i> Información</a></li>
+            <li><a class="dropdown-item rounded-4 text-muted" routerLink="/user/orders"><i class="bi bi-file-text"></i> Mis pedidos</a></li>
+            <li><hr class="dropdown-divider text-muted rounded-4"></li>
+            <li><button class="dropdown-item rounded-4 text-danger" (click)="logout()"><i class="bi bi-box-arrow-right"></i> Cerrar sesion</button></li>
+          </ul>
+        </div>
+        <!--Registrarse o iniciar sesion-->
+        <div *ngIf="!rol" class="btn-group">
+          <button type="button" class="btn position-relative p-1 nav-link dropdown-toggle text-light" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-person-circle" viewBox="0 0 16 16">
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+            </svg>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-lg-end border-0 rounded-4 p-2 shadow">
+            <li><a class="dropdown-item rounded-4 text-muted" routerLink="/login"><i class="bi bi-box-arrow-in-right"></i> Iniciar sesion</a></li>
+            <li><a class="dropdown-item rounded-4 text-muted" routerLink="/signup"><i class="bi bi-pencil-square"></i> Registrarse</a></li>
+          </ul>
+        </div>
       </ul>
     </div>
   </div>

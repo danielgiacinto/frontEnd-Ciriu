@@ -51,6 +51,12 @@
     max-width: 100%; /* Asegura que no exceda el ancho de la pantalla */
 }
 
+.dropdown-menu .dropdown-item:focus,
+.dropdown-menu .dropdown-item.active {
+  background-color: transparent !important;
+  color: #000 !important; /* Cambia el color del texto si es necesario */
+}
+
 
   
 
