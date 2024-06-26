@@ -23,11 +23,11 @@
     <div class="col-md-6 col-sm-12">
       <div class="input-group mb-3 rounded-5 bg-secondary-subtle">
         <button class="btn btn-link-light text-white border-0" style="cursor:default;"><i class="bi bi-search"></i></button>
-        <input type="text" id="searchProducts" class="form-control rounded-end-5 focus-ring focus-ring-light" placeholder="Buscar productos, marcas y más..."
+        <input type="text" id="searchProducts" class="form-control rounded-end-5" style="box-shadow: none;" placeholder="Buscar productos, marcas y más..."
           aria-describedby="button-addon2" (change)="searchProducts($event)">
       </div>
     </div>
-    <div class="col-md-6 col-xs-12 col-sm-12 d-flex justify-content-end">
+    <div class="col-md-6 col-xs-12 col-sm-12 d-flex justify-content-center">
       <div *ngIf="viewClearFilter">
         <button class="btn text-danger btn-lg" type="button" (click)="clearFilters()"><i class="bi bi-x-lg"> Borrar filtros</i></button>
       </div>
@@ -73,7 +73,7 @@
               <div class="mb-5 mt-5 ps-4 pe-4">
                 <h5 class="fw-light fs-4 text-center mb-3"><i class="bi bi-funnel"></i> Marcas</h5>
                 <div class="list-group text-center list-group-flush" *ngFor="let brand of brands">
-                  <a class="list-group-item list-group-item-action" [routerLink]="['/products']"
+                  <a class="list-group-item list-group-item-action"[routerLink]="['/products']"
                     [queryParams]="{category: brand.brand}" (click)="filterByBrand(brand.brand)"> {{brand.brand |
                     titlecase}}</a>
                 </div>
@@ -96,17 +96,17 @@
             <div class="col-md-12 pe-5 col-sm-4 align-self-center">
               <div class="col-md-12 pe-5 col-sm-4 fs-5">
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="orderBy" id="orderByDefault" value="default"
+                  <input class="form-check-input" type="radio" style="box-shadow: none;" name="orderBy" id="orderByDefault" value="default"
                     (change)="orderProducts($event)" checked>
                   <label class="form-check-label" for="orderByDefault">Por defecto</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="orderBy" id="orderByAsc" value="asc"
+                  <input class="form-check-input" type="radio" style="box-shadow: none;" name="orderBy" id="orderByAsc" value="asc"
                     (change)="orderProducts($event)">
                   <label class="form-check-label" for="orderByAsc">Precio: Menor a Mayor</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="orderBy" id="orderByDesc" value="desc"
+                  <input class="form-check-input" type="radio" style="box-shadow: none;" name="orderBy" id="orderByDesc" value="desc"
                     (change)="orderProducts($event)">
                   <label class="form-check-label" for="orderByDesc">Precio: Mayor a menor</label>
                 </div>
@@ -117,12 +117,12 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <div class="row align-items-center">
     <!--Productos-->
     <div class="col-md-12">
       <div class="row row-cols-1 row-cols-md-3 align-items-center">
         <ng-container *ngIf="toys.length > 0; else noResults">
-          <div class="col col-md-6 col-sm-12 col-xs-12 col-lg-4 col-xl-3 g-4" *ngFor="let toy of toys">
+          <div class="col-12 col-sm-12 col-md-6 col-xs-12 col-lg-4 col-xl-3 g-4 d-flex justify-content-center" *ngFor="let toy of toys">
             <div class="card rounded-0 border-0 p-0" style="width: 18rem;">
               <a routerLink="{{toy.code}}">
                 <img src={{toy.image[0]}} class="card-img-top rounded-0 mx-auto d-block p-0"
@@ -139,11 +139,11 @@
                   </div>
                   <div class="col-md-6 text-end">
                     <ng-container *ngIf="toy.stock > 0; else noStockButton">
-                      <button class="btn btn-primary boton fw-normal btn-sm rounded-0" (click)="addToCart(toy)"><i
+                      <button id="particleButton" class="btn btn-primary boton fw-normal btn-sm rounded-5" (click)="addToCart(toy)"><i
                           class="bi bi-bag"></i> Agregar</button>
                     </ng-container>
                     <ng-template #noStockButton>
-                      <button class="btn btn-warning text-dark fw-normal btn-sm rounded-0" disabled><i
+                      <button class="btn btn-warning text-dark fw-normal btn-sm rounded-5" disabled><i
                           class="bi bi-bag-x"></i> Sin Stock</button>
                     </ng-template>
                   </div>
@@ -158,32 +158,32 @@
           </div>
         </ng-template>
       </div>
+    </div>
+  </div>
 
-      <!--Navegacion-->
-      <div class="row mt-5 mb-5" *ngIf="totalElements > 8">
-        <div class="col-md-12 mb-3">
-          <h6 class="text-center"> ¿Queres seguir viendo más productos?</h6>
-        </div>
-        <div class="col-md-12">
-          <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-              <li class="page-item" [class.disabled]="currentPage === 0">
-                <a class="page-link border-0 text-dark"[routerLink]="['/products']" [queryParams]="{ page: currentPage - 1}"
-                  (click)="prevPage()"><i class="bi bi-chevron-left"> </i></a>
-              </li>
-              <li class="page-item">
-                <select class="form-select border-0 ms-1 focus-ring focus-ring-light" [(ngModel)]="currentPage" (change)="onPageChange($event)">
-                  <option *ngFor="let pageNumber of getPageNumbers()" [ngValue]="pageNumber">{{ pageNumber + 1 }}</option>
-                </select>
-              </li>
-              <li class="page-item">
-                <a class="page-link border-0 text-dark" [routerLink]="['/products']" [queryParams]="{ page: currentPage + 1 }"
-                  (click)="nextPage()"> <i class="bi bi-chevron-right"> </i></a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </div>
+  <!--Navegacion-->
+  <div class="row mt-5 mb-5" *ngIf="totalElements > 8">
+    <div class="col-md-12 mb-3">
+      <h6 class="text-center"> ¿Queres seguir viendo más productos?</h6>
+    </div>
+    <div class="col-md-12">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" [class.disabled]="currentPage === 0">
+            <a class="page-link border-0 text-dark" style="box-shadow: none;" [routerLink]="['/products']" [queryParams]="{ page: currentPage - 1}"
+              (click)="prevPage()"><i class="bi bi-chevron-left"> </i></a>
+          </li>
+          <li class="page-item">
+            <select class="form-select border-0 ms-1 focus-ring focus-ring-light" style="box-shadow: none;" [(ngModel)]="currentPage" (change)="onPageChange($event)">
+              <option *ngFor="let pageNumber of getPageNumbers()" [ngValue]="pageNumber">{{ pageNumber + 1 }}</option>
+            </select>
+          </li>
+          <li class="page-item">
+            <a class="page-link border-0 text-dark" style="box-shadow: none;" [routerLink]="['/products']" [queryParams]="{ page: currentPage + 1 }"
+              (click)="nextPage()"> <i class="bi bi-chevron-right"> </i></a>
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
 </div>

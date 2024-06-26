@@ -1,142 +1,164 @@
 <div class="container" style="font-family: Montserrat;">
-  <div class="card mt-5 bg-light rounded-0 mb-5 shadow border-0 rounded-0">
-    <div class="row m-0 mt-3">
+  <div class="card mt-5 rounded-5 shadow border-0">
+    <div class="row m-0 mt-3 mb-4">
       <div class="col-md-4">
-        <a class="btn text-muted" routerLink="/products"><i class="bi bi-arrow-90deg-left"> Volver</i></a>
+        <a class="btn btn-link text-decoration-none text-muted ps-4" routerLink="/products"><i class="bi bi-arrow-left"></i> Volver</a>
       </div>
       <div class="col-md-4 text-center">
-        <h4 class="fs-2 text-muted"><i class="bi bi-bag text-muted"></i> Detalle de la compra</h4>
-      </div>
-      <div class="col-md-4">
+        <h4 class="fs-3 text-muted fw-light">Información de la compra</h4>
       </div>
     </div>
-    <hr>
-    <div class="row">
-      <div class="col-md-12 mt-3 ps-5">
-        <h6 class="text-muted fs-5">Por favor, completar los campos obligatorios</h6>
+    <!--Linea de tiempo-->
+    <div class="row align-items-center mb-3">
+      <div class="col-md-4 col-4 d-flex flex-column align-items-end position-relative m-0 p-0">
+        <button class="btn btn-link text-decoration-none text-muted border-0 fs-4 rounded-circle p-0 shadow timeline-btn" style="cursor: default; background: #86BB3C;"><i class="bi bi-journal-text"></i> </button>
+      </div>
+      <div class="col-md-4 col-4 d-flex align-items-center m-0 p-0">
+        <hr class="w-100 border-secondary border-3 m-0">
+      </div>
+      <div class="col-md-4 col-4 d-flex flex-column align-items-start position-relative m-0 p-0">
+        <button class="btn btn-link text-decoration-none text-muted border-0 fs-4 bg-secondary-subtle rounded-circle p-0 timeline-btn" style="cursor: default;"><i class="bi bi-cash-coin"></i></button>
       </div>
     </div>
+    
     <div class="row pt-4 pb-4 pe-5">
-
-
       <!--Productos-->
-      <div class="col-md-5 ps-5">
-        <div class="card p-3 rounded-5 shadow-sm border-1">
-          <table class="table table-borderless">
-            <thead>
-              <tr>
-                <th class="align-middle fs-4 text-center text-muted" colspan="2">Productos</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let product of cart">
-                <th scope="row" class="align-middle"><img src="{{product.image}}" width="100px" height="100px"
-                    alt="producto">
-                </th>
-                <td>
-                  <p class="fw-bold">{{product.name.toUpperCase()}} </p>
-                  <p>
-                    Cantidad: {{product.quantity}} <span class="fw-light ps-4"> {{'$ ' + (product.price | number:'1.2-2')}} c/u</span>
-                  </p>
-                  <p>Subtotal: <span class="ps-5 fw-semibold">{{ '$ '+ (product.price * product.quantity | number:'1.2-2')}}</span></p>
-                </td>
-              </tr>
-              <tr>
-                <td colspan="2" class="text-center fs-4"><strong>Total: {{'$ ' + (getTotal() | number:'1.2-2')}}</strong></td>
-              </tr>
-            </tbody>
-          </table>
+      <div class="col-md-12 col-lg-5 col-12 ps-5 mb-5">
+        <div class="card p-2 rounded-5 border-0 bg-secondary-subtle">
+          <div class="table-responsive">
+            <table class="table align-middle table-borderless table-secondary">
+              <thead class="table-secondary">
+                <tr>
+                  <th class="align-middle fs-4 text-center fw-light text-muted" colspan="2">Productos</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let product of cart">
+                  <th scope="row" class="align-middle"><img src="{{product.image}}" class="img-fluid rounded" width="100px" height="100px" alt="producto">
+                  </th>
+                  <td>
+                    <p class="fw-normal">{{product.name.toUpperCase()}} </p>
+                    <p>
+                      Cantidad: {{product.quantity}} <span class="fw-light ps-4"> {{'$ ' + (product.price | number:'1.2-2')}} c/u</span>
+                    </p>
+                    <p>Subtotal: <span class="ps-5 fw-semibold">{{ '$ '+ (product.price * product.quantity | number:'1.2-2')}}</span></p>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2" class="text-center fs-4 fw-semibold"><strong>Total: {{'$ ' + (getTotal() | number:'1.2-2')}}</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
       <!--Formulario-->
-      <div class="col-md-7 ps-5 pe-5">
+      <div class="col-lg-7 col-md-12 col-12 ps-5 pe-5">
         <form class="row g-3 needs-validation" [formGroup]="checkoutForm" (ngSubmit)="checkoutPay()">
           <div class="col-md-6">
-            <label class="form-label text-muted">* Nombre</label>
-            <input type="text" class="form-control" [value]="user.name" placeholder="Nombre" formControlName="name"
-              [ngClass]="{'is-invalid': checkoutForm.get('name')?.errors 
-            && (checkoutForm.get('name')?.dirty || checkoutForm.get('name')?.touched) && 'is-invalid'}">
-            <div
-              *ngIf="checkoutForm.get('name')?.invalid && (checkoutForm.get('name')?.dirty || checkoutForm.get('name')?.touched)">
-              <p class="text-danger"> El nombre es obligatorio</p>
+            <div class="form-floating">
+              <input type="text" class="form-control rounded-5" [value]="user.name" placeholder="Nombre" formControlName="name"
+                [ngClass]="{'is-invalid': checkoutForm.get('name')?.errors 
+              && (checkoutForm.get('name')?.dirty || checkoutForm.get('name')?.touched) && 'is-invalid'}">
+              <label for="floatingInput">* Nombre</label>
+              <div
+                *ngIf="checkoutForm.get('name')?.invalid && (checkoutForm.get('name')?.dirty || checkoutForm.get('name')?.touched)">
+                <p class="text-danger"> El nombre es obligatorio</p>
+              </div>
             </div>
           </div>
           <div class="col-md-6">
-            <label class="form-label text-muted">* Apellido</label>
-            <input type="text" class="form-control" [value]="user.lastname" placeholder="Apellido"
-              formControlName="lastname" [ngClass]="{'is-invalid': checkoutForm.get('lastname')?.errors 
-            && (checkoutForm.get('lastname')?.dirty || checkoutForm.get('lastname')?.touched) && 'is-invalid'}">
-            <div
-              *ngIf="checkoutForm.get('lastname')?.invalid && (checkoutForm.get('lastname')?.dirty || checkoutForm.get('lastname')?.touched)">
-              <p class="text-danger"> El apellido es obligatorio</p>
+            <div class="form-floating">
+              <input type="text" class="form-control rounded-5" [value]="user.lastname" placeholder="Apellido"
+                formControlName="lastname" [ngClass]="{'is-invalid': checkoutForm.get('lastname')?.errors 
+              && (checkoutForm.get('lastname')?.dirty || checkoutForm.get('lastname')?.touched) && 'is-invalid'}">
+              <label for="floatingInput">* Apellido</label>
+              <div
+                *ngIf="checkoutForm.get('lastname')?.invalid && (checkoutForm.get('lastname')?.dirty || checkoutForm.get('lastname')?.touched)">
+                <p class="text-danger"> El apellido es obligatorio</p>
+              </div>
             </div>
           </div>
           <div class="col-md-6">
-            <label class="form-label text-muted">* Teléfono</label>
-            <input type="number" class="form-control" [value]="user.phone" placeholder="Telefono"
+            <div class="form-floating">
+              <input type="number" class="form-control rounded-5" [value]="user.phone" placeholder="Telefono"
               formControlName="phone" [ngClass]="{'is-invalid': checkoutForm.get('phone')?.errors 
             && (checkoutForm.get('phone')?.dirty || checkoutForm.get('phone')?.touched) && 'is-invalid'}">
+            <label for="floatingInput">* Telefono</label>
             <div
               *ngIf="checkoutForm.get('phone')?.invalid && (checkoutForm.get('phone')?.dirty || checkoutForm.get('phone')?.touched)">
               <p class="text-danger"> El telefono es obligatorio</p>
             </div>
+            </div>  
           </div>
           <div class="col-md-6">
-            <label class="form-label text-muted">* Pais</label>
-            <select class="form-select" required [value]="user.country" formControlName="country" [ngClass]="{'is-invalid': checkoutForm.get('country')?.errors 
-            && (checkoutForm.get('country')?.dirty || checkoutForm.get('country')?.touched) && 'is-invalid'}">
-              <option disabled selected>Seleccione un país</option>
-              <option *ngFor="let country of countries" [value]="country.id">{{country.country}}</option>
-            </select>
-            <div
-              *ngIf="checkoutForm.get('country')?.invalid && (checkoutForm.get('country')?.dirty || checkoutForm.get('country')?.touched)">
-              <p class="text-danger"> El pais es obligatorio</p>
+            <div class="form-floating">
+              <select class="form-select rounded-5" required [value]="user.country" formControlName="country" [ngClass]="{'is-invalid': checkoutForm.get('country')?.errors 
+              && (checkoutForm.get('country')?.dirty || checkoutForm.get('country')?.touched) && 'is-invalid'}">
+                <option disabled selected>Seleccione un país</option>
+                <option *ngFor="let country of countries" [value]="country.id">{{country.country}}</option>
+              </select>
+              <label for="floatingInput">* Pais</label>
+              <div
+                *ngIf="checkoutForm.get('country')?.invalid && (checkoutForm.get('country')?.dirty || checkoutForm.get('country')?.touched)">
+                <p class="text-danger"> El pais es obligatorio</p>
+              </div>
+            </div>
+            
+          </div>
+          <div class="col-md-6">
+            <div class="form-floating">
+              <select class="form-select rounded-5" required [value]="user.province" formControlName="province" [ngClass]="{'is-invalid': checkoutForm.get('province')?.errors 
+              && (checkoutForm.get('province')?.dirty || checkoutForm.get('province')?.touched) && 'is-invalid'}">
+                <option disabled selected>Seleccione una provincia</option>
+                <option *ngFor="let province of provinces" [value]="province.id">{{province.province}}</option>
+              </select>
+              <label for="floatingInput">* Provincia</label>
+              <div
+                *ngIf="checkoutForm.get('province')?.invalid && (checkoutForm.get('province')?.dirty || checkoutForm.get('province')?.touched)">
+                <p class="text-danger"> La provincia es obligatoria</p>
+              </div>
             </div>
           </div>
           <div class="col-md-6">
-            <label class="form-label text-muted">* Provincia</label>
-            <select class="form-select" required [value]="user.province" formControlName="province" [ngClass]="{'is-invalid': checkoutForm.get('province')?.errors 
-            && (checkoutForm.get('province')?.dirty || checkoutForm.get('province')?.touched) && 'is-invalid'}">
-              <option disabled selected>Seleccione una provincia</option>
-              <option *ngFor="let province of provinces" [value]="province.id">{{province.province}}</option>
-            </select>
-            <div
-              *ngIf="checkoutForm.get('province')?.invalid && (checkoutForm.get('province')?.dirty || checkoutForm.get('province')?.touched)">
-              <p class="text-danger"> La provincia es obligatoria</p>
+            <div class="form-floating">
+              <input type="text" class="form-control rounded-5" [value]="user.city" placeholder="Ciudad" formControlName="city"
+                [ngClass]="{'is-invalid': checkoutForm.get('city')?.errors 
+              && (checkoutForm.get('city')?.dirty || checkoutForm.get('city')?.touched) && 'is-invalid'}">
+              <label for="floatingInput">* Ciudad</label>
+              <div
+                *ngIf="checkoutForm.get('city')?.invalid && (checkoutForm.get('city')?.dirty || checkoutForm.get('city')?.touched)">
+                <p class="text-danger"> La ciudad es obligatoria</p>
+              </div>
             </div>
           </div>
           <div class="col-md-6">
-            <label class="form-label text-muted">* Ciudad</label>
-            <input type="text" class="form-control" [value]="user.city" placeholder="Ciudad" formControlName="city"
-              [ngClass]="{'is-invalid': checkoutForm.get('city')?.errors 
-            && (checkoutForm.get('city')?.dirty || checkoutForm.get('city')?.touched) && 'is-invalid'}">
-            <div
-              *ngIf="checkoutForm.get('city')?.invalid && (checkoutForm.get('city')?.dirty || checkoutForm.get('city')?.touched)">
-              <p class="text-danger"> La ciudad es obligatoria</p>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <label class="form-label text-muted">* Direccion</label>
-            <input type="text" class="form-control" [value]="user.address" placeholder="Direccion"
+            <div class="form-floating">
+              <input type="text" class="form-control rounded-5" [value]="user.address" placeholder="Direccion"
               formControlName="address" [ngClass]="{'is-invalid': checkoutForm.get('address')?.errors 
               && (checkoutForm.get('address')?.dirty || checkoutForm.get('address')?.touched) && 'is-invalid'}">
+              <label for="floatingInput">* Dirección</label>
             <div
               *ngIf="checkoutForm.get('address')?.invalid && (checkoutForm.get('address')?.dirty || checkoutForm.get('address')?.touched)">
               <p class="text-danger"> La direccion es obligatoria</p>
             </div>
           </div>
-          <div class="col-md-3">
-            <label class="form-label text-muted">Piso</label>
-            <input type="text" class="form-control" [value]="user.floor" placeholder="Piso" formControlName="floor">
           </div>
           <div class="col-md-3">
-            <label class="form-label text-muted">Departamento</label>
-            <input type="text" class="form-control" [value]="user.departament" placeholder="Departamento"
+            <div class="form-floating">
+              <input type="text" class="form-control rounded-5" [value]="user.floor" placeholder="Piso" formControlName="floor">
+              <label for="floatingInput">Piso</label>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-floating">
+              <input type="text" class="form-control rounded-5" [value]="user.departament" placeholder="Departamento"
               formControlName="departament">
+              <label for="floatingInput">Departamento</label>
+            </div>
           </div>
-          <div class="col-12 text-end p-2">
-            <button class="btn btn-primary boton-comprar" type="submit" [disabled]="!checkoutForm.valid">Actualizar y
-              continuar</button>
+          <div class="col-md-12 d-flex justify-content-end align-items-center mt-4">
+            <button class="btn btn-primary boton-comprar" type="submit" [disabled]="!checkoutForm.valid">Actualizar y continuar</button>
           </div>
         </form>
       </div>

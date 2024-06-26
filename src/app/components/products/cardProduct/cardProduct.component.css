@@ -10,6 +10,9 @@
     background-color: #a7c957;
     opacity: 1;
 }
+.boton:active {
+    transform: scale(0.96);
+}
 
 body{
     font-family: 'Montserrat', sans-serif;
@@ -38,6 +41,17 @@ body{
 
 .color-close {
     filter: brightness(0) invert(1) contrast(10000%) saturate(10000%);
+}
+
+@media (max-width: 576px) {
+    .carousel-inner {
+      max-width: 100%;
+      overflow: hidden;
+    }
+    .carousel-inner img {
+      max-width: 100%;
+      height: auto;
+    }
 }
 
   

@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Category } from 'src/app/models/category';
 import { CategoryService } from 'src/app/services/category.service';
 import { SubCategoryService } from 'src/app/services/subCategory.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-newSubcategory',
@@ -35,11 +36,39 @@ export class NewSubcategoryComponent implements OnInit {
       this.subCategory.createSubCategory(this.formNewSubCategory.value).subscribe(
         data => {
           console.log(data);
-          alert("Subcategoría añadida");
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            }
+          });
+          Toast.fire({
+            icon: "success",
+            title: "Se agrego la Sub cateogoria con exito"
+          });
           this.formNewSubCategory.reset();
         },
         error => {
-          alert("La subcategoría ya existe");
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            }
+          });
+          Toast.fire({
+            icon: "error",
+            title: "Error, la sub categoria ya existe"
+          });
           this.formNewSubCategory.reset();
         }
       )

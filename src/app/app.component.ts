@@ -52,7 +52,7 @@ export class AppComponent implements OnInit {
 
   logout() {
     Swal.fire({
-      title: 'Atencion',
+      title: 'Atención',
       text: '¿Estás seguro de que deseas cerrar sesion?',
       icon: 'warning',
       showCancelButton: true,

@@ -1,14 +1,14 @@
 <div class="container" style="font-family: Montserrat;">
   <div class="card mx-auto shadow-lg border mt-5 mb-5 border-0 rounded-5 p-4">
     <div class="row">
-      <div class="col-md-1 col-sm-1 col-xs-1 text-center d-block d-lg-none">
+      <div class="col-md-1 col-2 text-start d-block d-lg-none">
         <button class="btn btn-lg text-muted" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
           <i class="bi bi-list"></i>
         </button>
         <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
           <div class="offcanvas-header">
             <h5 class="offcanvas-title display-6 text-body-tertiary" id="offcanvasWithBothOptionsLabel">Menu</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" style="box-shadow: none;" aria-label="Close"></button>
           </div>
           <div class="offcanvas-body">
             <div class="d-grid gap-2">
@@ -27,15 +27,15 @@
           </div>
         </div>
       </div>
-      <div class="col-md-11 col-lg-11 col-sm-11 col-xs-11">
+      <div class="col-md-11 col-10 mt-1">
         <h4 class="display-6 text-muted">
-          <span class="text-body-tertiary"><i class="bi bi-person"></i>Bienvenido, </span> {{user.name.toLowerCase() | titlecase}}
+          <span class="text-body-tertiary"><i class="bi bi-person"></i>Hola, </span> {{user.name.toLowerCase() | titlecase}}
         </h4>
       </div>
     </div>
     <hr>
     <div class="row">
-      <div class="col-md-2 pt-4 col-sm-1 col-xs-1 d-none d-lg-block">
+      <div class="pt-4 col-lg-2 d-none d-lg-block">
         <div class="d-grid gap-2 mb-5">
           <a class="btn btn-primary btn-lg boton p-3" routerLink="/admin/orders"><i class="bi bi-file-earmark-text">
               Pedidos</i></a>
@@ -52,7 +52,7 @@
       </div>
 
       <!--Mostrar pedidos-->
-      <div class="col-md-10 col-sm-12 col-xs-12">
+      <div class="col-12 col-lg-10 col-sm-12 col-xs-12">
         <div class="m-4">
           <div class="row pb-4">
             <div class="col-md-12 text-center">
@@ -61,23 +61,23 @@
               </h4>
             </div>
           </div>
-          <div class="row pb-2 align-items-center d-flex justify-content-center">
+          <div class="row align-items-center d-flex justify-content-center">
             <form action="#" class="col-md-12 row p-3 border-0 rounded-5 text-center" (ngSubmit)="getOrders()" [formGroup]="formOrders">
               <div class="col-md-3">
                 <div class="form-floating mb-3">
-                  <input type="datetime-local" class="form-control" id="floatingInput" formControlName="fromDate">
+                  <input type="datetime-local" class="form-control rounded-5" style="box-shadow: none;" id="floatingInput" formControlName="fromDate">
                   <label for="floatingInput">Fecha desde</label>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-floating mb-3">
-                  <input type="datetime-local" class="form-control" id="floatingInput" formControlName="toDate">
+                  <input type="datetime-local" class="form-control rounded-5" style="box-shadow: none;" id="floatingInput" formControlName="toDate">
                   <label for="floatingInput">Fecha hasta</label>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-floating mb-3">
-                  <select name="estado" id="estado" class="form-select" formControlName="status">
+                  <select name="estado" id="estado" style="box-shadow: none;" class="form-select rounded-5" formControlName="status">
                     <option value="0">Cualquiera</option>
                     <option value="1">Aprobado</option>
                     <option value="2">Pendiente</option>
@@ -86,28 +86,30 @@
                   <label for="validationCustom01" class="form-label"> Estado de pago</label>
                 </div>
               </div>
-              <div class="col-md-3 align-self-center mb-3">
+              <div class="col-md-3 align-self-center">
                 <button class="btn btn-outline-secondary border-1 p-2 ps-3 pe-3 rounded-5"><i
                     class="bi bi-search"></i> Buscar</button>
               </div>
             </form>
           </div>
-          <div class="row mb-3">
-            <div class="col-md-4 ps-4">
-              <p class="text-muted">{{totalElements}} Resultados</p> 
+          <hr class="border-3 border-top border-secondary rounded-5">
+          <div class="row mb-3 align-items-center d-flex justify-content-center">
+            <div class="col-md-4 text-center">
+              <p class="text-muted fs-5">{{totalElements}} Resultados</p> 
             </div>
-            <div class="col-md-5 text-end mb-2">
-              <!--Boton de exportar a EXCEL -->
+            <div class="col-md-4 mb-3 text-center align-self-center">
               <button class="btn btn-outline-success ms-3 border-1 p-2 ps-3 pe-3 rounded-5" (click)="exportToExcel()">
                 <i class="bi bi-file-earmark-excel-fill"></i> Exportar a Excel
               </button>
             </div>
-            <div class="col-md-3">
-              <select class="form-select" (change)="orderBy($event)">
-                <option class="form-select text-muted" selected disabled>Ordenar pedidos por</option>
-                <option class="form-select text-muted" value="reciente">Mas recientes</option>
-                <option class="form-select text-muted" value="antiguo">Mas antiguos</option>
-              </select>
+            <div class="col-md-4 mb-3">
+              <div class="form-floating mb-3">
+                <select class="form-select rounded-5" style="box-shadow: none;" (change)="orderBy($event)">
+                  <option class="form-select text-muted" value="reciente">Mas recientes</option>
+                  <option class="form-select text-muted" value="antiguo">Mas antiguos</option>
+                </select>
+                <label for="validationCustom01" class="form-label">Ordenar pedidos por</label> 
+              </div>
             </div>
           </div>
           
@@ -119,7 +121,7 @@
                   <h5 class="accordion-header">
                     <button class="accordion-button collapsed btn focus-ring focus-ring-light" type="button" data-bs-toggle="collapse"
                       [attr.data-bs-target]="'#collapse-' + order.id" aria-expanded="false"
-                      [attr.aria-controls]="'collapse-' + order.id">
+                      [attr.aria-controls]="'collapse-' + order.id" style="box-shadow: none; border: none;">
                       <div class="row mb-0">
                         <div class="col-md-4">
                           <p class="text-muted">Fecha</p>
@@ -281,14 +283,17 @@
     <div class="modal-content rounded-5 border-0 p-2">
       <div class="modal-header border-0">
         <h1 class="modal-title fs-5 text-muted" id="exampleModalLabel">Actualizar estados del pedido</h1>
-        <button type="button" class="btn-close focus-ring focus-ring-light" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" style="box-shadow: none;" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form [formGroup]="formStatus">
           <div class="row">
             <div class="col-md-12">
+              <p class="text-muted">Por favor, seleccione los estados que desea actualizar.</p>
+            </div>
+            <div class="col-md-12">
               <div class="form-floating mb-3">
-                <select formControlName="status" class="form-select" [ngClass]="{'is-invalid': formStatus.get('status')?.errors 
+                <select formControlName="status" style="box-shadow: none;" class="form-select" [ngClass]="{'is-invalid': formStatus.get('status')?.errors 
                 && (formStatus.get('status')?.dirty || formStatus.get('status')?.touched) && 'is-invalid'}">
                   <option *ngFor="let s of status" value="{{s.id}}">{{s.status}}</option>
                 </select>
@@ -301,7 +306,7 @@
             </div>
             <div class="col-md-12">
               <div class="form-floating mb-3">
-                <select formControlName="delivery_status" class="form-select" [ngClass]="{'is-invalid': formStatus.get('delivery_status')?.errors 
+                <select formControlName="delivery_status" style="box-shadow: none;" class="form-select" [ngClass]="{'is-invalid': formStatus.get('delivery_status')?.errors 
                 && (formStatus.get('delivery_status')?.dirty || formStatus.get('delivery_status')?.touched) && 'is-invalid'}">
                   <option selected disabled value="">Seleccione un estado de entrega</option>
                   <option *ngFor="let d of deliveryStatus" value="{{d.id}}">{{d.delivery_status}}</option>
@@ -317,8 +322,8 @@
         </form>
       </div>
       <div class="modal-footer border-0">
-        <button type="button" class="btn btn-secondary rounded-4" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-info rounded-4" (click)="updateOrder()">Guardar cambios</button>
+        <button type="button" class="btn btn-secondary rounded-4 shadow" data-bs-dismiss="modal"><i class="bi bi-x-circle-fill text-white"></i> Cancelar</button>
+        <button type="button" class="btn btn-info rounded-4 boton shadow text-light"(click)="updateOrder()"><i class="bi bi-floppy2-fill"></i> Guardar cambios</button>
       </div>
     </div>
   </div>

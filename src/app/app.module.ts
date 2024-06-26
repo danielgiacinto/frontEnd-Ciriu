@@ -31,6 +31,8 @@ import { QuestionsComponent } from './components/questions/questions.component';
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
+import { SuccessComponent } from './components/success/success.component';
+import { PendingComponent } from './components/pending/pending.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +61,8 @@ import localeEs from '@angular/common/locales/es';
     NewSubcategoryComponent,
     ConditionsComponent,
     QuestionsComponent,
+    SuccessComponent,
+    PendingComponent
   ],
   imports: [
     BrowserModule,

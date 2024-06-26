@@ -3,13 +3,18 @@
     opacity: 0.9;
     color: white;
     border: 25px;
+    transition: transform 0.3s ease;
     border-radius: 20px;
+}
+.boton:active {
+    transform: scale(0.8);
 }
 
 .boton:hover {
     background-color: #a7c957;
     opacity: 1;
 }
+
 
 body{
     font-family: 'Montserrat', sans-serif;
@@ -29,6 +34,7 @@ body{
     width: 100%;
     height: auto;
 }
+
 
   
 

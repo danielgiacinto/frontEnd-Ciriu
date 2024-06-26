@@ -32,7 +32,7 @@ export class CartService {
     const existingProduct = cart.find((p: any) => p.code === product.code);
     if(existingProduct) {
       Swal.fire({
-        icon: 'error',
+        icon: 'warning',
         title: 'El producto ya existe en el carrito',
       })
     } else {

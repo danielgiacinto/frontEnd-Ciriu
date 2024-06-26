@@ -1,12 +1,14 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
+      <p>Complete el campo para agregar una nueva marca</p>
+    </div>
+    <div class="col-md-12">
       <form action="" [formGroup]="formNewBrand" (ngSubmit)="createBrand()">
-        <div class="input-group">
+        <div class="input-group rounded">
           <label class="input-group-text" for="inputGroupSelect01"><i class="bi bi-tag-fill"></i></label>
-          <input type="text" class="form-control" placeholder="Nueva marca" formControlName="brand">
-          <button class="btn btn-outline-success border-0 p-2 rounded-1" type="submit"><i class="bi bi-plus-circle">
-              Añadir</i></button>
+          <input type="text" class="form-control rounded-end-5" style="box-shadow: none;" placeholder="Nueva marca" formControlName="brand">
+          <button class="btn btn-success boton rounded-5 ms-1" type="submit"><i class="bi bi-plus-circle"></i></button>
       </div>
       </form>
       <div class="text-start" *ngIf="formNewBrand.get('brand')?.invalid && (formNewBrand.get('brand')?.dirty || formNewBrand.get('brand')?.touched)">

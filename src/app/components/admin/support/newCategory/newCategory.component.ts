@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CategoryService } from 'src/app/services/category.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-newCategory',
@@ -22,11 +23,39 @@ export class NewCategoryComponent implements OnInit {
       this.categoryService.createCategory(this.formNewCategory.value).subscribe(
         data => {
           console.log(data);
-          alert("Categoría añadida");
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            }
+          });
+          Toast.fire({
+            icon: "success",
+            title: "Se agrego la categoria con exito"
+          });
           this.formNewCategory.reset();
         },
         error => {
-          alert("La categoría ya existe");
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            }
+          });
+          Toast.fire({
+            icon: "error",
+            title: "Error, la categoria ya existe"
+          });
           this.formNewCategory.reset();
         }
       )

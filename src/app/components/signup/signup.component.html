@@ -1,7 +1,7 @@
 <div class="container fade-in" style="font-family: Montserrat;">
   <div class="row justify-content-md-center mt-4 mb-4 align-items-center">
-    <div class="col-md-5">
-      <div class="card mx-auto shadow-lg mt-5 mb-5 border-0 rounded-0 p-3">
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-6">
+      <div class="card mx-auto shadow-lg mt-5 mb-5 border-0 rounded-5 p-3">
         <h5 class="text-muted text-center mt-2 fw-light fs-3">
           Crear cuenta
         </h5>
@@ -10,58 +10,81 @@
             <div class="row">
               <!--Nombre-->
               <div class="mb-4 col-md-6">
-                <input type="text" class="form-control text-muted p-2" required placeholder="Nombre"
-                  formControlName="nameSignUp" maxlength="40" [ngClass]="{'is-invalid': signUpForm.get('nameSignUp')?.errors 
-                  && (signUpForm.get('nameSignUp')?.dirty || signUpForm.get('nameSignUp')?.touched)}">
-                <div *ngIf="signUpForm.get('nameSignUp')?.invalid && (signUpForm.get('nameSignUp')?.dirty || signUpForm.get('nameSignUp')?.touched)">
-                  <p class="text-danger">Ingrese su nombre</p>
+                <div class="form-floating">
+                  <input type="text" class="form-control text-muted rounded-5" required placeholder="Nombre"
+                    formControlName="nameSignUp" maxlength="40" style="box-shadow: none;"
+                    [ngClass]="{'is-invalid': signUpForm.get('nameSignUp')?.errors 
+                  && (signUpForm.get('nameSignUp')?.dirty || signUpForm.get('nameSignUp')?.touched) && 'is-invalid'}">
+                  <label for="floatingInput" class="text-muted bg-transparent">Nombre</label>
+                  <div
+                    *ngIf="signUpForm.get('nameSignUp')?.invalid && (signUpForm.get('nameSignUp')?.dirty || signUpForm.get('nameSignUp')?.touched)">
+                    <p class="text-danger">Ingrese su nombre</p>
+                  </div>
                 </div>
               </div>
               <!--Apellido-->
               <div class="mb-4 col-md-6">
-                <input type="text" class="form-control text-muted p-2" required placeholder="Apellido"
-                  formControlName="lastnameSignUp" maxlength="40"
-                  [ngClass]="{'is-invalid': signUpForm.get('lastnameSignUp')?.errors 
+                <div class="form-floating">
+                  <input type="text" class="form-control text-muted rounded-5" required placeholder="Apellido"
+                    formControlName="lastnameSignUp" maxlength="40" style="box-shadow: none;"
+                    [ngClass]="{'is-invalid': signUpForm.get('lastnameSignUp')?.errors 
                   && (signUpForm.get('lastnameSignUp')?.dirty || signUpForm.get('lastnameSignUp')?.touched) && 'is-invalid'}">
-                <div *ngIf="signUpForm.get('lastnameSignUp')?.invalid && (signUpForm.get('lastnameSignUp')?.dirty || signUpForm.get('lastnameSignUp')?.touched)">
-                  <p class="text-danger">Ingrese su apellido</p>
+                  <label for="floatingInput" class="text-muted">Apellido</label>
+                  <div
+                    *ngIf="signUpForm.get('lastnameSignUp')?.invalid && (signUpForm.get('lastnameSignUp')?.dirty || signUpForm.get('lastnameSignUp')?.touched)">
+                    <p class="text-danger">Ingrese su apellido</p>
+                  </div>
                 </div>
               </div>
             </div>
             <!--Correo-->
             <div class="mb-4">
-              <input type="email" class="form-control text-muted p-2" required placeholder="Email" maxlength="50"
-                formControlName="emailSignUp" maxlength="60"
-                [ngClass]="{'is-invalid': signUpForm.get('emailSignUp')?.errors 
+              <div class="form-floating">
+                <input type="email" class="form-control text-muted rounded-5" required placeholder="Email" style="box-shadow: none;"
+                maxlength="50" formControlName="emailSignUp" maxlength="60" [ngClass]="{'is-invalid': signUpForm.get('emailSignUp')?.errors 
                 && (signUpForm.get('emailSignUp')?.dirty || signUpForm.get('emailSignUp')?.touched) && 'is-invalid'}">
-              <div *ngIf="signUpForm.get('emailSignUp')?.invalid && (signUpForm.get('emailSignUp')?.dirty || signUpForm.get('emailSignUp')?.touched)">
-                <p class="text-danger">Ingrese un correo valido</p>
+                <label for="floatingInput" class="text-muted">Email</label>
+                <div
+                *ngIf="signUpForm.get('emailSignUp')?.invalid && (signUpForm.get('emailSignUp')?.dirty || signUpForm.get('emailSignUp')?.touched)">
+                <p class="text-danger">Ingrese un correo válido</p>
+                </div>
               </div>
             </div>
             <!--Contraseña-->
             <div class="mb-4">
-              <input type="password" class="form-control text-muted p-2" maxlength="25" required
-                placeholder="Contraseña" formControlName="passwordSignUp" maxlength="60"
+              <div class="form-floating">
+                <input type="password" class="form-control text-muted rounded-5" maxlength="25" required
+                placeholder="Contraseña" formControlName="passwordSignUp" maxlength="60" style="box-shadow: none;"
                 [ngClass]="{'is-invalid': signUpForm.get('passwordSignUp')?.errors 
                 && (signUpForm.get('passwordSignUp')?.dirty || signUpForm.get('passwordSignUp')?.touched) && 'is-invalid'}">
-              <div *ngIf="signUpForm.get('passwordSignUp')?.invalid && (signUpForm.get('passwordSignUp')?.dirty || signUpForm.get('passwordSignUp')?.touched)">
+              <label for="floatingInput" class="text-muted">Contraseña</label>
+              <div
+                *ngIf="signUpForm.get('passwordSignUp')?.invalid && (signUpForm.get('passwordSignUp')?.dirty || signUpForm.get('passwordSignUp')?.touched)">
                 <p class="text-danger">Ingrese una contraseña, minimo 8 caracteres</p>
               </div>
-            </div> 
+              </div>
+            </div>
             <!--Repetir contraseña-->
             <div class="mb-4">
-              <input type="password" class="form-control text-muted p-2" maxlength="25" required
-                placeholder="Repetir Contraseña" formControlName="repeatPasswordSignUp" maxlength="60"
+              <div class="form-floating">
+                <input type="password" class="form-control text-muted rounded-5" maxlength="25" required
+                placeholder="Repetir Contraseña" formControlName="repeatPasswordSignUp" maxlength="60" style="box-shadow: none;"
                 [ngClass]="{'is-invalid': signUpForm.get('repeatPasswordSignUp')?.errors 
                 && (signUpForm.get('repeatPasswordSignUp')?.dirty || signUpForm.get('repeatPasswordSignUp')?.touched) && 'is-invalid'}">
-              <div *ngIf="signUpForm.get('repeatPasswordSignUp')?.invalid && (signUpForm.get('repeatPasswordSignUp')?.dirty || signUpForm.get('repeatPasswordSignUp')?.touched)">
+              <label for="floatingInput" class="text-muted">Repetir Contraseña</label>
+              <div
+                *ngIf="signUpForm.get('repeatPasswordSignUp')?.invalid && (signUpForm.get('repeatPasswordSignUp')?.dirty || signUpForm.get('repeatPasswordSignUp')?.touched)">
                 <p class="text-danger">Las contraseñas deben coincidir</p>
+              </div>
               </div>
             </div>
             <!--Terminos-->
             <div class="mb-3 form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1" (change)="changeTerms()">
+              <input type="checkbox" class="form-check-input rounded" id="exampleCheck1" style="box-shadow: none;" (change)="changeTerms()">
               <label class="form-check-label text-muted" for="exampleCheck1">Aceptar los términos y condiciones.</label>
+            </div>
+            <div class="mb-4">
+              <p class="text-danger" *ngIf="message"><i class="bi bi-exclamation-circle"></i> {{message}}</p>
             </div>
 
             <div class="text-center d-grid gap-2 col-6 mx-auto">

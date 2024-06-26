@@ -27,6 +27,7 @@ export class StockAdminComponent implements OnInit {
   totalPages: number = 0;
   totalElements: number = 0;
   product = new Toy();
+  message: string = '';
   private suscripciones = new Subscription();
   formMovements = new FormGroup({
     date: new FormControl(this.getCurrentDateTime(), [Validators.required]),
@@ -60,6 +61,7 @@ export class StockAdminComponent implements OnInit {
     console.log(fromDate, toDate, movement);
     this.stockService.getMovements(this.currentPage, fromDate, toDate, movement).subscribe(data => {
       this.movements = data.content;
+      console.log(this.movements);
       this.totalElements = data.totalElements;
       this.totalPages = data.totalPages;
     })
@@ -107,20 +109,24 @@ export class StockAdminComponent implements OnInit {
       this.stockService.createMovement(this.formMovements.value).subscribe(data => {
         console.log(data);
         this.loadMovements();
-        Swal.fire({
-          title: 'Movimiento registrado',
-          icon: 'success',
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
           showConfirmButton: false,
-          timer: 1500
-        })
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
+        });
+        Toast.fire({
+          icon: "success",
+          title: "Se registro el movimiento con éxito"
+        });
       }, error => {
-        Swal.fire({
-          title: 'Error, no se pudo registrar el movimiento',
-          text: error.error.message,
-          icon: 'error',
-          showConfirmButton: false,
-          timer: 1500
-        })
+        this.message = error.error.message;
+        console.log(error);
       })
     }
   }

@@ -265,12 +265,20 @@ export class AdminComponent implements OnInit {
     const id_delivery_status = this.formStatus.value.delivery_status ? this.formStatus.value.delivery_status : 0;
     if(this.formStatus.valid && id_status > 0 && id_delivery_status > 0 && id !== '') {
       this.orderService.updateOrder(id, id_status, id_delivery_status).subscribe(data => {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Pedido actualizado correctamente",
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
           showConfirmButton: false,
-          timer: 2000,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
+        });
+        Toast.fire({
+          icon: "success",
+          title: "Pedido actualizado correctamente"
         });
         this.getOrders();
       })  

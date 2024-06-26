@@ -1,14 +1,14 @@
 <div class="container" style="font-family: Montserrat;">
   <div class="card mx-auto shadow-lg border mt-5 mb-5 border-0 rounded-5 p-4">
     <div class="row">
-      <div class="col-md-1 col-sm-1 col-xs-1 text-center d-block d-lg-none">
+      <div class="col-md-1 col-2 text-center d-block d-lg-none">
         <button class="btn btn-lg text-muted" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
           <i class="bi bi-list"></i>
         </button>
         <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
           <div class="offcanvas-header">
             <h5 class="offcanvas-title display-6 text-body-tertiary" id="offcanvasWithBothOptionsLabel">Menu</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" style="box-shadow: none;" aria-label="Close"></button>
           </div>
           <div class="offcanvas-body">
             <div class="d-grid gap-2">
@@ -22,16 +22,16 @@
           </div>
         </div>
       </div>
-      <div class="col-md-11 col-lg-11 col-sm-11 col-xs-11">
+      <div class="col-md-11 col-10 mt-1">
         <h4 class="display-6 text-muted">
-          <span class="text-body-tertiary"><i class="bi bi-person"></i> Bienvenido, </span>
+          <span class="text-body-tertiary"><i class="bi bi-person"></i> Hola, </span>
           {{user.name.toLowerCase() | titlecase}}
         </h4>
       </div>
     </div>
     <hr>
     <div class="row">
-      <div class="col-md-2 pt-4 col-sm-1 col-xs-1 d-none d-lg-block">
+      <div class="pt-4 col-lg-2 d-none d-lg-block">
         <div class="d-grid gap-2 mb-5">
           <a class="btn btn-primary btn-lg boton p-3" routerLink="/user/info"><i class="bi bi-info-circle">
              Información</i></a>
@@ -42,7 +42,7 @@
         </div>
       </div>
       <!--Mostrar informacion-->
-      <div class="col-md-10 col-sm-12 col-xs-12">
+      <div class="col-12 col-lg-10 col-sm-12 col-xs-12">
         <div class="m-4">
           <div class="row pb-3">
             <div class="col-md-12 text-center">
@@ -51,7 +51,7 @@
               </h4>
             </div>
             <div class="col-md-12 align-items-end d-flex justify-content-end mt-2">
-              <button class="btn btn-outline-warning fs-6" (click)="edit()"><i class="bi bi-pencil-square">
+              <button class="btn btn-outline-warning fs-6 rounded-5" (click)="edit()"><i class="bi bi-pencil-square">
                   Editar</i></button>
             </div>
           </div>
@@ -138,7 +138,7 @@
             <div class="col-12 text-center pt-3">
               <button *ngIf="mostrarBoton" class="btn btn-primary border-0 p-2 rounded-4 me-4"
                 style="background-color: #86BB3C; opacity: 0.9;" type="submit" [disabled]="userForm.invalid">
-                Actualizar informacion
+                Actualizar
               </button>
               <button *ngIf="mostrarBoton" class="btn btn-secondary border-0 p-2 rounded-4" (click)="cancel()"
                 type="button">Cancelar</button>

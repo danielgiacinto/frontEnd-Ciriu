@@ -12,16 +12,16 @@ export class HomeComponent implements OnInit {
   }
 
   cards = [
-    { title: 'Muñecas', image: 'https://images.mattel.net/image/upload/w_360,c_scale/shop-contentstack/blt5f6006a4b6ed6875/61ba0219cbf1910f34154450/Mattel_Shopper_HP_2-1_Category_Dolls_Copy.jpg' },
-    { title: 'Autos', image: 'https://i.ibb.co/spfxH8S/cars-cars-and-vehicles.jpg' },
-    { title: 'Peluches', image: 'https://images.mattel.net/image/upload/w_360,c_scale/shop-contentstack/blta6ca5eea2aefc4c4/61ba02191fb57b569e60b7f4/Mattel_Shopper_HP_2-9_Category_Plush_Copy.jpg' },
-    { title: 'Musicales', image: 'https://images.mattel.net/image/upload/w_360,c_scale/shop-contentstack/blt8c0958f632e107aa/61ba08bc702c7d57ccdd0a8c/Mattel_Shopper_HP_2-2_Category_Cars.jpg' },
-    { title: 'Aire Libre', image: 'https://images.mattel.net/image/upload/w_360,c_scale/shop-contentstack/blt5f6006a4b6ed6875/61ba0219cbf1910f34154450/Mattel_Shopper_HP_2-1_Category_Dolls_Copy.jpg' },
-    { title: 'Bloques, Construcción', image: 'https://images.mattel.net/image/upload/w_360,c_scale/shop-contentstack/blt27bb96d8cc7a9ca0/61ba0219c7bcdd56a3191d81/Mattel_Shopper_HP_2-7_Category_Building-Blocks_Copy.jpg' },
-    { title: 'Juego De Mesa', image: 'https://images.mattel.net/image/upload/w_360,c_scale/shop-contentstack/blt820f433071d4ecdb/61ba0219f0a5f27e0047fa73/Mattel_Shopper_HP_2-8_Category_Games_Copy.jpg' },
-    { title: 'Ingenio', image: 'https://images.mattel.net/image/upload/w_360,c_scale/shop-contentstack/blt8c0958f632e107aa/61ba08bc702c7d57ccdd0a8c/Mattel_Shopper_HP_2-2_Category_Cars.jpg' },
-    { title: 'Dinosaurios', image: 'https://i.ibb.co/rQnnxWr/AF-LP-1-1-Dinosaurs-682x821.jpg' },
-    { title: 'Didáctico', image: 'https://images.mattel.net/image/upload/w_360,c_scale/shop-contentstack/blt8c0958f632e107aa/61ba08bc702c7d57ccdd0a8c/Mattel_Shopper_HP_2-2_Category_Cars.jpg' },
+    { title: 'Muñecas', image: 'https://i.ibb.co/mD2jd1P/munecas.jpg' },
+    { title: 'Autos', image: 'https://i.ibb.co/bbp6w6k/autos.jpg' },
+    { title: 'Peluches', image: 'https://i.ibb.co/4fqMt9g/peluches.jpg' },
+    { title: 'Musicales', image: 'https://i.ibb.co/Bw5y002/musicalez.jpg' },
+    { title: 'Aire Libre', image: 'https://i.ibb.co/gmr8s2s/aire-libre.jpg' },
+    { title: 'Bloques, Construcción', image: 'https://i.ibb.co/kH480k2/bloques.jpg' },
+    { title: 'Juego De Mesa', image: 'https://i.ibb.co/rH9tff3/juego-de-mesa.jpg' },
+    { title: 'Ingenio', image: 'https://i.ibb.co/3db37bF/ingenio.jpg' },
+    { title: 'Dinosaurios', image: 'https://i.ibb.co/LkrVrf3/dinosaurios.jpg' },
+    { title: 'Didáctico', image: 'https://i.ibb.co/p4hffpb/didactico.jpg' },
   ];
   currentIndex = 0;
   transform = 'translateX(0)';

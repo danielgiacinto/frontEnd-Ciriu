@@ -57,6 +57,11 @@
   color: #000 !important; /* Cambia el color del texto si es necesario */
 }
 
+.color-blanco {
+    filter: brightness(0) invert(1) contrast(100000%) saturate(100000%);
+}
+
+
 
   
 

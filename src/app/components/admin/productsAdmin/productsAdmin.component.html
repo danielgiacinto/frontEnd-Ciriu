@@ -1,14 +1,14 @@
 <div class="container" style="font-family: Montserrat;">
   <div class="card mx-auto shadow-lg border mt-5 mb-5 border-0 rounded-5 p-4">
     <div class="row">
-      <div class="col-md-1 col-sm-1 col-xs-1 text-center d-block d-lg-none">
+      <div class="col-md-1 col-2 text-center d-block d-lg-none">
         <button class="btn btn-lg text-muted" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
           <i class="bi bi-list"></i>
         </button>
         <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
           <div class="offcanvas-header">
             <h5 class="offcanvas-title display-6 text-body-tertiary" id="offcanvasWithBothOptionsLabel">Menu</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <button type="button" class="btn-close" style="box-shadow: none;" data-bs-dismiss="offcanvas" aria-label="Close"></button>
           </div>
           <div class="offcanvas-body">
             <div class="d-grid gap-2">
@@ -27,15 +27,15 @@
           </div>
         </div>
       </div>
-      <div class="col-md-11 col-lg-11 col-sm-11 col-xs-11">
+      <div class="col-md-11 col-10 mt-1">
         <h4 class="display-6 text-muted">
-          <span class="text-body-tertiary"><i class="bi bi-person"></i>Bienvenido, </span> {{user.name.toLowerCase() | titlecase}}
+          <span class="text-body-tertiary"><i class="bi bi-person"></i>Hola, </span> {{user.name.toLowerCase() | titlecase}}
         </h4>
       </div>
     </div>
     <hr>
     <div class="row">
-      <div class="col-md-2 pt-4 col-sm-1 col-xs-1 d-none d-lg-block">
+      <div class="pt-4 col-lg-2 d-none d-lg-block">
         <div class="d-grid gap-2 mb-5">
           <a class="btn btn-primary btn-lg boton p-3" routerLink="/admin/orders"><i class="bi bi-file-earmark-text">
               Pedidos</i></a>
@@ -51,7 +51,7 @@
         </div>
       </div>
       <!--Mostrar productos -->
-      <div class="col-md-10">
+      <div class="col-12 col-lg-10 col-sm-12 col-xs-12">
         <div class="m-4">
           <div class="row pb-4">
             <div class="col-md-12 text-center">
@@ -61,35 +61,35 @@
             </div>
           </div>
           <div class="row pb-2">
-            <div class="col-md-5">
-              <div class="input-group mb-3">
-                <button class="btn btn-light rounded-left border-1"
-                  style="background-color: #86BB3C; border-color: #86BB3C; cursor: default;"><i
+            <div class="col-md-5 col-11 m-0 p-0 col-xs-12">
+              <div class="input-group mb-3 rounded-5">
+                <button class="btn btn-light border-1"
+                  style="background-color: #86BB3C; border-color: #86BB3C; cursor: default; box-shadow: none;"><i
                     class="bi bi-search text-white"></i></button>
-                <input type="text" class="form-control rounded-right text-muted border-start-0 border-1"
-                  style="border-color: #86BB3C;" placeholder="Buscar productos, marcas y más..."
+                <input type="text" class="form-control rounded-end-5 text-muted border-start-0 border-1"
+                  style="border-color: #86BB3C; box-shadow: none;" placeholder="Buscar productos, marcas y más..."
                   aria-describedby="button-addon2" (change)="searchProducts($event)">
               </div>
             </div>
-            <div class="col-md-2 col-sm-4">
-              <select class="form-select rounded-0" (change)="orderProducts($event)">
+            <div class="col-md-1 col-1 mb-3 align-self-center">
+              <button type="button" class="btn btn-primary rounded-circle border-0" style="background-color: #86BB3C;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                <i class="bi bi-plus-circle"></i>
+              </button>
+            </div>
+            <div class="col-md-3 col-6 pe-5 mb-3">
+              <select class="form-select rounded-5" style="box-shadow: none;" (change)="orderProducts($event)">
                 <option class="form-select text-muted" selected disabled>Ordenar</option>
                 <option value="default" class="form-select text-muted">Por defecto</option>
                 <option class="form-select text-muted" value="asc">Menor precio</option>
                 <option class="form-select text-muted" value="desc">Mayor precio</option>
               </select>
             </div>
-            <div class="col-md-2 ms-5 align-self-center form-check form-switch">
-              <input class="form-check-input fs-5" type="checkbox" role="switch" id="flexSwitchCheckDefault"
+            <div class="col-md-3 mb-3 col-6 align-self-center form-check form-switch form-check-center">
+              <input class="form-check-input fs-5" style="box-shadow: none; outline: none;" type="checkbox" role="switch" id="flexSwitchCheckDefault"
                 (change)="filterByNonStock($event)">
-              <label class="form-check-label text-muted" class="form-label fs-5" for="flexSwitchCheckDefault">Sin stock</label>
+              <label class="form-check-label text-muted mt-1" class="form-label fs-5 text-danger fw-semibold"for="flexSwitchCheckDefault">Sin stock</label>
             </div>
-            <div class="col-md-2 align-items-center justify-content-center">
-              <button type="button" class="btn btn-primary border-0 p-2 rounded-5 ps-3 pe-3"
-                style="background-color: #86BB3C;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                <i class="bi bi-plus-circle">Nuevo</i>
-              </button>
-            </div>
+
             <!--Nuevo producto-->
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
               aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -98,7 +98,7 @@
                   <div class="modal-header border-0">
                     <h1 class="modal-title fs-4 text-success" id="staticBackdropLabel"><i
                         class="bi bi-folder-plus fs-4 pe-2"></i> Nuevo producto</h1>
-                    <button type="button" class="btn-close" (click)="clearForm()" data-bs-dismiss="modal"
+                    <button type="button" class="btn-close" style="box-shadow: none;" (click)="clearForm()" data-bs-dismiss="modal"
                       aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
@@ -269,7 +269,7 @@
                           <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-chat"></i></span>
                             <textarea class="form-control" aria-label="With textarea" placeholder="Descripcion..."
-                              formControlName="description"
+                              formControlName="description" rows="4"
                               [ngClass]="{'is-invalid': formNewToy.get('description')?.errors 
                               && (formNewToy.get('description')?.dirty || formNewToy.get('description')?.touched) && 'is-invalid'}">
                             </textarea>
@@ -307,9 +307,9 @@
                       </div>
 
                       <div class="modal-footer border-0">
-                        <button type="button" class="btn btn-secondary rounded-5" (click)="clearForm()"
+                        <button type="button" class="btn btn-secondary rounded-5 shadow" (click)="clearForm()"
                           data-bs-dismiss="modal"><i class="bi bi-x-circle-fill text-white"></i> Cancelar</button>
-                        <button type="submit" class="btn btn-primary boton"
+                        <button type="submit" class="btn btn-primary rounded-5 shadow boton"
                           [disabled]="formNewToy.invalid || guardandoCambios">
                           <span *ngIf="!guardandoCambios">
                             <i class="bi bi-floppy2-fill"></i> Guardar cambios
@@ -327,54 +327,57 @@
             </div>
           </div>
           <!--Total resultados-->
-          <div class="row mb-3">
+          <div class="row mb-3 mt-2">
             <div class="col-md-12">
-              <h6 class="fw-light">{{totalElements}} Resultados</h6>
+              <h6 class="fw-light fs-5 text-muted">{{totalElements}} Resultados</h6>
             </div>
           </div>
           <!-- Productos -->
           <div class="row">
-            <div class="col-md-12 col-sm-12">
-              <table class="table table-striped-columns table-bordered">
-                <thead>
-                  <tr>
-                    <th scope="col">Producto</th>
-                    <th scope="col">Caracteristicas</th>
-                    <th scope="col">Detalles</th>
-                    <th scope="col">Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let toy of toys">
-                    <th scope="row" class="align-middle">
-                      <img src="{{toy.image}}" width="100px" class="img-fluid" style="cursor: pointer;" height="100px" alt="producto" routerLink="/products/{{toy.code}}">
-                    </th>
-                    <td scope="row" class="align-middle">
-                      <p>Codigo: {{toy.code}}</p>
-                      <p>Nombre: {{toy.name}}</p>
-                      <p>Marca: {{toy.brand | titlecase}}</p>
-                    </td>
-                    <td scope="row" class="align-middle">
-                      <p>Precio: {{'$ ' + (toy.price | number:'1.2-2')}}</p>
-                      <p>Stock: {{toy.stock}}</p>
-                      <a routerLink="/admin/stock" class="text-decoration-none"><i class="bi bi-box"> Agregar stock</i></a>
-                    </td>
-                    <td scope="row mt-5" class="align-middle text-center">
-                      <div class="col mb-2">
-                        <button type="button" class="btn btn-primary border-0 p-2 rounded-3 me-2"
-                          style="background-color: #FFD27C;" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                          (click)="getToyEdit(toy.code)">
-                          <i class="bi bi-pencil-fill"></i>
-                        </button>
-                        <button type="button" (click)="deleteProduct(toy.code)"
-                          class="btn btn-primary border-0 p-2 rounded-3 me-2" style="background-color: #FF8383;"><i
-                            class="bi bi-trash"></i>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="col-md-12 col-12">
+              <div class="table-responsive">
+                <table class="table table-striped-columns table-borderless">
+                  <thead>
+                    <tr class="table-dark opacity-50">
+                      <th scope="col">Producto</th>
+                      <th scope="col">Caracteristicas</th>
+                      <th scope="col">Detalles</th>
+                      <th scope="col">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let toy of toys">
+                      <th scope="row" class="align-middle text-center p-0 m-0">
+                        <img src="{{toy.image}}" width="90px" class="img-fluid rounded shadow" style="cursor: pointer;" height="auto" alt="producto" routerLink="/products/{{toy.code}}">
+                      </th>
+                      <td scope="row" class="align-middle">
+                        <p>Codigo: {{toy.code}}</p>
+                        <p>Nombre: {{toy.name}}</p>
+                        <p>Marca: {{toy.brand | titlecase}}</p>
+                      </td>
+                      <td scope="row" class="align-middle">
+                        <p>Precio: {{'$ ' + (toy.price | number:'1.2-2')}}</p>
+                        <p>Stock: {{toy.stock}}</p>
+                        <a routerLink="/admin/stock" class="text-decoration-none"><i class="bi bi-box"> Agregar stock</i></a>
+                      </td>
+                      <td scope="row mt-5" class="align-middle text-center">
+                        <div class="col mb-2">
+                          <button type="button" class="btn btn-primary border-0 p-2 rounded-3 me-2 mb-2"
+                            style="background-color: #FFD27C;" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                            (click)="getToyEdit(toy.code)">
+                            <i class="bi bi-pencil-fill"></i>
+                          </button>
+                          <button type="button" (click)="deleteProduct(toy.code)"
+                            class="btn btn-primary border-0 p-2 rounded-3 me-2 mb-2" style="background-color: #FF8383;"><i
+                              class="bi bi-trash"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              
             </div>
           </div>
 
@@ -386,7 +389,7 @@
                 <div class="modal-header border-0">
                   <h1 class="modal-title fs-4 text-warning" id="staticBackdropLabel"><i class="bi bi-pencil-fill"></i>
                     Editar producto</h1>
-                  <button type="button" class="btn-close" (click)="clearForm()" data-bs-dismiss="modal"
+                  <button type="button" class="btn-close" style="box-shadow: none;" (click)="clearForm()" data-bs-dismiss="modal"
                     aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -529,7 +532,7 @@
                         <div class="input-group">
                           <span class="input-group-text"><i class="bi bi-chat"></i></span>
                           <textarea class="form-control" aria-label="With textarea" placeholder="Descripcion..."
-                            formControlName="descriptionEdit"
+                            formControlName="descriptionEdit" rows="4"
                             [ngClass]="{'is-invalid': formEditToy.get('descriptionEdit')?.errors 
                             && (formEditToy.get('descriptionEdit')?.dirty || formEditToy.get('descriptionEdit')?.touched) && 'is-invalid'}">
                           </textarea>
@@ -566,9 +569,9 @@
                       </div>
                     </div>
                     <div class="modal-footer border-0">
-                      <button type="button" class="btn btn-secondary rounded-5" (click)="clearForm()"
+                      <button type="button" class="btn btn-secondary rounded-5 shadow" (click)="clearForm()"
                         data-bs-dismiss="modal"><i class="bi bi-x-circle-fill text-white"></i> Cancelar</button>
-                      <button type="submit" class="btn btn-primary boton"
+                      <button type="submit" class="btn btn-primary boton rounded-5 shadow"
                         [disabled]="formEditToy.invalid || guardandoCambios">
                         <span *ngIf="!guardandoCambios">
                           <i class="bi bi-floppy2-fill"></i> Actualizar

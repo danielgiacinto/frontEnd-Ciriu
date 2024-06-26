@@ -1,58 +1,63 @@
 <div class="container" style="font-family: Montserrat;">
-  <div class="card mt-5 bg-light rounded-0 mb-5 rounded-0 border-0 shadow">
-    <div class="row m-0 mt-3">
-      <div class="col-md-4 mt-2">
-        <button class="btn" routerLink="/checkout"><i class="bi bi-arrow-90deg-left fs-6 text-muted"> Volver</i></button>
+  <div class="card mt-5 rounded-5 shadow border-0">
+    <div class="row m-0 mt-3 mb-4">
+      <div class="col-md-4">
+        <a class="btn btn-link text-decoration-none text-muted ps-4" routerLink="/checkout"><i class="bi bi-arrow-left"></i> Volver</a>
       </div>
       <div class="col-md-4 text-center">
-        <h4 class="fs-2 text-muted"><i class="bi bi-bag text-muted"></i> Detalle de la compra</h4>
-      </div>
-      <div class="col-md-4">
+        <h4 class="fs-3 text-muted fw-light"> Método de pago</h4>
       </div>
     </div>
-    <hr>
-    <div class="row ps-4">
-      <div class="col-md-12 mt-3">
-        <h6 class="text-muted fw-light"><i class="bi bi-info-circle fs-5"> Por favor, completar la informacion
-            correspondiente</i></h6>
+    <!--Linea de tiempo-->
+    <div class="row align-items-center mb-3">
+      <div class="col-md-4 col-4 d-flex flex-column align-items-end position-relative m-0 p-0">
+        <button class="btn btn-link text-decoration-none text-muted border-0 bg-secondary-subtle fs-4 rounded-circle p-0 timeline-btn" style="cursor: default;"><i class="bi bi-journal-text"></i></button>
+      </div>
+      <div class="col-md-4 col-4 d-flex align-items-center m-0 p-0">
+        <hr class="w-100 border-3 m-0" style="border-color: #86BB3C;">
+      </div>
+      <div class="col-md-4 col-4 d-flex flex-column align-items-start position-relative m-0 p-0">
+        <button class="btn btn-link text-decoration-none text-muted border-0 fs-4 rounded-circle p-0 shadow timeline-btn" style="background: #86BB3C; cursor: default;"><i class="bi bi-cash-coin"></i></button>
       </div>
     </div>
+
     <div class="row p-4">
       <!--Productos-->
-      <div class="col-md-5">
-        <div class="card p-3 rounded-5 shadow-sm border-1">
-          <table class="table table-borderless">
-            <thead>
-              <tr>
-                <th class="align-middle fs-4 text-center text-muted" colspan="2">Productos</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let product of cart">
-                <th scope="row" class="align-middle"><img src="{{product.image}}" width="100px" height="100px"
-                    alt="producto">
-                </th>
-                <td>
-                  <p class="fw-bold">{{product.name.toUpperCase()}} </p>
-                  <p>
-                    Cantidad: {{product.quantity}} <span class="fw-light ps-4"> {{'$ ' + (product.price | number:'1.2-2')}} c/u</span>
-                  </p>
-                  <p>Subtotal: <span class="ps-5 fw-semibold">{{'$ '+ (product.price * product.quantity | number:'1.2-2')}}</span></p>
-                </td>
-              </tr>
-              <tr>
-                <td colspan="2" class="text-center fs-4"><strong>Total: {{'$ ' + (getTotal() | number:'1.2-2')}}</strong></td>
-              </tr>
-            </tbody>
-          </table>
+      <div class="col-md-12 col-lg-5 col-12 ps-5 mb-5">
+        <div class="card p-2 rounded-5 bg-secondary-subtle border-0">
+          <div class="table-responsive">
+            <table class="table align-middle table-borderless table-secondary">
+              <thead class="table-secondary">
+                <tr>
+                  <th class="align-middle fs-4 text-center fw-light text-muted" colspan="2">Productos</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let product of cart">
+                  <th scope="row" class="align-middle"><img src="{{product.image}}" class="img-fluid rounded" width="100px" height="100px" alt="producto">
+                  </th>
+                  <td>
+                    <p class="fw-normal">{{product.name.toUpperCase()}} </p>
+                    <p>
+                      Cantidad: {{product.quantity}} <span class="fw-light ps-4"> {{'$ ' + (product.price | number:'1.2-2')}} c/u</span>
+                    </p>
+                    <p>Subtotal: <span class="ps-5 fw-semibold">{{ '$ '+ (product.price * product.quantity | number:'1.2-2')}}</span></p>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2" class="text-center fs-4 fw-semibold"><strong>Total: {{'$ ' + (getTotal() | number:'1.2-2')}}</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
       <!--Formulario-->
-      <div class="col-md-7">
+      <div class="col-lg-7 col-md-12 col-12 ps-5 pe-5">
         <form class="row g-3 needs-validation" [formGroup]="paymentForm">
           <div class="col-md-6 ps-5">
-            <h4 class="fs-4 text-muted pb-3">Envío</h4>
+            <h4 class="fs-4 text-muted pb-3 fw-light">Envío</h4>
             <div class="row">
               <div class="col-md-12 ps-4 pb-2">
                 <input type="radio" id="envioDomicilio" formControlName="shipping" class="form-check-input fs-5"
@@ -70,7 +75,7 @@
             </div>
           </div>
           <div class="col-md-6 ps-5">
-            <h4 class="fs-4 text-muted pb-3">Método de pago</h4>
+            <h4 class="fs-4 text-muted pb-3 fw-light">Método de pago</h4>
             <div class="row">
               <div class="col-md-6 ps-4 d-flex align-items-center">
                 <input type="radio" id="efectivo" formControlName="payment" class="form-check-input fs-5" value="1"

@@ -13,6 +13,7 @@ export class SignupComponent implements OnInit {
   
   loading: boolean = false;
   acceptTerms: boolean = false;
+  message: string = '';
   constructor(private loginService: LoginService, private router: Router) { }
 
   ngOnInit() {
@@ -49,19 +50,13 @@ export class SignupComponent implements OnInit {
           });
           Toast.fire({
             icon: "success",
-            title: "Se envio un codigo al email de confirmacion"
+            title: "Se envió un código a tu correo para confirmar tu cuenta"
           });
           this.loading = false;
         },
         (error) => {
           console.log(error);
-          Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: "Error, no se pudo crear la cuenta",
-            showConfirmButton: false,
-            timer: 3000
-          });
+          this.message = error.error.message;
           this.loading = false;
         }
       );

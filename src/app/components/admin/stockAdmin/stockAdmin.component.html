@@ -1,14 +1,14 @@
 <div class="container" style="font-family: Montserrat;">
   <div class="card mx-auto shadow-lg border mt-5 mb-5 border-0 rounded-5 p-4">
     <div class="row">
-      <div class="col-md-1 col-sm-1 col-xs-1 text-center d-block d-lg-none">
+      <div class="col-md-1 col-2 text-center d-block d-lg-none">
         <button class="btn btn-lg text-muted" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
           <i class="bi bi-list"></i>
         </button>
         <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
           <div class="offcanvas-header">
             <h5 class="offcanvas-title display-6 text-body-tertiary" id="offcanvasWithBothOptionsLabel">Menu</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <button type="button" class="btn-close" style="box-shadow: none;" data-bs-dismiss="offcanvas" aria-label="Close"></button>
           </div>
           <div class="offcanvas-body">
             <div class="d-grid gap-2">
@@ -27,15 +27,15 @@
           </div>
         </div>
       </div>
-      <div class="col-md-11 col-lg-11 col-sm-11 col-xs-11">
+      <div class="col-md-11 col-10 mt-1">
         <h4 class="display-6 text-muted">
-          <span class="text-body-tertiary"><i class="bi bi-person"></i>Bienvenido, </span> {{user.name.toLowerCase() | titlecase}}
+          <span class="text-body-tertiary"><i class="bi bi-person"></i>Hola, </span> {{user.name.toLowerCase() | titlecase}}
         </h4>
       </div>
     </div>
     <hr>
     <div class="row">
-      <div class="col-md-2 pt-4 col-sm-1 col-xs-1 d-none d-lg-block">
+      <div class="pt-4 col-lg-2 d-none d-lg-block">
         <div class="d-grid gap-2 mb-5">
           <a class="btn btn-primary btn-lg boton p-3" routerLink="/admin/orders"><i class="bi bi-file-earmark-text">
               Pedidos</i></a>
@@ -51,7 +51,7 @@
         </div>
       </div>
       <!-- Stock -->
-      <div class="col-md-10">
+      <div class="col-12 col-lg-10 col-sm-12 col-xs-12">
         <div class="m-4">
           <div class="row pb-3">
             <div class="col-md-12 text-center">
@@ -60,24 +60,24 @@
               </h4>
             </div>
           </div>
-          <div class="mt-2 mb-4">
+          <div class="mt-2">
             <form action="#" class="col-md-12 row p-3 border-0 rounded-5 text-center"
               [formGroup]="formSearchStock">
               <div class="col-md-3">
-                <div class="form-floating">
-                  <input type="datetime-local" class="form-control" formControlName="fromDateSearch">  
+                <div class="form-floating mb-3">
+                  <input type="datetime-local" style="box-shadow: none;" class="form-control rounded-5" formControlName="fromDateSearch">  
                   <label for="validationCustom01" class="form-label">Fecha Desde</label>
                 </div>
               </div>
               <div class="col-md-3">
-                <div class="form-floating">
-                  <input type="datetime-local" class="form-control" formControlName="toDateSearch">
+                <div class="form-floating mb-3">
+                  <input type="datetime-local" style="box-shadow: none;" class="form-control rounded-5" formControlName="toDateSearch">
                   <label for="validationCustom01" class="form-label">Fecha Hasta</label>
                 </div>
               </div>
               <div class="col-md-3">
-                <div class="form-floating">
-                  <select name="movement" id="movement" class="form-select" formControlName="movementSearch">
+                <div class="form-floating mb-3">
+                  <select name="movement" style="box-shadow: none;" id="movement" class="form-select rounded-5" formControlName="movementSearch">
                     <option value="" selected="selected">Cualquiera</option>
                     <option value="Ingreso">Ingreso</option>
                     <option value="Egreso">Egreso</option>
@@ -92,18 +92,19 @@
               </div>
             </form>
           </div>
-          <div class="row pb-3">
-            <div class="col-md-4">
-              <p class="text-muted">{{totalElements}} Resultados</p>
+          <hr class="border-3 border-top border-secondary rounded-5">
+          <div class="row pb-4">
+            <div class="col-md-4 text-center">
+              <p class="text-muted fs-5">{{totalElements}} Resultados</p>
             </div>
-            <div class="col-md-4">
-              <button class="btn btn-primary border-0 p-2 ps-3 pe-3 rounded-4" data-bs-toggle="modal"
+            <div class="col-md-4 text-center mb-3">
+              <button class="btn btn-primary border-0 p-2 ps-3 pe-3 rounded-5" data-bs-toggle="modal"
                 data-bs-target="#exampleModal2" style="background-color: #86BB3C; opacity: 0.9;" type="submit"><i
                   class="bi bi-arrow-down-up"></i> Registrar movimiento
               </button>
             </div>
             <div class="col-md-4">
-              <select class="form-select rounded-5" (change)="orderBy($event)">
+              <select class="form-select rounded-5" style="box-shadow: none;" (change)="orderBy($event)">
                 <option class="form-select text-muted" selected disabled>Ordenar movimientos por</option>
                 <option class="form-select text-muted" value="reciente">Mas recientes</option>
                 <option class="form-select text-muted" value="antiguo">Mas antiguos</option>
@@ -116,26 +117,26 @@
                 <thead class="table-dark opacity-50">
                   <tr class="text-center">
                     <th scope="col">Fecha</th>
-                    <th scope="col">Cantidad</th>
                     <th scope="col">Movimiento</th>
-                    <th scope="col">Codigo de producto</th>
-                    <th scope="col"> Ver</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col"> Producto</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr class="text-center" *ngFor="let movement of movements">
-                    <td>{{movement.date}}</td>
-                    <td>{{movement.quantity}}</td>
+                    <td>
+                      <div class="text-primary"> <i class="bi bi-calendar"></i> {{movement.date}}</div>
+                    </td>
                     <td>
                       <div *ngIf="movement.movement ==='Ingreso' " class="text-success fw-bold"><i
                           class="bi bi-arrow-up"></i> {{movement.movement}}</div>
                       <div *ngIf="movement.movement ==='Egreso' " class="text-danger fw-bold"><i
                           class="bi bi-arrow-down"></i> {{movement.movement}}</div>
                     </td>
-                    <td>{{movement.code_product}}</td>
+                    <td>{{movement.quantity}}</td>
                     <td><button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal"
                         (click)="viewProduct(movement.code_product)">
-                        <i class="bi bi-eye text-muted"></i>
+                        <i class="bi bi-eye text-muted"> Ver</i>
                       </button>
                     </td>
                   </tr>
@@ -172,16 +173,16 @@
 <!-- Ver Producto -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Detalle del producto</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="modal-content rounded-5 border-0 p-2">
+      <div class="modal-header border-0">
+        <h1 class="modal-title fs-5 text-muted" id="exampleModalLabel">Detalle del producto</h1>
+        <button type="button" class="btn-close focus-ring focus-ring-light" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="row">
           <div class="col-md-12 col-sm-12">
-            <table class="table table-striped-columns table-bordered">
-              <thead>
+            <table class="table align-middle table-borderless">
+              <thead class="table-dark opacity-50">
                 <tr>
                   <th scope="col">Producto</th>
                   <th scope="col">Caracteristicas</th>
@@ -191,7 +192,7 @@
               <tbody>
                 <tr>
                   <th scope="row" class="align-middle">
-                    <img src="{{product.image}}" width="100px" height="100px" alt="producto">
+                    <img src="{{product.image}}" class="img-fluid rounded" width="100px" height="100px" alt="producto">
                   </th>
                   <td scope="row" class="align-middle">
                     <p>Codigo: {{product.code}}</p>
@@ -215,49 +216,55 @@
 <!-- Registrar Movimiento -->
 <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Registrar movimiento</h1>
+    <div class="modal-content rounded-5 border-0 p-2">
+      <div class="modal-header border-0">
+        <h1 class="modal-title fs-5 text-muted" id="exampleModalLabel">Registrar movimiento</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div class="row">
           <form action="" [formGroup]="formMovements" (ngSubmit)="registerMovement()">
-            <div class="col-md-6">
-              <div class="form-floating mb-3">
-                <input type="datetime-local" class="form-control" id="floatingInput" placeholder=" "
-                  formControlName="date">
-                <label for="floatingInput">Fecha</label>
+            <div class="row">
+              <div class="col-md-12">
+                <p class="text-muted">Por favor, complete los campos para registrar un nuevo movimiento de Ingreso o Egreso de stock.</p> 
               </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-floating mb-3">
-                <input type="number" class="form-control" id="floatingInput" placeholder=" " formControlName="quantity">
-                <label for="floatingInput">Cantidad</label>
+              <div class="col-md-6">
+                <div class="form-floating mb-3">
+                  <input type="datetime-local" style="box-shadow: none;" class="form-control rounded-5" id="floatingInput" placeholder=" "
+                    formControlName="date">
+                  <label for="floatingInput">Fecha</label>
+                </div>
               </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-floating mb-3">
-                <select name="estado" id="movimiento" class="form-select" formControlName="movement">
-                  <option value="Ingreso">Ingreso</option>
-                  <option value="Egreso">Egreso</option>
-                </select>
-                <label for="floatingInput">Movimiento</label>
+              <div class="col-md-6">
+                <div class="form-floating mb-3">
+                  <input type="number" class="form-control rounded-5" style="box-shadow: none;" id="floatingInput" placeholder=" " formControlName="quantity">
+                  <label for="floatingInput">Cantidad</label>
+                </div>
               </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="floatingInput" placeholder=" "
-                  formControlName="code_product">
-                <label for="floatingInput">Codigo de producto</label>
+              <div class="col-md-6">
+                <div class="form-floating mb-3">
+                  <select name="estado" id="movimiento" style="box-shadow: none;" class="form-select rounded-5" formControlName="movement">
+                    <option value="Ingreso">Ingreso</option>
+                    <option value="Egreso">Egreso</option>
+                  </select>
+                  <label for="floatingInput">Movimiento</label>
+                </div>
               </div>
-            </div>
+              <div class="col-md-6">
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control rounded-5" style="box-shadow: none;" id="floatingInput" placeholder=" "
+                    formControlName="code_product">
+                  <label for="floatingInput">Codigo de producto</label>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <p class="text-danger" *ngIf="message"><i class="bi bi-exclamation-circle"></i> {{message}}</p>
+              </div>
+            </div> 
           </form>
-        </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary" (click)="registerMovement()">Registrar</button>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-secondary rounded-5 shadow" data-bs-dismiss="modal"><i class="bi bi-x-circle-fill text-white"></i> Cancelar</button>
+        <button type="button" class="btn btn-info rounded-5 boton shadow text-light" (click)="registerMovement()"><i class="bi bi-floppy2-fill"></i> Registrar movimiento</button>
       </div>
     </div>
   </div>

@@ -64,7 +64,7 @@ export class ProductsAdminComponent implements OnInit {
       Validators.min(1),
       Validators.max(999999),
     ]),
-    brand: new FormControl('', [Validators.required]),
+    brand: new FormControl(''),
     stock: new FormControl('', [
       Validators.required,
       Validators.min(1),
@@ -90,7 +90,7 @@ export class ProductsAdminComponent implements OnInit {
       Validators.min(1),
       Validators.max(999999),
     ]),
-    brandEdit: new FormControl('', [Validators.required]),
+    brandEdit: new FormControl(''),
     imageEdit: this.formBuilder.array([this.formBuilder.control('')]),
   });
 
@@ -244,10 +244,20 @@ export class ProductsAdminComponent implements OnInit {
       this.guardandoCambios = true;
       this.toyService.postToy(this.formNewToy.value).subscribe(
         (data) => {
-          Swal.fire({
-            title: 'Producto creado con exito!',
-            text: 'Se agrego correctamente a el catálogo!',
-            icon: 'success',
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            }
+          });
+          Toast.fire({
+            icon: "success",
+            title: "Producto creado con éxito"
           });
           this.formNewToy.reset();
           this.loadToys();
@@ -267,25 +277,20 @@ export class ProductsAdminComponent implements OnInit {
     }
   }
 
-  private saveToy(imageURL: string) {
-    const toyData = { ...this.formNewToy.value, image: imageURL };
-    this.toyService.postToy(toyData).subscribe(
-      (data) => {
-        Swal.fire({
-          title: 'Producto creado con exito!',
-          text: 'Se agrego correctamente a el catálogo!',
-          icon: 'success',
-        });
-        this.formNewToy.reset();
-        this.previewUrl = '';
-        this.loadToys();
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-    this.guardandoCambios = false;
-  }
+  // private saveToy(imageURL: string) {
+  //   const toyData = { ...this.formNewToy.value, image: imageURL };
+  //   this.toyService.postToy(toyData).subscribe(
+  //     (data) => {
+  //       this.formNewToy.reset();
+  //       this.previewUrl = '';
+  //       this.loadToys();
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //     }
+  //   );
+  //   this.guardandoCambios = false;
+  // }
 
   onCategoryChange(event: any) {
     const categoryId = event.target.value;
@@ -325,10 +330,20 @@ export class ProductsAdminComponent implements OnInit {
       if (result.isConfirmed) {
         this.toyService.deleteProduct(code).subscribe(
           (data) => {
-            Swal.fire({
-              title: 'Producto eliminado con éxito!',
-              text: 'Se elimino y esta alojado en la papelera!',
-              icon: 'success',
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+              }
+            });
+            Toast.fire({
+              icon: "success",
+              title: "Producto eliminado con éxito",
             });
             this.loadToys();
           },
@@ -414,10 +429,20 @@ export class ProductsAdminComponent implements OnInit {
       };
       this.toyService.updateProduct(this.codeUpdate, toyData).subscribe(
         (data) => {
-          Swal.fire({
-            title: 'Producto actualizado con éxito!',
-            text: 'Se actualizo el producto correctamente!',
-            icon: 'success',
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            }
+          });
+          Toast.fire({
+            icon: "success",
+            title: "Producto actualizado con éxito"
           });
           console.log(data);
           this.loadToys();

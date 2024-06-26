@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 export class LogsComponent implements OnInit {
 
   loading: boolean = false;
+  message: string = '';
 
   constructor(private loginService: LoginService, private router: Router, private userService: UserService) {}
 
@@ -41,13 +42,7 @@ export class LogsComponent implements OnInit {
         },
         (error) => {
           console.log(error);
-          Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: "Error, credenciales incorrectas",
-            showConfirmButton: false,
-            timer: 2000
-          });
+          this.message = error.error.message;
           this.loading = false;
         }
       );

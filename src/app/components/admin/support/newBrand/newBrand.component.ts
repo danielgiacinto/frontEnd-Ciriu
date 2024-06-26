@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BrandService } from 'src/app/services/brand.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-newBrand',
@@ -22,12 +23,40 @@ export class NewBrandComponent implements OnInit {
       this.brandService.createBrand(this.formNewBrand.value).subscribe(
         data => {
           console.log(data);
-          alert("Marca añadida");
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            }
+          });
+          Toast.fire({
+            icon: "success",
+            title: "Se registro la marca con exito"
+          });
           this.formNewBrand.reset();
           window.location.reload();
         },
         error => {
-          alert("La marca ya existe");
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            }
+          });
+          Toast.fire({
+            icon: "error",
+            title: "Error, ya existe una marca con ese nombre"
+          });
           this.formNewBrand.reset();
         }
       )

@@ -114,11 +114,40 @@ export class SupportComponent implements OnInit {
     this.brandService.updateBrand(brand.id, brand.brand).subscribe(
       (data) => {
         console.log(data);
-        alert("Se actulizo la marca: " + brand.brand);
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
+        });
+        Toast.fire({
+          icon: "success",
+          title: "Se actualizo la marca: " + brand.brand + " con exito"
+        });
         this.loadBrands();
       },
       (error) => {
         console.log(error);
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
+        });
+        Toast.fire({
+          icon: "error",
+          title: "Error al actualizar, ya existe una marca con ese nombre"
+        });
       }
     );
     brand.editable = false;
@@ -128,11 +157,40 @@ export class SupportComponent implements OnInit {
     this.categoryService.updateCategory(category.id, category.category).subscribe(
       (data) => {
         console.log(data);
-        alert("Se actualizo la categoria: " + category.category);
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
+        });
+        Toast.fire({
+          icon: "success",
+          title: "Se actualizo la categoria: " + category.category + " con exito"
+        });
         this.loadCategories();
       },
       (error) => {
         console.log(error);
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
+        });
+        Toast.fire({
+          icon: "error",
+          title: "Error al actualizar, ya existe una categoria con ese nombre"
+        });
       }
     );
     category.editable = false;
@@ -142,11 +200,40 @@ export class SupportComponent implements OnInit {
     this.subCategoryService.updateSubCategory(subCategory.id, subCategory.subcategory).subscribe(
       (data) => {
         console.log(data);
-        alert("Se actualizo la sub categoria: " + subCategory.subcategory);
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
+        });
+        Toast.fire({
+          icon: "success",
+          title: "Se actualizo la sub categoria: " + subCategory.subcategory + " con exito"
+        });
         this.loadSubCategories();
       },
       (error) => {
         console.log(error);
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
+        });
+        Toast.fire({
+          icon: "error",
+          title: "Error al actualizar, ya existe una sub categoria con ese nombre"
+        });
       }
     );
     subCategory.editable = false;

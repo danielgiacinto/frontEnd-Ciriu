@@ -1,14 +1,14 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <p>Complete los campos para agregar una nueva Sub categoria</p>
+      <p>Complete el campo para agregar una nueva Sub categoria</p>
     </div>
     <div class="col-md-12">
       <form action="" [formGroup]="formNewSubCategory" (ngSubmit)="createSubCategory()">
         <div class="input-group mb-2">
           <label class="input-group-text" for="inputGroupSelect01"><i
               class="bi bi-c-circle-fill"></i></label>
-          <select class="form-select text-muted" id="inputGroupSelect01" formControlName="id_category">
+          <select class="form-select text-muted rounded-end-5" style="box-shadow: none;" id="inputGroupSelect01" formControlName="id_category">
             <option value="" disabled selected> Categoria</option>
             <option *ngFor="let category of categories" [value]="category.id">{{category.category}}
             </option>
@@ -16,9 +16,8 @@
         </div>
         <div class="input-group mb-2">
           <label class="input-group-text" for="inputGroupSelect01"><i class="bi bi-tag-fill"></i></label>
-          <input type="text" class="form-control" placeholder="Nueva categoria" formControlName="subcategory">
-          <button class="btn btn-outline-success border-0 p-2 rounded-1" type="submit"><i class="bi bi-plus-circle">
-              Añadir</i></button>
+          <input type="text" class="form-control rounded-end-5" style="box-shadow: none;" placeholder="Nueva categoria" formControlName="subcategory">
+          <button class="btn btn-success boton rounded-5 ms-1" type="submit"><i class="bi bi-plus-circle"> </i></button>
         </div>
         <div class="text-start" *ngIf="formNewSubCategory.get('subcategory')?.invalid && (formNewSubCategory.get('subcategory')?.dirty || formNewSubCategory.get('subcategory')?.touched)">
           <p class="text-danger"> Debe ingresar una sub categoria</p>

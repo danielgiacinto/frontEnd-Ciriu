@@ -211,4 +211,6 @@ export class ProductsComponent implements OnInit {
       this.originalImage = '';
     }
   }
+
+  
 }
