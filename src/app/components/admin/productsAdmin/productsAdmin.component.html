@@ -72,7 +72,7 @@
               </div>
             </div>
             <div class="col-md-1 col-1 mb-3 align-self-center">
-              <button type="button" class="btn btn-primary rounded-circle border-0" style="background-color: #86BB3C;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+              <button type="button" title="Añadir producto" class="btn btn-primary rounded-circle border-0" style="background-color: #86BB3C;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 <i class="bi bi-plus-circle"></i>
               </button>
             </div>
@@ -362,13 +362,13 @@
                       </td>
                       <td scope="row mt-5" class="align-middle text-center">
                         <div class="col mb-2">
-                          <button type="button" class="btn btn-primary border-0 p-2 rounded-3 me-2 mb-2"
+                          <button type="button" title="Editar" class="btn btn-primary border-0 rounded-circle me-2 mb-2"
                             style="background-color: #FFD27C;" data-bs-toggle="modal" data-bs-target="#exampleModal"
                             (click)="getToyEdit(toy.code)">
                             <i class="bi bi-pencil-fill"></i>
                           </button>
-                          <button type="button" (click)="deleteProduct(toy.code)"
-                            class="btn btn-primary border-0 p-2 rounded-3 me-2 mb-2" style="background-color: #FF8383;"><i
+                          <button type="button" title="Eliminar" (click)="deleteProduct(toy.code)"
+                            class="btn btn-primary border-0 rounded-circle me-2 mb-2" style="background-color: #FF8383;"><i
                               class="bi bi-trash"></i>
                           </button>
                         </div>

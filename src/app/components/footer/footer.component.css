@@ -12,4 +12,10 @@
     align-items: center;
     padding: 0 8px;
     justify-content: center;
+    transition: scale 0.3s ease-in-out;
+}
+
+.social-icon:hover {
+    background-color: #a7c957;
+    scale: 1.1;
 }

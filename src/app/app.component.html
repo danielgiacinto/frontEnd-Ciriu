@@ -1,6 +1,8 @@
 <nav class="navbar navbar-expand-lg sticky-top navbar-custom" id="navbar">
   <div class="container-fluid">
-    <button class="navbar-toggler border-0 focus-ring focus-ring-light color-blanco" style="box-shadow: none;" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+    <button class="navbar-toggler border-0 focus-ring focus-ring-light color-blanco" style="box-shadow: none;"
+      type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"
+      aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="order-1 order-lg-2">
@@ -28,11 +30,15 @@
       <ul class="navbar-nav d-flex align-items-center mb-0">
         <li class="nav-item me-1" *ngIf="!isCheckoutRoute()">
           <!-- Boton de carrito -->
-          <button class="btn position-relative p-1 nav-link" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-bag" viewBox="0 0 16 16">
-              <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
+          <button class="btn position-relative p-1 nav-link" data-bs-toggle="offcanvas" href="#offcanvasExample"
+            role="button" aria-controls="offcanvasExample">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-bag"
+              viewBox="0 0 16 16">
+              <path
+                d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z" />
             </svg>
-            <span *ngIf="quantityCart !== 0" class="position-absolute top-10 start-100 translate-middle badge rounded-pill bg-success rounded-circle">
+            <span *ngIf="quantityCart !== 0"
+              class="position-absolute top-10 start-100 translate-middle badge rounded-pill bg-success rounded-circle">
               {{ quantityCart }}
             </span>
           </button>
@@ -40,40 +46,55 @@
       </ul>
       <ul class="navbar-nav d-flex align-items-center mb-0">
         <li class="nav-item dropdown me-3" *ngIf="rol">
-          <button type="button" class="btn p-1 nav-link dropdown-toggle text-light" data-bs-toggle="dropdown" aria-expanded="false">
-            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-person-circle" viewBox="0 0 16 16">
-              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+          <button type="button" class="btn p-1 nav-link dropdown-toggle text-light" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-person-circle"
+              viewBox="0 0 16 16">
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+              <path fill-rule="evenodd"
+                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
             </svg>
           </button>
-          <ul class="dropdown-menu dropdown-menu-end border-0 rounded-4 p-2 shadow position-absolute">
+          <ul class="dropdown-menu dropdown-menu-end rounded-4 border-0 p-2 shadow position-absolute fs-5">
             <li *ngIf="rol === 'Administrador'">
-              <a class="dropdown-item rounded-4 text-muted" routerLink="/admin/orders"><i class="bi bi-file-earmark-text"></i> Pedidos</a>
-              <a class="dropdown-item rounded-4 text-muted" routerLink="/admin/products"><i class="bi bi-boxes"></i> Productos</a>
-              <a class="dropdown-item rounded-4 text-muted" routerLink="/admin/stock"><i class="bi bi-box"></i> Stock</a>
-              <a class="dropdown-item rounded-4 text-muted" routerLink="/admin/report"><i class="bi bi-bar-chart-line"></i> Reportes</a>
-              <a class="dropdown-item rounded-4 text-muted" routerLink="/admin/support"><i class="bi bi-gear-wide-connected"></i> Soporte</a>
-              <hr class="dropdown-divider text-muted rounded-4">
+              <a class="dropdown-item rounded-4 text-muted" routerLink="/admin/orders"><i
+                  class="bi bi-file-earmark-text"></i> Pedidos</a>
+              <a class="dropdown-item rounded-4 text-muted" routerLink="/admin/products"><i class="bi bi-boxes"></i>
+                Productos</a>
+              <a class="dropdown-item rounded-4 text-muted" routerLink="/admin/stock"><i class="bi bi-box"></i>
+                Stock</a>
+              <a class="dropdown-item rounded-4 text-muted" routerLink="/admin/report"><i
+                  class="bi bi-bar-chart-line"></i> Reportes</a>
+              <a class="dropdown-item rounded-4 text-muted" routerLink="/admin/support"><i
+                  class="bi bi-gear-wide-connected"></i> Soporte</a>
+              <hr class="dropdown-divider border border-secondary border-1 rounded-5 opacity-25">
             </li>
             <li *ngIf="rol === 'Usuario'">
-              <a class="dropdown-item rounded-4 text-muted" routerLink="/user/info"><i class="bi bi-info-circle"></i> Información</a>
-              <a class="dropdown-item rounded-4 text-muted" routerLink="/user/orders"><i class="bi bi-file-text"></i> Mis pedidos</a>
-              <hr class="dropdown-divider text-muted rounded-4">
+              <a class="dropdown-item rounded-4 text-muted" routerLink="/user/info"><i class="bi bi-info-circle"></i>
+                Información</a>
+              <a class="dropdown-item rounded-4 text-muted" routerLink="/user/orders"><i class="bi bi-file-text"></i>
+                Mis pedidos</a>
+              <hr class="dropdown-divider border border-secondary border-1 rounded-5 opacity-25">
             </li>
             <li>
-              <button class="dropdown-item rounded-4 text-danger" (click)="logout()"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</button>
+              <button class="dropdown-item rounded-4 text-danger" (click)="logout()"><i
+                  class="bi bi-box-arrow-right"></i> Cerrar sesión</button>
             </li>
           </ul>
         </li>
         <li class="nav-item dropdown" *ngIf="!rol">
-          <button type="button" class="btn p-1 nav-link dropdown-toggle text-light" data-bs-toggle="dropdown" aria-expanded="false">
-            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-person-circle" viewBox="0 0 16 16">
-              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+          <button type="button" class="btn p-1 nav-link dropdown-toggle text-light" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-person-circle"
+              viewBox="0 0 16 16">
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+              <path fill-rule="evenodd"
+                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
             </svg>
           </button>
-          <ul class="dropdown-menu dropdown-menu-end border-0 rounded-4 p-2 shadow position-absolute">
-            <li><a class="dropdown-item rounded-4 text-muted" routerLink="/login"><i class="bi bi-box-arrow-in-right"></i> Iniciar sesión</a></li>
+          <ul class="dropdown-menu dropdown-menu-end border-0 rounded-4 p-2 shadow position-absolute fs-5">
+            <li><a class="dropdown-item rounded-4 text-muted" routerLink="/login"><i
+                  class="bi bi-box-arrow-in-right"></i> Iniciar sesión</a></li>
             <li><a class="dropdown-item rounded-4 text-muted" routerLink="/signup"><i class="bi bi-pencil-square"></i> Registrarse</a></li>
           </ul>
         </li>
@@ -82,10 +103,12 @@
   </div>
 </nav>
 
-<div class="offcanvas offcanvas-start border-0" style="background-color: #86bb3c; opacity: 0.9;" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+<div class="offcanvas offcanvas-start border-0" style="background-color: #86bb3c; opacity: 0.9;" tabindex="-1"
+  id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
   <div class="offcanvas-header">
     <h5 class="display-6 text-light" id="offcanvasNavbarLabel">Menu</h5>
-    <button type="button" class="btn-close text-light btn-light color-blanco" style="box-shadow: none;" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    <button type="button" class="btn-close text-light btn-light color-blanco" style="box-shadow: none;"
+      data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body mx-auto">
     <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-center align-items-center mx-auto">
@@ -108,10 +131,13 @@
 <router-outlet></router-outlet>
 
 <!-- Carrito de compras-->
-<div class="offcanvas offcanvas-end custom-offcanvas" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+<div class="offcanvas offcanvas-end custom-offcanvas" tabindex="-1" id="offcanvasExample"
+  aria-labelledby="offcanvasExampleLabel">
   <div class="offcanvas-header">
-    <h5 class="offcanvas-title text-muted display-6" id="offcanvasExampleLabel"> <i class="bi bi-cart2"></i> Mi Carrito</h5>
-    <button type="button" class="btn-close" style="box-shadow: none;" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    <h5 class="offcanvas-title text-muted display-6" id="offcanvasExampleLabel"> <i class="bi bi-cart2"></i> Mi Carrito
+    </h5>
+    <button type="button" class="btn-close" style="box-shadow: none;" data-bs-dismiss="offcanvas"
+      aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
     <div>
@@ -122,8 +148,3 @@
 
 <!--Footer-->
 <app-footer></app-footer>
-
-
-
-
-

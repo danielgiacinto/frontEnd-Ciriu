@@ -4,9 +4,13 @@
     transition: width 0.3s;
     opacity: 0.9;
     border-radius: 25px;
-    transition: 0.3s ease-in-out;
+    transition: 0.2s ease-in-out;
+    scale: 0.95;
 }
 
 .boton:hover {
-    background-color: #8daa64;
+    background-color: #8cb551;
+    border-radius: 50px;
+    opacity: 1.0;
+    scale: 1.0;
 }

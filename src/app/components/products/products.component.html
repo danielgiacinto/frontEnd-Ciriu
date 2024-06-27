@@ -22,17 +22,17 @@
   <div class="row align-items-center mb-1">
     <div class="col-md-6 col-sm-12">
       <div class="input-group mb-3 rounded-5 bg-secondary-subtle">
-        <button class="btn btn-link-light text-white border-0" style="cursor:default;"><i class="bi bi-search"></i></button>
+        <button class="btn btn-lg btn-link-light text-white border-0" style="cursor:default;"><i class="bi bi-search"></i></button>
         <input type="text" id="searchProducts" class="form-control rounded-end-5" style="box-shadow: none;" placeholder="Buscar productos, marcas y más..."
           aria-describedby="button-addon2" (change)="searchProducts($event)">
       </div>
     </div>
-    <div class="col-md-6 col-xs-12 col-sm-12 d-flex justify-content-center">
-      <div *ngIf="viewClearFilter">
-        <button class="btn text-danger btn-lg" type="button" (click)="clearFilters()"><i class="bi bi-x-lg"> Borrar filtros</i></button>
+    <div class="col-md-6 col-xs-12 col-sm-12 d-flex align-self-center justify-content-center pb-3">
+      <div *ngIf="viewClearFilter" class="me-3">
+        <button class="btn text-danger btn-lg btn-outline-light rounded-5 border-3" type="button" (click)="clearFilters()"><i class="bi bi-x-lg"> Borrar filtros</i></button>
       </div>
       <div>
-        <button class="btn btn-lg" type="button" data-bs-toggle="offcanvas" data-bs-target="#filtros"
+        <button class="btn btn-lg btn-outline-light rounded-5 border-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#filtros"
           aria-controls="staticBackdrop" style="color: #a7c957;">
           <i class="bi bi-sliders"></i> Filtrar
         </button>
@@ -82,8 +82,8 @@
           </div>
         </div>
       </div>
-      <div>
-        <button class="btn btn-lg" type="button" data-bs-toggle="offcanvas" data-bs-target="#ordenar"
+      <div class="ms-3">
+        <button class="btn btn-lg btn-outline-light rounded-5 border-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#ordenar"
           aria-controls="staticBackdrop" style="color: #a7c957;">
           <i class="bi bi-arrow-down-up"></i> Ordenar
         </button>
@@ -123,10 +123,9 @@
       <div class="row row-cols-1 row-cols-md-3 align-items-center">
         <ng-container *ngIf="toys.length > 0; else noResults">
           <div class="col-12 col-sm-12 col-md-6 col-xs-12 col-lg-4 col-xl-3 g-4 d-flex justify-content-center" *ngFor="let toy of toys">
-            <div class="card rounded-0 border-0 p-0" style="width: 18rem;">
+            <div class="card border-0 shadow" style="width: 18rem;">
               <a routerLink="{{toy.code}}">
-                <img src={{toy.image[0]}} class="card-img-top rounded-0 mx-auto d-block p-0"
-                  style="width: 100%; height: 250px;" alt="imagen" (mouseenter)="changeToNextImage(toy)"
+                <img src={{toy.image[0]}} class="rounded-top-1" style="width: 100%; height: 250px;" alt="imagen" (mouseenter)="changeToNextImage(toy)"
                   (mouseleave)="changeResetImage(toy)">
               </a>
               <div class="card-body text-center text-muted p-1 pt-2">
