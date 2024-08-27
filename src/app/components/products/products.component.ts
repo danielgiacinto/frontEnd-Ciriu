@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Toy } from 'src/app/models/Toy';
@@ -40,7 +40,9 @@ export class ProductsComponent implements OnInit {
   brands: Brand[] = [];
   subcategories: SubCategory[] = [];
   categories: Category[] = [];
+
   originalImage: string = '';
+  categoryToy: boolean = false;
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -55,6 +57,7 @@ export class ProductsComponent implements OnInit {
       this.loadToys();
       this.viewClearFilter = this.existFilters();
     });
+    this.calculateVisibleCards();
   }
 
   loadToys(): void {
@@ -107,11 +110,23 @@ export class ProductsComponent implements OnInit {
     );
   }
 
+  loadReelToy(): boolean {
+    if (this.category && this.subcategories.length > 0) {
+      for (let subCategory of this.subcategories) {
+        if (subCategory.category.toLowerCase() === 'juguetería' && subCategory.subcategory.toLowerCase() === this.category.toLowerCase() || this.category === 'juguetería') {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+  
   loadSubCategories(): void {
     this.suscripciones.add(
       this.subCategoryService.getSubCategories().subscribe(
         (data) => {
           this.subcategories = data;
+          this.categoryToy = this.loadReelToy();
         },
         (error) => {
           console.log(error);
@@ -210,6 +225,95 @@ export class ProductsComponent implements OnInit {
       toy.image[0] = this.originalImage;
       this.originalImage = '';
     }
+  }
+
+  cards = [
+    { title: 'Muñecas', image: 'https://i.imgur.com/2WwiNq6.jpeg' },
+    { title: 'Autos', image: 'https://i.imgur.com/0cjmqR2.jpeg' },
+    { title: 'Peluches', image: 'https://i.imgur.com/0EZpqAW.jpeg' },
+    { title: 'Musicales', image: 'https://imgur.com/mc8lYBl.jpeg' },
+    { title: 'Aire Libre', image: 'https://imgur.com/r05JiYo.jpeg' },
+    { title: 'Bloques, Construcción', image: 'https://imgur.com/ubhfvJE.jpeg' },
+    { title: 'Juego De Mesa', image: 'https://imgur.com/QhVDtuO.jpeg' },
+    { title: 'Ingenio', image: 'https://imgur.com/BaD5P3h.jpeg' },
+    { title: 'Dinosaurios', image: 'https://imgur.com/RzA4iBz.jpeg' },
+    { title: 'Didáctico', image: 'https://imgur.com/DsWbEWI.jpeg' },
+  ];
+  currentIndex = 0;
+  transform = 'translateX(0)';
+  currentTranslate = 0;
+  prevTranslate = 0;
+  startX = 0;
+  isDragging = false;
+  visibleCards = 4;
+
+  calculateVisibleCards() {
+    const screenWidth = window.innerWidth;
+    if (screenWidth < 576) {
+      this.visibleCards = 1;
+    } else if (screenWidth < 768) {
+      this.visibleCards = 2;
+    } else if (screenWidth < 992) {
+      this.visibleCards = 3;
+    } else {
+      this.visibleCards = 4;
+    }
+    this.updateTransform();
+  }
+
+  prevSlide() {
+    if (this.currentIndex > 0) {
+      this.currentIndex--;
+    }
+    this.updateTransform();
+  }
+
+  nextSlide() {
+    if (this.currentIndex < this.cards.length - this.visibleCards) {
+      this.currentIndex++;
+    }
+    this.updateTransform();
+  }
+
+  updateTransform() {
+    const cardWidth = 15; // 15rem
+    const gap = 1; // 0.5rem en cada lado
+    const totalCardWidth = cardWidth + 2 * gap; // ancho total por tarjeta incluyendo margen
+    this.transform = `translateX(-${this.currentIndex * totalCardWidth}rem)`;
+    this.currentTranslate = -this.currentIndex * totalCardWidth;
+    this.prevTranslate = this.currentTranslate;
+  }
+
+  onTouchStart(event: TouchEvent) {
+    this.startX = event.touches[0].clientX;
+    this.isDragging = true;
+    this.prevTranslate = this.currentTranslate;
+  }
+
+  onTouchMove(event: TouchEvent) {
+    if (this.isDragging) {
+      const currentX = event.touches[0].clientX;
+      const diff = currentX - this.startX;
+      this.currentTranslate = this.prevTranslate + diff / 16; // Dividir por 16 para convertir píxeles a rem
+      this.transform = `translateX(${this.currentTranslate}rem)`;
+    }
+  }
+
+  onTouchEnd() {
+    this.isDragging = false;
+    const cardWidth = 15; // 15rem
+    const gap = 1; // 0.5rem en cada lado
+    const totalCardWidth = cardWidth + 2 * gap; // ancho total por tarjeta incluyendo margen
+
+    // Ajustar la posición al índice más cercano
+    const movedCards = Math.round(-this.currentTranslate / totalCardWidth);
+    this.currentIndex = Math.min(Math.max(movedCards, 0), this.cards.length - this.visibleCards);
+    this.updateTransform();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.calculateVisibleCards();
   }
 
   

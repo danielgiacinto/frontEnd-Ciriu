@@ -1,8 +1,44 @@
-<div class="container pt-4" style="font-family: 'Montserrat'; color: #515151;">
+
+<div *ngIf="categoryToy" class="container-fluid" style="font-family: 'Montserrat';">
+  <div class="row p-3 mb-5" style="background-color: #f8f6f5;">
+    <div class="col-md-8">
+      <p class="text-success text-start display-6">Categorías de juguetes</p>
+    </div>
+    <div class="col-md-4 mb-2 align-self-end text-end">
+      <button class="btn btn-success rounded-5 me-2" (click)="prevSlide()" type="button"><i
+          class="bi bi-caret-left-fill"></i></button>
+      <button class="btn btn-success rounded-5" type="button" (click)="nextSlide()"><i
+          class="bi bi-caret-right-fill"></i></button>
+    </div>
+    <div class="col-12">
+      <div class="carousel d-flex flex-nowrap overflow-hidden"
+            (touchstart)="onTouchStart($event)"
+           (touchmove)="onTouchMove($event)"
+           (touchend)="onTouchEnd()">
+        <div class="d-flex w-100">
+          <div class="carousel-track d-flex flex-row" [style.transform]="transform">
+            <div class="card border-0 bg-transparent m-1 user-select-none" style="width: 15rem;" *ngFor="let card of cards; let i = index">
+              <div class="card-body zoom">
+                <a [routerLink]="['/products']" [queryParams]="{ category: card.title }">
+                  <img src="{{card.image}}" class="card-img-top" alt="...">
+                </a>
+              </div>
+              <div class="card-footer text-center border-0 bg-transparent">
+                <h5 class="fw-semibold text-muted">{{card.title}}</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container pt-0" style="font-family: 'Montserrat'; color: #515151;">
   <div class="row">
     <div class="col-md-12 col-sm-12 mb-3">
       <nav style="--bs-breadcrumb-divider: '';" aria-label="breadcrumb">
-        <ol class="breadcrumb m-1">
+        <ol class="breadcrumb m-1 pt-2">
           <li class="breadcrumb-item"><a class="text-center text-body-tertiary text-decoration-none" routerLink="/home">Inicio</a></li>
           <ng-container *ngIf="category; else showProducts">
             <li class="breadcrumb-item active" aria-current="page">{{category | titlecase}}</li>
@@ -16,7 +52,14 @@
   </div>
   <div class="row">
     <div class="col-md-12">
-      <p class="display-6" style="color: #a7c957;">Productos</p>
+      <p class="display-6" style="color: #a7c957;">
+        <ng-container *ngIf="category; else showProductos">
+          {{category | titlecase}}
+        </ng-container>
+        <ng-template #showProductos>
+          Productos
+        </ng-template>
+      </p>
     </div>
   </div>
   <div class="row align-items-center mb-1">

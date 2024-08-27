@@ -20,18 +20,28 @@ body{
     font-family: 'Montserrat', sans-serif;
 }
 
-.card {
+/*  */
+.carousel {
+    overflow: hidden;
     width: 100%;
-    transition: box-shadow 0.3s ease-in-out;
-}
-  
-.card:hover {
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Incrementar la sombra al pasar el mouse */
 }
 
-.card-img-top {
-    width: 100%;
-    height: auto;
+  
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+.carousel-track.no-transition {
+    transition: none;
+}
+
+.zoom{
+    scale: 1.0;
+    transition: scale 0.5s ease;
+}
+  
+.zoom:hover{
+    scale: 1.1;
 }
 
 
