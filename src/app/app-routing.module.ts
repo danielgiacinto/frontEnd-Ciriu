@@ -12,7 +12,7 @@ import {checkoutUserGuard} from "./guards/checkoutUser.guard";
 import {checkoutCartGuard } from './guards/checkoutCart.guard';
 import { UserComponent } from './components/user/user.component';
 import { SignupComponent } from './components/signup/signup.component';
-import { VerifyComponent } from './components/verify/createAccount.component';
+import { VerifyComponent } from './components/signup/verify/createAccount.component';
 import { CardProductComponent } from './components/products/cardProduct/cardProduct.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { PaymentComponent } from './components/checkout/payment/payment.component';
@@ -27,6 +27,8 @@ import { ConditionsComponent } from './components/conditions/conditions.componen
 import { QuestionsComponent } from './components/questions/questions.component';
 import { SuccessComponent } from './components/success/success.component';
 import { PendingComponent } from './components/pending/pending.component';
+import { PasswordComponent } from './components/password/password.component';
+import { ChangePasswordComponent } from './components/password/changePassword/changePassword.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -36,6 +38,8 @@ const routes: Routes = [
   {path: 'contact', component: ContactComponent},
   {path: 'about', component: AboutComponent},
   {path: 'login', component: LogsComponent},
+  {path: 'recoverPassword', component: PasswordComponent},
+  {path: 'recoverPassword/reset/:token', component: ChangePasswordComponent},
   {path: 'checkout', component: CheckoutComponent, canActivate: [checkoutUserGuard, checkoutCartGuard]},
   {path: 'checkout/payment', component: PaymentComponent, canActivate: [checkoutUserGuard, checkoutCartGuard, checkoutPaymentGuard]},
   {path: 'login/verify/:code', component: VerifyComponent},

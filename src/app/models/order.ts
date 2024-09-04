@@ -1,3 +1,4 @@
+import { Gift } from "./Gift";
 
 export class Order {
     state: number = 0;
@@ -5,6 +6,7 @@ export class Order {
     id_user: string = '';
     id_payment: number = 0;
     id_shipping: number = 0;
+    gift: Gift = new Gift();
     orderDetails: OrderDetail[] = [];
 }
 

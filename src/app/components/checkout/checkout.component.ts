@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Gift } from 'src/app/models/Gift';
 import { Toy } from 'src/app/models/Toy';
 import { Country } from 'src/app/models/country';
 import { Province } from 'src/app/models/province';
@@ -28,10 +29,18 @@ export class CheckoutComponent implements OnInit {
   countries: Country[] = [];
   provinces: Province[] = [];
   user: User = new User();
+  gift: Gift = new Gift();
+  giftForm: FormGroup = new FormGroup({});
   checkoutForm: FormGroup = new FormGroup({});
   private suscripciones = new Subscription();
   ngOnInit() {
     const cart = localStorage.getItem('cart') || '[]';
+    const storedGift = JSON.parse(localStorage.getItem('gift') || '{}');
+    this.gift = {
+      by: storedGift.by || '',
+      destination: storedGift.destination || '',
+      message: storedGift.message || ''
+    };
     this.cart = JSON.parse(cart);
 
     this.checkoutForm = this.fb.group({
@@ -43,7 +52,12 @@ export class CheckoutComponent implements OnInit {
       city: [{value: this.user.city}, Validators.required],
       address: [{value: this.user.address}, Validators.required],
       floor: [{value: this.user.floor} ],
-      departament: [{value: this.user.departament}],
+      departament: [{value: this.user.departament}]
+    });
+    this.giftForm = this.fb.group({
+      by: [this.gift.by],
+      destination: [this.gift.destination],
+      message: [this.gift.message]
     });
     this.suscripciones.add(
       this.userService.getInfo().subscribe(data => {
@@ -85,7 +99,18 @@ export class CheckoutComponent implements OnInit {
     return total;
   }
 
+  saveGift() {
+    this.gift.by = this.giftForm.get('by')?.value || '';
+    this.gift.destination = this.giftForm.get('destination')?.value || '';
+    this.gift.message = this.giftForm.get('message')?.value || '';
+
+    localStorage.setItem('gift', JSON.stringify(this.gift));
+    console.log('Gift saved:', this.gift);
+  }
+
   checkoutPay() {
+    this.saveGift();
+
     if(this.checkoutForm.valid && this.cart.length > 0) {
       console.log(this.checkoutForm.value);
       const user = this.checkoutForm.value;

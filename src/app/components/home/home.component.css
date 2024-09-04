@@ -47,12 +47,14 @@
 .card-img {
     height: 100%;
     width: 100%;
+    opacity: 0.7;
     object-fit: cover; /* Mantiene el aspecto de la imagen mientras se ajusta al contenedor */
-    transition: transform 0.5s ease;
+    transition: transform 0.3s ease;
 }
   
 .card:hover .card-img {
     transform: scale(1.1);
+    opacity: 0.5;
 }
 @keyframes colorChange {
     0% {

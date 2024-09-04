@@ -72,23 +72,23 @@
     </div>
     <div class="col-md-6 col-xs-12 col-sm-12 d-flex align-self-center justify-content-center pb-3">
       <div *ngIf="viewClearFilter" class="me-3">
-        <button class="btn text-danger btn-lg btn-outline-light rounded-5 border-3" type="button" (click)="clearFilters()"><i class="bi bi-x-lg"> Borrar filtros</i></button>
+        <button class="btn text-danger btn-lg btn-outline-light rounded-5 border-0" type="button" (click)="clearFilters()"><i class="bi bi-x-lg"> Borrar filtros</i></button>
       </div>
       <div>
-        <button class="btn btn-lg btn-outline-light rounded-5 border-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#filtros"
+        <button class="btn btn-lg btn-outline-light rounded-5 border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#filtros"
           aria-controls="staticBackdrop" style="color: #a7c957;">
           <i class="bi bi-sliders"></i> Filtrar
         </button>
         <div class="offcanvas offcanvas-end" tabindex="-1" id="filtros" aria-labelledby="staticBackdropLabel">
           <div class="offcanvas-header">
-            <h5 class="offcanvas-title fs-2 fw-light" id="staticBackdropLabel">Filtrar</h5>
+            <p class="display-6" style="color: #a7c957;" id="staticBackdropLabel">Filtrar</p>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
           </div>
           <div class="offcanvas-body">
             <div>
-              <h5 class="fw-light fs-4 text-center mb-3"><i class="bi bi-filter-left"></i> Categorías</h5>
+              <h5 class="fw-light fs-4 text-center mb-3" style="color: #a7c957;"><i class="bi bi-filter-left"></i> Categorías</h5>
               <div class="accordion accordion-flush" id="accordionFlushExample">
-                <div class="accordion-item" *ngFor="let category of categories">
+                <div class="accordion-item border-0" *ngFor="let category of categories">
                   <h2 class="accordion-header">
                     <button class="accordion-button collapsed focus-ring focus-ring-light" type="button"
                       data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + category.id" aria-expanded="false"
@@ -114,7 +114,7 @@
                 </div>
               </div>
               <div class="mb-5 mt-5 ps-4 pe-4">
-                <h5 class="fw-light fs-4 text-center mb-3"><i class="bi bi-funnel"></i> Marcas</h5>
+                <h5 class="fw-light fs-4 text-center mb-3" style="color: #a7c957;"><i class="bi bi-funnel"></i> Marcas</h5>
                 <div class="list-group text-center list-group-flush" *ngFor="let brand of brands">
                   <a class="list-group-item list-group-item-action"[routerLink]="['/products']"
                     [queryParams]="{category: brand.brand}" (click)="filterByBrand(brand.brand)"> {{brand.brand |
@@ -126,7 +126,7 @@
         </div>
       </div>
       <div class="ms-3">
-        <button class="btn btn-lg btn-outline-light rounded-5 border-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#ordenar"
+        <button class="btn btn-lg btn-outline-light rounded-5 border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#ordenar"
           aria-controls="staticBackdrop" style="color: #a7c957;">
           <i class="bi bi-arrow-down-up"></i> Ordenar
         </button>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Gift } from 'src/app/models/Gift';
 import { Toy } from 'src/app/models/Toy';
 import { Order } from 'src/app/models/order';
 import { MercadoPagoService } from 'src/app/services/mercadoPago.service';
@@ -18,6 +19,7 @@ export class PaymentComponent implements OnInit {
   ) {}
   cart: Toy[] = [];
   order: Order = new Order();
+  gift: Gift = new Gift();
   paymentForm: FormGroup = new FormGroup({});
   hiddenButton: boolean = true;
   hiddenSpinner: boolean = false;
@@ -25,6 +27,10 @@ export class PaymentComponent implements OnInit {
 
   ngOnInit() {
     const cart = localStorage.getItem('cart') || '[]';
+    const gift = localStorage.getItem('gift') || '{}';
+    this.gift.by = JSON.parse(gift).by || '';
+    this.gift.destination = JSON.parse(gift).destination || '';
+    this.gift.message = JSON.parse(gift).message || '';
     this.cart = JSON.parse(cart);
 
     this.paymentForm = this.fb.group({
@@ -48,7 +54,8 @@ export class PaymentComponent implements OnInit {
       const idUser = localStorage.getItem('user') || ''.toString();
       const orderData = {
         idUser : idUser, 
-        shippmentMode: this.paymentForm.value.shipping, 
+        shippmentMode: this.paymentForm.value.shipping,
+        gift: this.gift,
         items: this.cart.map((item) => ({
           code: item.code,
           name: item.name,

@@ -14,7 +14,7 @@ export class SignupComponent implements OnInit {
   loading: boolean = false;
   acceptTerms: boolean = false;
   message: string = '';
-  constructor(private loginService: LoginService, private router: Router) { }
+  constructor(private loginService: LoginService) { }
 
   ngOnInit() {
     this.signUpForm.get('passwordSignUp')?.valueChanges.subscribe(() => {
@@ -41,7 +41,7 @@ export class SignupComponent implements OnInit {
             toast: true,
             position: "top-end",
             showConfirmButton: false,
-            timer: 3000,
+            timer: 5000,
             timerProgressBar: true,
             didOpen: (toast) => {
               toast.onmouseenter = Swal.stopTimer;

@@ -78,7 +78,7 @@
                       <app-newCategory></app-newCategory>
                     </div>
                     <!--Tabla de Categorias-->
-                    <div class="table-responsive">
+                    <div class="table-responsive overflow-auto" style="max-height: 500px;">
                       <table class="table table-borderless">
                         <thead class="table-dark opacity-50">
                           <tr>
@@ -126,7 +126,7 @@
                     </div>
                     <div class="col-md-12">
                       <!-- Tabla de marcas -->
-                       <div class="table-responsive">
+                       <div class="table-responsive overflow-auto" style="max-height: 500px;">
                         <table class="table table-borderless">
                           <thead class="table-dark opacity-50">
                             <tr>
@@ -168,6 +168,7 @@
         <h1 class="modal-title fs-5 text-muted" id="exampleModalLabel">Sub categorias</h1>
         <button type="button" class="btn-close focus-ring focus-ring-light" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+      <app-newSubcategory></app-newSubcategory>
       <div class="modal-body">
         <table class="table text-center table-borderless">
           <thead class="table-dark opacity-50">
@@ -190,7 +191,7 @@
             </tr>
           </tbody>
         </table>
-        <app-newSubcategory></app-newSubcategory>
+        
       </div>
     </div>
   </div>

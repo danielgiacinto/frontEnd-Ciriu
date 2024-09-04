@@ -88,7 +88,16 @@
                           <p><i class="bi bi-cash-coin"></i> {{getTotal(i) | currency}}</p>
                         </div>
                       </div>
+                      <div *ngIf="order.gift.message !== null" class="col-md-2 d-flex">
+                        <div class="">
+                          <img src="https://freeiconshop.com/wp-content/uploads/edd/gift-flat.png" class="img-fluid" width="30" alt="">
+                        </div>
+                        <div class="text-center ps-2 pt-1">
+                          <p class="fw-bold" style="color: rgba(49, 73, 167, 0.852);">Regalo</p>
+                        </div>
+                      </div>
                     </button>
+                    
                   </h5>
                   <div [id]="'collapse-' + order.id" class="accordion-collapse collapse"
                     [attr.data-bs-parent]="'#accordionFlushExample'">
@@ -147,6 +156,18 @@
                             </div>
                           </div>
                         </div>
+                      <div class="row" *ngIf="order.gift.message !== null">
+                        <hr>
+                        <div class="col-md-6">
+                          <p><i class="bi bi-gift-fill text-primary"></i> De: {{order.gift.by}}</p>
+                        </div>
+                        <div class="col-md-6">
+                          <p><i class="bi bi-geo-alt-fill text-primary"></i> Para: {{order.gift.destination}}</p>
+                        </div>
+                        <div class="col-md-12">
+                          <p><i class="bi bi-chat-left-dots-fill text-primary"></i> {{order.gift.message}}</p>
+                        </div>
+                      </div>
                         <hr>
                         <div class="col-md-12">
                           <p class="text-end fs-6 fw-bold">Total: {{ '$ '+ (getTotal(i) | number:'1.2-2')}}</p>

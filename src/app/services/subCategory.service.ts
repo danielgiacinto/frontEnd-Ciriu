@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SubCategory } from '../models/subCategory';
@@ -12,6 +12,14 @@ export class SubCategoryService {
   constructor(private httpClient: HttpClient) { }
   urlSubCategories = 'http://localhost:8081/subCategories';
 
+  private getHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token');
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+  }
+
   getSubCategories():Observable<SubCategory[]> {
     return this.httpClient.get<SubCategory[]>(this.urlSubCategories);
   }
@@ -21,11 +29,11 @@ export class SubCategoryService {
   }
 
   updateSubCategory(id: number, subCategory: string){
-    return this.httpClient.put(this.urlSubCategories + "/edit/" + id, subCategory);
+    return this.httpClient.put(this.urlSubCategories + "/edit/" + id, subCategory, { headers: this.getHeaders() });
   }
 
   createSubCategory(subCategory: any){
-    return this.httpClient.post(this.urlSubCategories + "/new", subCategory);
+    return this.httpClient.post(this.urlSubCategories + "/new", subCategory, { headers: this.getHeaders() });
   }
 
 }

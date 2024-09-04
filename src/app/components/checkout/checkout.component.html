@@ -157,6 +157,38 @@
               <label for="floatingInput">Departamento</label>
             </div>
           </div>
+          <div class="col-md-12">
+            <p class="d-inline-flex gap-1">
+              <button class="btn btn-lg rounded-5 border-0 bg-primary-subtle" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGift" aria-expanded="false" aria-controls="collapseGift">
+                <img src="https://freeiconshop.com/wp-content/uploads/edd/gift-flat.png" class="img-fluid" width="40" alt="">
+                Agregar mensaje de regalo
+              </button>
+            </p>
+            <div class="collapse" id="collapseGift">
+              <div class="card card-body border-0">
+                <form [formGroup]="giftForm" class="row g-3" (ngSubmit)="saveGift()">
+                  <div class="col-md-6">
+                    <div class="form-floating">
+                      <input type="text" class="form-control rounded-5" placeholder="De" formControlName="by">
+                      <label for="floatingInput">De</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating">
+                      <input type="text" class="form-control rounded-5" placeholder="Para" formControlName="destination">
+                      <label for="floatingInput">Para</label>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-floating">
+                      <input type="text" class="form-control rounded-5" placeholder="Mensaje" formControlName="message">
+                      <label for="floatingInput">Mensaje</label>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
           <div class="col-md-12 d-flex justify-content-end align-items-center mt-4">
             <button class="btn btn-primary boton-comprar" type="submit" [disabled]="!checkoutForm.valid">Actualizar y continuar</button>
           </div>

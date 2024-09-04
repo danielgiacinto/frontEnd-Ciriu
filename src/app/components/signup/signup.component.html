@@ -1,9 +1,9 @@
-<div class="container fade-in" style="font-family: Montserrat;">
+<div class="container fade-in pt-5 pb-5" style="font-family: Montserrat;">
   <div class="row justify-content-md-center mt-4 mb-4 align-items-center">
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-6">
       <div class="card mx-auto shadow-lg mt-5 mb-5 border-0 rounded-5 p-3">
         <h5 class="text-muted text-center mt-2 fw-light fs-3">
-          Crear cuenta
+          <i class="bi bi-person-plus-fill text-muted"></i> Crear cuenta
         </h5>
         <div class="card-body">
           <form class="px-4 py-3 needs-validation" [formGroup]="signUpForm" (ngSubmit)="signUp()">
@@ -81,7 +81,7 @@
             <!--Terminos-->
             <div class="mb-3 form-check">
               <input type="checkbox" class="form-check-input rounded" id="exampleCheck1" style="box-shadow: none;" (change)="changeTerms()">
-              <label class="form-check-label text-muted" for="exampleCheck1">Aceptar los términos y condiciones.</label>
+              <label class="form-check-label text-muted" for="exampleCheck1">Aceptar los <a class="pe-auto text-decoration-underline" routerLink="/terms">términos y condiciones.</a></label>
             </div>
             <div class="mb-4">
               <p class="text-danger" *ngIf="message"><i class="bi bi-exclamation-circle"></i> {{message}}</p>

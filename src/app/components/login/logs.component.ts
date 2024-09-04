@@ -32,6 +32,7 @@ export class LogsComponent implements OnInit {
         (response: any) => {
           localStorage.setItem('user', response.id);
           localStorage.setItem('rol', response.rol);
+          localStorage.setItem('token', response.token);
           this.userService.setRole(response.rol);
           if (response.rol === 'Administrador') {
             this.router.navigate(['/admin/orders']);

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { User } from '../models/user';
@@ -10,10 +10,18 @@ export class UserService {
 
   constructor(private httpClient: HttpClient) { }
   urlUsers = 'http://localhost:8081/users';
-  urlOrder = 'http://localhost:8081/orders';
   checkout: boolean = false;
+
   private roleSubject = new BehaviorSubject<string | null>(localStorage.getItem('rol'));
   role$ = this.roleSubject.asObservable();
+
+  private getHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token');
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+  }
 
   getInfo():Observable<User> {
     const id = localStorage.getItem('user') || '';
@@ -42,7 +50,7 @@ export class UserService {
   }
 
   getOrdersByIdUser(page:number, id: string): Observable<any> {
-    return this.httpClient.get<any>(this.urlOrder + '/user/' + id + '?page=' + page);
+    return this.httpClient.get<any>(this.urlUsers + '/orders/' + id + '?page=' + page, {headers: this.getHeaders()});
   }
 
   setRole(role: string | null) {

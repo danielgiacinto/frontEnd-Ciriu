@@ -1,15 +1,14 @@
-<div class="container fade-in" style="font-family: Montserrat;">
+<div class="container fade-in pt-5 pb-5" style="font-family: Montserrat;">
     <div class="row justify-content-md-center mt-5 mb-5 align-items-center">
         <div class="col-md-5">
             <div class="card mx-auto shadow-lg mt-5 mb-5 border-0 rounded-5 p-3">
                 <h5 class="text-muted text-center mt-2 fw-light fs-3">
-                    Validar cuenta
+                    <i class="bi bi-person-check text-muted"></i> Validar cuenta
                 </h5>
-                <hr class="border border-secondary border-2 opacity-25 rounded-5">
                 <div class="card-body text-center">
                     <form class="px-4 py-3 needs-validation" [formGroup]="verifyAccount" (ngSubmit)="verify()">
                         <div class="mb-4">
-                            <p class="text-muted">Haga click en el botón para validar la cuenta.</p>
+                            <p class="text-muted">Haga click en el botón para validar su cuenta.</p>
                         </div>
                         <div class="mb-4">
                             <p class="text-danger" *ngIf="message"><i class="bi bi-exclamation-circle"></i> {{message}}
