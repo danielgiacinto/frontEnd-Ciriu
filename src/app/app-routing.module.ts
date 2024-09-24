@@ -31,7 +31,7 @@ import { PasswordComponent } from './components/password/password.component';
 import { ChangePasswordComponent } from './components/password/changePassword/changePassword.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/home', pathMatch: 'full'},
+  {path: '', component: HomeComponent},
   {path: 'cart', component: CartComponent},
   {path: 'products', component: ProductsComponent},
   {path: 'products/:code', component: CardProductComponent},
@@ -55,8 +55,6 @@ const routes: Routes = [
   {path: 'admin/support', component: SupportComponent, canActivate: [adminGuard]},
   {path: 'user/info', component: UserComponent, canActivate: [userGuard]},
   {path: 'user/orders', component: OrdersComponent, canActivate: [userGuard]},
-  {path: 'home', component: HomeComponent},
-  {path: '**', redirectTo: '/home', pathMatch: 'full'}
 ];
 
 @NgModule({
