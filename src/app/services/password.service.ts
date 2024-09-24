@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ResetPassword } from '../models/resetPassword';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class PasswordService {
 
 constructor(private httpClient : HttpClient) { }
 
-  urlPassword = 'http://localhost:8081/recoverPassword'
+  urlPassword = environment.urlPassword;
 
 
   recoverPassword(email: string): Observable<any> {

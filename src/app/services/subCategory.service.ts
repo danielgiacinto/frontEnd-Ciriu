@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SubCategory } from '../models/subCategory';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class SubCategoryService {
 
 
   constructor(private httpClient: HttpClient) { }
-  urlSubCategories = 'http://localhost:8081/subCategories';
+  urlSubCategories = environment.urlSubCategories;
 
   private getHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');

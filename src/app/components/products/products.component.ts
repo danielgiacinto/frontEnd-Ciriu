@@ -40,7 +40,6 @@ export class ProductsComponent implements OnInit {
   brands: Brand[] = [];
   subcategories: SubCategory[] = [];
   categories: Category[] = [];
-
   originalImage: string = '';
   categoryToy: boolean = false;
 
@@ -68,6 +67,7 @@ export class ProductsComponent implements OnInit {
           this.totalPages = response.totalPages;
           this.toys = response.content;
           this.totalElements = response.totalElements;
+          
         },
         (error) => {
           console.log(error);

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import { Observable } from 'rxjs';
 export class DeliveryStatusService {
 
   constructor(private httpClient: HttpClient) { }
-  urlDeliveryStatus = 'http://localhost:8081/delivery';
+  urlDeliveryStatus = environment.urlDeliveryStatus;
 
   getDeliveryStatus(): Observable<any> {
     return this.httpClient.get<any>(this.urlDeliveryStatus);

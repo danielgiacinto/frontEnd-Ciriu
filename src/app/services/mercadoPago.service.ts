@@ -1,13 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MercadoPagoService {
 
-  urlMercadoPago = 'http://localhost:8081/create_preference'
+  urlMercadoPago = environment.urlMercadoPago;
   
   constructor(private httpClient: HttpClient) { }
   payMercadoPago(products: any): Observable<any> {

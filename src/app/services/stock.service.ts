@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import { Observable } from 'rxjs';
 export class StockService {
 
   constructor(private httpClient: HttpClient) { }
-  urlStocks = 'http://localhost:8081/stock';
+  urlStocks = environment.urlStocks;
 
   private getHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');

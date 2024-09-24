@@ -79,10 +79,10 @@
           aria-controls="staticBackdrop" style="color: #a7c957;">
           <i class="bi bi-sliders"></i> Filtrar
         </button>
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="filtros" aria-labelledby="staticBackdropLabel">
+        <div class="offcanvas offcanvas-end border-0" tabindex="-1" id="filtros" aria-labelledby="staticBackdropLabel">
           <div class="offcanvas-header">
             <p class="display-6" style="color: #a7c957;" id="staticBackdropLabel">Filtrar</p>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <button type="button" class="btn-close" style="box-shadow: none;" data-bs-dismiss="offcanvas" aria-label="Close"></button>
           </div>
           <div class="offcanvas-body">
             <div>
@@ -90,7 +90,7 @@
               <div class="accordion accordion-flush" id="accordionFlushExample">
                 <div class="accordion-item border-0" *ngFor="let category of categories">
                   <h2 class="accordion-header">
-                    <button class="accordion-button collapsed focus-ring focus-ring-light" type="button"
+                    <button class="accordion-button collapsed" style="box-shadow: none; background-color: transparent;" type="button"
                       data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + category.id" aria-expanded="false"
                       [attr.aria-controls]="'collapse' + category.id">
                       {{ category.category | titlecase }}
@@ -130,9 +130,9 @@
           aria-controls="staticBackdrop" style="color: #a7c957;">
           <i class="bi bi-arrow-down-up"></i> Ordenar
         </button>
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="ordenar" aria-labelledby="staticBackdropLabel">
+        <div class="offcanvas offcanvas-end border-0" tabindex="-1" id="ordenar" aria-labelledby="staticBackdropLabel">
           <div class="offcanvas-header">
-            <h5 class="offcanvas-title fs-2 fw-light" id="staticBackdropLabel">Ordenar por</h5>
+            <h5 class="offcanvas-title fs-2 fw-light" style="color: #a7c957;" id="staticBackdropLabel">Ordenar por</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
           </div>
           <div class="offcanvas-body">
@@ -195,6 +195,24 @@
           </div>
         </ng-container>
         <ng-template #noResults>
+          <div class="col-12 col-sm-12 col-md-6 col-xs-12 col-lg-4 col-xl-3 g-4 d-flex justify-content-center" *ngFor="let _ of [1, 2, 3, 4, 5, 6, 7, 8]">
+            <div class="card border-0 shadow" style="width: 18rem;">
+              <div class="placeholder-glow">
+                <img src="https://www.envelopments.com/uploads/papers/328/front_image/soft-gray_22in-sq-150dpi_gmund_v2.jpg" class="rounded-top-1 placeholder" style="width: 100%; height: 250px;" alt="imagen">
+              </div>
+              <div class="card-body text-center text-muted p-1 pt-2 placeholder-glow">
+                <h5 class="fw-light user-select-none">
+                  <span class="placeholder col-6"></span>
+                </h5>
+                <p class="card-text fw-bold text-muted user-select-none">
+                  <span class="placeholder col-4"></span>
+                </p>
+              </div>
+              <div class="card-footer border-0 bg-transparent rounded-0 p-3 pt-2 text-end placeholder-glow">
+                <span class="btn btn-dark disabled placeholder col-6"></span>
+              </div>
+            </div>
+          </div>
           <div class="col-md-12 text-center mt-5 mb-5 align-self-center" style="min-height: 40vh;">
             <p class="fs-3 text-muted">Ups, no hay resultados para esta búsqueda.</p>
           </div>
@@ -204,7 +222,7 @@
   </div>
 
   <!--Navegacion-->
-  <div class="row mt-5 mb-5" *ngIf="totalElements > 8">
+  <div class="row mt-5 mb-5" *ngIf="totalElements > 12">
     <div class="col-md-12 mb-3">
       <h6 class="text-center"> ¿Queres seguir viendo más productos?</h6>
     </div>

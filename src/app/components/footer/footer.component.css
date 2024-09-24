@@ -19,3 +19,10 @@
     background-color: #a7c957;
     scale: 1.1;
 }
+
+.texto {
+    color: rgb(215, 215, 215);
+}
+.texto:hover {
+    color: white;
+}

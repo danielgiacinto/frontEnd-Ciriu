@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Brand } from '../models/brand';
 import { Observable } from 'rxjs';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { Observable } from 'rxjs';
 export class BrandService {
 
   constructor(private httpClient: HttpClient) { }
-  urlBrand = 'http://localhost:8081/brands';
+  urlBrand = environment.urlBrand;
 
   private getHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');

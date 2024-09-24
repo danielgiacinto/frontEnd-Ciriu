@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Province } from '../models/province';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { Province } from '../models/province';
 export class ProvinceService {
 
   constructor(private httpClient: HttpClient) { }
-  urlProvinces = 'http://localhost:8081/provinces';
+  urlProvinces = environment.urlProvinces;
 
   getProvinces(): Observable<Province[]> {
     return this.httpClient.get<Province[]>(this.urlProvinces);

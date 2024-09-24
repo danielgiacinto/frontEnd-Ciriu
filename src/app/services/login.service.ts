@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../environments/environment';
 
 
 @Injectable({
@@ -8,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class LoginService {
 
-  urlLogin = 'http://localhost:8081/login'
+  urlLogin = environment.urlLogin;
   constructor(private httpClient: HttpClient) { }
 
   loginUser(login: any): Observable<any> {

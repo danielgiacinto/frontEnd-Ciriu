@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { User } from '../models/user';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { User } from '../models/user';
 export class UserService {
 
   constructor(private httpClient: HttpClient) { }
-  urlUsers = 'http://localhost:8081/users';
+  urlUsers = environment.urlUsers;
   checkout: boolean = false;
 
   private roleSubject = new BehaviorSubject<string | null>(localStorage.getItem('rol'));

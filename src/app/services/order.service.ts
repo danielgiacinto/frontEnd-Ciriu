@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Order } from '../models/order';
 import { Observable } from 'rxjs';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { Observable } from 'rxjs';
 export class OrderService {
 
   constructor(private httpClient: HttpClient) { }
-  urlOrder = 'http://localhost:8081/orders'
+  urlOrder = environment.urlOrder;
 
   private getHeaders(): HttpHeaders {
     // Recupera el token del almacenamiento local (o donde lo estés guardando)

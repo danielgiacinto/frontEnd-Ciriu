@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Toy } from '../models/Toy';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { Toy } from '../models/Toy';
 export class ToyService {
 
   constructor(private httpClient: HttpClient) { }
-  urlToys = 'http://localhost:8081/toys';
+  urlToys = environment.urlToys;
 
   private getHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
