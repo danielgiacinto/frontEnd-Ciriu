@@ -48,7 +48,7 @@ const routes: Routes = [
   {path: 'faq', component: QuestionsComponent},
   {path: 'success', component: SuccessComponent},
   {path: 'pending', component: PendingComponent},
-  {path: 'admin/orders', component: AdminComponent, canActivate: [adminGuard]},
+  {path: 'admin/orders', loadChildren: () => import('./components/admin/admin.module').then(m => m.AdminModule), canActivate: [adminGuard]},
   {path: 'admin/products', component: ProductsAdminComponent, canActivate: [adminGuard]},
   {path: 'admin/report', component: ReportAdminComponent, canActivate: [adminGuard]},
   {path: 'admin/stock', component: StockAdminComponent, canActivate: [adminGuard]},

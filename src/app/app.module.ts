@@ -45,7 +45,6 @@ import { ChangePasswordComponent } from './components/password/changePassword/ch
     HomeComponent,
     LogsComponent,
     ProductsComponent,
-    AdminComponent,
     UserComponent,
     SignupComponent,
     VerifyComponent,
