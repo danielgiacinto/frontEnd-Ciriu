@@ -14,7 +14,7 @@
     "@angular/common": "^16.2.0",
     "@angular/compiler": "^16.2.0",
     "@angular/core": "^16.2.0",
-    "@angular/fire": "^17.0.1",
+    "@angular/fire": "^16.0.0",
     "@angular/forms": "^16.2.0",
     "@angular/platform-browser": "^16.2.0",
     "@angular/platform-browser-dynamic": "^16.2.0",
@@ -30,7 +30,6 @@
     "sweetalert2": "^11.10.7",
     "tslib": "^2.3.0",
     "xlsx": "^0.18.5",
-    "xlsx-style": "^0.8.13",
     "zone.js": "~0.13.0"
   },
   "devDependencies": {
