@@ -4,15 +4,15 @@ import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
-import * as ApexCharts from 'apexcharts';
 import { OrderService } from 'src/app/services/order.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToyService } from 'src/app/services/toy.service';
 import { Toy } from 'src/app/models/Toy';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import * as XLSX from 'xlsx';
+import { utils as XLSXUtils, write, WorkSheet, WorkBook } from 'xlsx';
 import { saveAs } from 'file-saver';
+import * as ApexCharts from 'apexcharts';
 
 @Component({
   selector: 'app-reportAdmin',
@@ -53,6 +53,10 @@ export class ReportAdminComponent implements OnInit {
     );
     this.getReport();
     this.getReportBar();
+  }
+
+  ngOnDestroy(): void {
+    this.suscripciones.unsubscribe();
   }
 
   logout() {
@@ -282,10 +286,10 @@ export class ReportAdminComponent implements OnInit {
     ];
 
 
-    const worksheetGeneral: XLSX.WorkSheet = XLSX.utils.json_to_sheet(generalData);
-    const worksheetSales: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(salesData);
+    const worksheetGeneral: WorkSheet = XLSXUtils.json_to_sheet(generalData);
+    const worksheetSales: WorkSheet = XLSXUtils.aoa_to_sheet(salesData);
    
-    const workbook: XLSX.WorkBook = {
+    const workbook: WorkBook = {
       Sheets: { 
         'Datos Generales': worksheetGeneral,
         'Datos de Ventas': worksheetSales
@@ -293,7 +297,7 @@ export class ReportAdminComponent implements OnInit {
       SheetNames: ['Datos Generales', 'Datos de Ventas'],
     };
 
-    const excelBuffer: any = XLSX.write(workbook, {
+    const excelBuffer: any = write(workbook, {
       bookType: 'xlsx',
       type: 'array',
     });

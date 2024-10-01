@@ -14,7 +14,7 @@ import { OrderService } from 'src/app/services/order.service';
 import { ProvinceService } from 'src/app/services/province.service';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
-import * as XLSX from 'xlsx';
+import { utils as XLSXUtils, write, WorkSheet, WorkBook } from 'xlsx';
 import { saveAs } from 'file-saver';
 import { StatusService } from 'src/app/services/status.service';
 import { DeliveryStatusService } from 'src/app/services/deliveryStatus.service';
@@ -195,16 +195,16 @@ export class AdminComponent implements OnInit {
       });
     });
 
-    const worksheetOrders: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataToExport);
-    const worksheetProducts: XLSX.WorkSheet = XLSX.utils.json_to_sheet(productsToExport);
+    const worksheetOrders: WorkSheet = XLSXUtils.json_to_sheet(dataToExport);
+    const worksheetProducts: WorkSheet = XLSXUtils.json_to_sheet(productsToExport);
 
-    const workbook: XLSX.WorkBook = {
+    const workbook: WorkBook = {
       Sheets: { 'Pedidos': worksheetOrders, 'Productos': worksheetProducts },
       SheetNames: ['Pedidos', 'Productos']
     };
 
     // Generar archivo Excel
-    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const excelBuffer: any = write(workbook, { bookType: 'xlsx', type: 'array' });
     this.saveAsExcelFile(excelBuffer, 'Pedidos_y_Productos_Vendidos');
   }
   
