@@ -233,7 +233,6 @@ export class ProductsAdminComponent implements OnInit {
       if (result.isConfirmed) {
         localStorage.clear();
         window.location.reload();
-        this.router.navigate(['/home']);
       }
     });
   }

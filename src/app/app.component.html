@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg sticky-top navbar-custom m-3 shadow" style="border-radius: 50px;" id="navbar">
+<nav class="navbar navbar-expand-lg sticky-top navbar-custom shadow m-3" style="border-radius: 50px;" id="navbar">
   <div class="container-fluid">
     <button class="navbar-toggler border-0 focus-ring focus-ring-light color-blanco" style="box-shadow: none;"
       type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"
@@ -106,23 +106,25 @@
 <div class="offcanvas offcanvas-start border-0" style="background-color: #86bb3c; opacity: 0.9;" tabindex="-1"
   id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
   <div class="offcanvas-header">
-    <h5 class="display-6 text-light" id="offcanvasNavbarLabel">Menu</h5>
+    <a class="navbar-brand text-center justify-content-center align-items-center d-flex logo" routerLink="/">
+      <img src="assets/logoCiriu2.png" alt="logo">
+    </a>
     <button type="button" class="btn-close text-light btn-light color-blanco" style="box-shadow: none;"
       data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body mx-auto">
     <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-center align-items-center mx-auto">
       <li class="nav-item">
-        <a class="nav-link letras" routerLink="/home">INICIO</a>
+        <a class="nav-link letras" routerLink="/" data-bs-dismiss="offcanvas">INICIO</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link letras" routerLink="/products">PRODUCTOS</a>
+        <a class="nav-link letras" routerLink="/products" data-bs-dismiss="offcanvas">PRODUCTOS</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link letras" routerLink="/contact">CONTACTO</a>
+        <a class="nav-link letras" routerLink="/contact" data-bs-dismiss="offcanvas">CONTACTO</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link letras" routerLink="/about">QUIÉNES SOMOS</a>
+        <a class="nav-link letras" routerLink="/about" data-bs-dismiss="offcanvas">QUIÉNES SOMOS</a>
       </li>
     </ul>
   </div>

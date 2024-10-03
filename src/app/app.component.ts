@@ -1,6 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs';
+import { Router } from '@angular/router';
 import { CartService } from './services/cart.service';
 import { UserService } from './services/user.service';
 import Swal from 'sweetalert2';
