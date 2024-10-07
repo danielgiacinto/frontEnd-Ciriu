@@ -26,8 +26,8 @@ export const environment = {
     urlPassword : 'https://backend-ciriu-production.up.railway.app/recoverPassword',
     urlProvinces : 'https://backend-ciriu-production.up.railway.app/provinces',
     urlStatus : 'https://backend-ciriu-production.up.railway.app/status',
-    urlStocks : 'https://backend-ciriu-production.up.railway.app//stock',
-    urlSubCategories : 'https://backend-ciriu-production.up.railway.app//subCategories',
+    urlStocks : 'https://backend-ciriu-production.up.railway.app/stock',
+    urlSubCategories : 'https://backend-ciriu-production.up.railway.app/subCategories',
     urlToys : 'https://backend-ciriu-production.up.railway.app/toys',
     urlUsers : 'https://backend-ciriu-production.up.railway.app/users',
 };
