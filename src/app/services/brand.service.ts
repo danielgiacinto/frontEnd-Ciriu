@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Brand } from '../models/brand';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 
 @Injectable({
@@ -11,6 +11,8 @@ export class BrandService {
 
   constructor(private httpClient: HttpClient) { }
   urlBrand = environment.urlBrand;
+  private brandUpdatedSource = new BehaviorSubject<void>(undefined);
+  brandUpdated$ = this.brandUpdatedSource.asObservable();
 
   private getHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
@@ -30,6 +32,10 @@ export class BrandService {
 
   updateBrand(id: number, brand: String){
     return this.httpClient.put(this.urlBrand + "/edit/" + id, brand, { headers: this.getHeaders() });
+  }
+
+  notifyBrandUpdated() {
+    this.brandUpdatedSource.next(); // Emitir evento
   }
 
 }

@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subscription, finalize } from 'rxjs';
+import { Observable, Subscription, every, finalize } from 'rxjs';
 import { Toy } from 'src/app/models/Toy';
 import { Brand } from 'src/app/models/brand';
 import { Category } from 'src/app/models/category';
@@ -40,8 +40,6 @@ export class ProductsAdminComponent implements OnInit {
   subCategoriesEdit: SubCategory[] = [];
   brands: Brand[] = [];
   previewUrl: string | undefined;
-  oldImage: string = '';
-  selectedImage: File | null = null;
   guardandoCambios: boolean = false;
   codeUpdate: string = '';
 
@@ -62,7 +60,7 @@ export class ProductsAdminComponent implements OnInit {
     price: new FormControl('', [
       Validators.required,
       Validators.min(1),
-      Validators.max(999999),
+      Validators.max(9999999),
     ]),
     brand: new FormControl(''),
     stock: new FormControl('', [
@@ -88,7 +86,7 @@ export class ProductsAdminComponent implements OnInit {
     priceEdit: new FormControl(1, [
       Validators.required,
       Validators.min(1),
-      Validators.max(999999),
+      Validators.max(9999999),
     ]),
     brandEdit: new FormControl(''),
     imageEdit: this.formBuilder.array([this.formBuilder.control('')]),
@@ -109,24 +107,10 @@ export class ProductsAdminComponent implements OnInit {
       this.loadToys()
     )
     this.suscripciones.add(
-      this.categoryService.getCategories().subscribe(
-        (data) => {
-          this.categories = data;
-        },
-        (error) => {
-          console.log(error);
-        }
-      )
+      this.loadCategories()
     );
     this.suscripciones.add(
-      this.brandService.getBrands().subscribe(
-        (data) => {
-          this.brands = data;
-        },
-        (error) => {
-          console.log(error);
-        }
-      )
+      this.loadBrands()
     );
     this.suscripciones.add(
       this.userService.getInfo().subscribe((data) => {
@@ -137,7 +121,16 @@ export class ProductsAdminComponent implements OnInit {
       this.subCategoryService.getSubCategories().subscribe((data) => {
         this.subCategoriesEdit = data;
       })
-    );
+    )
+    this.brandService.brandUpdated$.subscribe(() => {
+      this.loadBrands();
+    })
+    this.categoryService.categoryUpdated$.subscribe(() => {
+      this.loadCategories();
+    })
+    this.subCategoryService.subCategoryUpdated$.subscribe(() => {
+      
+    })
   }
 
   loadToys(): void {
@@ -166,6 +159,30 @@ export class ProductsAdminComponent implements OnInit {
         )
     );
   }
+
+  loadBrands() {
+    // Método para cargar todas las marcas desde el servicio
+    this.brandService.getBrands().subscribe(
+      (data: any) => {
+        this.brands = data;  // Actualizar la lista de marcas
+      },
+      (error) => {
+        console.error('Error al cargar marcas', error);
+      }
+    );
+  }
+
+  loadCategories() {
+    this.categoryService.getCategories().subscribe(
+      (data) => {
+        this.categories = data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
+  }
+
 
   nextPage(): void {
     if (this.currentPage + 1 < this.totalPages) {
@@ -247,7 +264,7 @@ export class ProductsAdminComponent implements OnInit {
             toast: true,
             position: "top-end",
             showConfirmButton: false,
-            timer: 3000,
+            timer: 4000,
             timerProgressBar: true,
             didOpen: (toast) => {
               toast.onmouseenter = Swal.stopTimer;
@@ -263,18 +280,33 @@ export class ProductsAdminComponent implements OnInit {
         },
         (error) => {
           console.log(error);
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 5000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            }
+          });
+          Toast.fire({
+            icon: "error",
+            title: error.error.message
+          });
         }
       );
       this.guardandoCambios = false;
     }
   }
 
-  uploadFile(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      this.selectedImage = file;
-    }
-  }
+  // uploadFile(event: any) {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     this.selectedImage = file;
+  //   }
+  // }
 
   // private saveToy(imageURL: string) {
   //   const toyData = { ...this.formNewToy.value, image: imageURL };
@@ -312,7 +344,6 @@ export class ProductsAdminComponent implements OnInit {
       .getSubCategoriesByCategory(category)
       .subscribe((data) => {
         this.subCategories = data;
-        console.log(this.subCategories);
       });
   }
 
@@ -376,7 +407,6 @@ export class ProductsAdminComponent implements OnInit {
   clearForm() {
     this.formNewToy.reset();
     this.previewUrl = '';
-    this.selectedImage = null;
   }
 
   getToyEdit(code: string) {
@@ -409,6 +439,21 @@ export class ProductsAdminComponent implements OnInit {
       },
       (error) => {
         console.log(error);
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 5000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
+        });
+        Toast.fire({
+          icon: "error",
+          title: error.error.message
+        });
       }
     );
   }
@@ -432,7 +477,7 @@ export class ProductsAdminComponent implements OnInit {
             toast: true,
             position: "top-end",
             showConfirmButton: false,
-            timer: 3000,
+            timer: 4000,
             timerProgressBar: true,
             didOpen: (toast) => {
               toast.onmouseenter = Swal.stopTimer;

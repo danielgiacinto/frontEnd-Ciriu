@@ -39,6 +39,7 @@ export class NewCategoryComponent implements OnInit {
             title: "Se agrego la categoria con exito"
           });
           this.formNewCategory.reset();
+          this.categoryService.notifyCategoryUpdated();
         },
         error => {
           const Toast = Swal.mixin({

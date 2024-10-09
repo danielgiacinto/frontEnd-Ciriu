@@ -100,13 +100,13 @@
                     [attr.aria-labelledby]="'heading' + category.id" data-bs-parent="#accordionFlushExample">
                     <div class="list-group">
                       <a class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']"
-                        [queryParams]="{ category: category.category }"
+                        [queryParams]="{ category: category.category }" data-bs-dismiss="offcanvas"
                         (click)="filterByCategory(category.category)">Todo
                         en
                         {{ category.category }}</a>
-                      <a *ngFor="let subCategory of getSubCategoriesByCategory(category.category)"
+                      <a *ngFor="let subCategory of getSubCategoriesByCategory(category.category) | sortBy: 'subcategory'"
                         class="list-group-item list-group-item-action border-0 ps-5" [routerLink]="['/products']"
-                        [queryParams]="{ category: subCategory.subcategory}"
+                        [queryParams]="{ category: subCategory.subcategory}" data-bs-dismiss="offcanvas"
                         (click)="filterByCategory(subCategory.subcategory)">{{ subCategory.subcategory | titlecase
                         }}</a>
                     </div>
@@ -115,8 +115,8 @@
               </div>
               <div class="mb-5 mt-5 ps-4 pe-4">
                 <h5 class="fw-light fs-4 text-center mb-3" style="color: #a7c957;"><i class="bi bi-funnel"></i> Marcas</h5>
-                <div class="list-group text-center list-group-flush" *ngFor="let brand of brands">
-                  <a class="list-group-item list-group-item-action"[routerLink]="['/products']"
+                <div class="list-group text-center list-group-flush" *ngFor="let brand of brands | sortBy: 'brand'">
+                  <a class="list-group-item list-group-item-action"[routerLink]="['/products']" data-bs-dismiss="offcanvas"
                     [queryParams]="{category: brand.brand}" (click)="filterByBrand(brand.brand)"> {{brand.brand |
                     titlecase}}</a>
                 </div>
@@ -140,17 +140,17 @@
               <div class="col-md-12 pe-5 col-sm-4 fs-5">
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" type="radio" style="box-shadow: none;" name="orderBy" id="orderByDefault" value="default"
-                    (change)="orderProducts($event)" checked>
+                    (change)="orderProducts($event)" checked data-bs-dismiss="offcanvas">
                   <label class="form-check-label" for="orderByDefault">Por defecto</label>
                 </div>
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" type="radio" style="box-shadow: none;" name="orderBy" id="orderByAsc" value="asc"
-                    (change)="orderProducts($event)">
+                    (change)="orderProducts($event)" data-bs-dismiss="offcanvas">
                   <label class="form-check-label" for="orderByAsc">Precio: Menor a Mayor</label>
                 </div>
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" type="radio" style="box-shadow: none;" name="orderBy" id="orderByDesc" value="desc"
-                    (change)="orderProducts($event)">
+                    (change)="orderProducts($event)" data-bs-dismiss="offcanvas">
                   <label class="form-check-label" for="orderByDesc">Precio: Mayor a menor</label>
                 </div>
               </div>

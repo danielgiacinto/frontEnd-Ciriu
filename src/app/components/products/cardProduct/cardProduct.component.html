@@ -45,7 +45,7 @@
               <h5 class="card-title display-6 text-muted">{{toy.name.toUpperCase()}}</h5>
               <p class="mt-4 fs-3 text-muted fw-semibold"> {{'$ ' + (toy.price | number:'1.2-2')}} <span
                   class="fw-light">c/u</span></p>
-              <p class="card-text text-muted fs-5"><i class="bi bi-tag"></i> {{toy.brand | titlecase}}</p>
+              <p *ngIf="showBrand" class="card-text text-muted fs-5"><i class="bi bi-tag"></i> {{toy.brand | titlecase}}</p>
               <p class="card-text text-muted fs-5"> <i class="bi bi-cash-coin"></i> Medios de pago</p>
               <button class="btn border-0 rounded-4" data-bs-toggle="modal" data-bs-target="#medioPago">
                 <img class="img-fluid float-start"

@@ -104,8 +104,9 @@
                   <div class="modal-body">
                     <form [formGroup]="formNewToy" class="text-center" (ngSubmit)="newToy()">
                       <div class="row">
-                        <div class="col-md-12">
-                          <p class="text-muted text-start">Complete los siguientes campos para crear un nuevo producto</p>
+                        <div class="col-md-12 mt-0">
+                          <p class="text-muted text-start">Complete los siguientes campos para crear un nuevo producto. 
+                            En el caso que el producto no cuente con una marca dejar el campo vacío.</p>
                         </div>
                         <!-- Codigo-->
                         <div class="col-md-5 mb-4">
@@ -143,8 +144,8 @@
                               [ngClass]="{'is-invalid': formNewToy.get('category')?.errors 
                             && (formNewToy.get('category')?.dirty || formNewToy.get('category')?.touched) && 'is-invalid'}">
                               <option value="" disabled selected> Categoria</option>
-                              <option *ngFor="let category of categories" [value]="category.id">{{category.category}}
-                              </option>
+                              <option *ngFor="let category of categories | sortBy: 'category'" [value]="category.id">{{category.category | titlecase}}
+                              </option> 
                             </select>
                           </div>
                           <div
@@ -178,8 +179,8 @@
                               [ngClass]="{'is-invalid': formNewToy.get('sub_category')?.errors 
                           && (formNewToy.get('subcategory')?.dirty || formNewToy.get('subcategory')?.touched) && 'is-invalid'}">
                               <option value="" disabled selected> Sub categoria</option>
-                              <option *ngFor="let subCategory of subCategories" [value]="subCategory.id">
-                                {{subCategory.subcategory}}</option>
+                              <option *ngFor="let subCategory of subCategories | sortBy: 'subcategory'" [value]="subCategory.id">
+                                {{subCategory.subcategory | titlecase}}</option>
                             </select>
                           </div>
                           <div
@@ -212,7 +213,7 @@
                               [ngClass]="{'is-invalid': formNewToy.get('brand')?.errors 
                           && (formNewToy.get('brand')?.dirty || formNewToy.get('brand')?.touched) && 'is-invalid'}">
                               <option value="" disabled selected> Marca</option>
-                              <option *ngFor="let brand of brands" [value]="brand.id">{{brand.brand | titlecase}}</option>
+                              <option *ngFor="let brand of brands | sortBy: 'brand'" [value]="brand.id">{{brand.brand | titlecase}}</option>
                             </select>
                           </div>
                           <div
@@ -320,6 +321,7 @@
                           </span>
                         </button>
                       </div>
+                      
                     </form>
                   </div>
                 </div>
@@ -434,7 +436,7 @@
                             [ngClass]="{'is-invalid': formEditToy.get('categoryEdit')?.errors 
                           && (formEditToy.get('categoryEdit')?.dirty || formEditToy.get('categoryEdit')?.touched) && 'is-invalid'}">
                             <option value="" disabled selected> Categoria</option>
-                            <option *ngFor="let category of categories" [value]="category.id">{{category.category | titlecase}}
+                            <option *ngFor="let category of categories | sortBy: 'category'" [value]="category.id">{{category.category | titlecase}}
                             </option>
                           </select>
                         </div>
@@ -469,7 +471,7 @@
                             [ngClass]="{'is-invalid': formEditToy.get('subcategoryEdit')?.errors 
                         && (formEditToy.get('subcategoryEdit')?.dirty || formEditToy.get('subcategoryEdit')?.touched) && 'is-invalid'}">
                             <option value="" disabled selected> Sub categoria</option>
-                            <option *ngFor="let subCategory of subCategories" [value]="subCategory.id">
+                            <option *ngFor="let subCategory of subCategories | sortBy: 'subcategory'" [value]="subCategory.id">
                               {{subCategory.subcategory | titlecase}}</option>
                           </select>
                         </div>
@@ -503,7 +505,7 @@
                             [ngClass]="{'is-invalid': formEditToy.get('brandEdit')?.errors 
                         && (formEditToy.get('brandEdit')?.dirty || formEditToy.get('brandEdit')?.touched) && 'is-invalid'}">
                             <option value="" disabled selected> Marca</option>
-                            <option *ngFor="let brand of brands" [value]="brand.id">{{brand.brand}}</option>
+                            <option *ngFor="let brand of brands | sortBy: 'brand'" [value]="brand.id">{{brand.brand | titlecase}}</option>
                           </select>
                         </div>
                         <div

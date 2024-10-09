@@ -16,6 +16,7 @@ export class CardProductComponent implements OnInit {
   code: string = '';
   idImagenModal: number = 0;
   toy: Toy = new Toy();
+  showBrand: boolean = true;
   private suscripciones = new Subscription();
 
   ngOnInit() {
@@ -26,6 +27,9 @@ export class CardProductComponent implements OnInit {
       this.toyService.getToyByCode(this.code).subscribe(
         (data) => {
           this.toy = data;
+          if(this.toy.brand == null || this.toy.brand == ''){
+            this.showBrand = false;
+          }
         },
         (error) => {
           console.log(error);

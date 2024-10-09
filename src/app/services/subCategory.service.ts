@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { SubCategory } from '../models/subCategory';
 import { environment } from '../environments/environment';
 
@@ -12,6 +12,8 @@ export class SubCategoryService {
 
   constructor(private httpClient: HttpClient) { }
   urlSubCategories = environment.urlSubCategories;
+  private subCategoryUpdatedSource = new BehaviorSubject<void>(undefined);
+  subCategoryUpdated$ = this.subCategoryUpdatedSource.asObservable();
 
   private getHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
@@ -35,6 +37,10 @@ export class SubCategoryService {
 
   createSubCategory(subCategory: any){
     return this.httpClient.post(this.urlSubCategories + "/new", subCategory, { headers: this.getHeaders() });
+  }
+
+  notifySubCategoryUpdated(){
+    this.subCategoryUpdatedSource.next();
   }
 
 }

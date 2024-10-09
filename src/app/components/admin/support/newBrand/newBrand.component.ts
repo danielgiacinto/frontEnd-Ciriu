@@ -39,7 +39,7 @@ export class NewBrandComponent implements OnInit {
             title: "Se registro la marca con exito"
           });
           this.formNewBrand.reset();
-          window.location.reload();
+          this.brandService.notifyBrandUpdated();
         },
         error => {
           const Toast = Swal.mixin({

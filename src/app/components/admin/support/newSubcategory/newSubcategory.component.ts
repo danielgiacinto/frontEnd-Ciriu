@@ -52,6 +52,7 @@ export class NewSubcategoryComponent implements OnInit {
             title: "Se agrego la Sub cateogoria con exito"
           });
           this.formNewSubCategory.reset();
+          this.subCategory.notifySubCategoryUpdated();
         },
         error => {
           const Toast = Swal.mixin({

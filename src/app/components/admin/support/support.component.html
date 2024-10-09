@@ -135,7 +135,7 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <tr *ngFor="let brand of brands; let i = index">
+                            <tr *ngFor="let brand of brands | sortBy: 'brand'; let i = index">
                             <td> <input type="text" class="form-control text-center" [readOnly]="!brand.editable" [(ngModel)]="brand.brand"></td>
                             <td><button type="button" class="btn border-0 p-2 rounded-3 me-2" (click)="editBrand(brand)">
                               <i class="bi bi-pencil-fill"></i>
@@ -179,7 +179,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let sub of subCategoriesByCategory">
+            <tr *ngFor="let sub of subCategoriesByCategory | sortBy: 'subcategory'">
               <td>{{sub.category}}</td>
               <td><input type="text" class="form-control text-center" [readOnly]="!sub.editable" [(ngModel)]="sub.subcategory"></td>
               <td><button type="button" class="btn border-0 p-2 rounded-3 me-2" (click)="editSubCategory(sub)"><i class="bi bi-pencil-fill"></i></button>
