@@ -54,10 +54,10 @@
     <div class="col-md-12">
       <p class="display-6" style="color: #a7c957;">
         <ng-container *ngIf="category; else showProductos">
-          {{category | titlecase}}
+          <p class="fw-normal">{{category | titlecase}}</p>
         </ng-container>
         <ng-template #showProductos>
-          Productos
+          <p class="fw-normal">Productos</p>
         </ng-template>
       </p>
     </div>
@@ -81,7 +81,7 @@
         </button>
         <div class="offcanvas offcanvas-end border-0" tabindex="-1" id="filtros" aria-labelledby="staticBackdropLabel">
           <div class="offcanvas-header">
-            <p class="display-6" style="color: #a7c957;" id="staticBackdropLabel">Filtrar</p>
+            <p class="display-6 fw-normal" style="color: #a7c957;" id="staticBackdropLabel">Filtrar</p>
             <button type="button" class="btn-close" style="box-shadow: none;" data-bs-dismiss="offcanvas" aria-label="Close"></button>
           </div>
           <div class="offcanvas-body">
@@ -132,7 +132,7 @@
         </button>
         <div class="offcanvas offcanvas-end border-0" tabindex="-1" id="ordenar" aria-labelledby="staticBackdropLabel">
           <div class="offcanvas-header">
-            <h5 class="offcanvas-title fs-2 fw-light" style="color: #a7c957;" id="staticBackdropLabel">Ordenar por</h5>
+            <h5 class="offcanvas-title fs-2 fw-normal" style="color: #a7c957;" id="staticBackdropLabel">Ordenar por</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
           </div>
           <div class="offcanvas-body">
@@ -172,7 +172,7 @@
                   (mouseleave)="changeResetImage(toy)">
               </a>
               <div class="card-body text-center text-muted p-1 pt-2">
-                <h5 class="fw-light user-select-none" style="text-transform: capitalize;">{{toy.name}}</h5>
+                <h5 class="fw-medium text-body-tertiary user-select-none" style="text-transform: capitalize;">{{toy.name}}</h5>
               </div>
               <div class="card-footer border-0 bg-transparent rounded-0 p-3 pt-2">
                 <div class="row">
@@ -195,27 +195,31 @@
           </div>
         </ng-container>
         <ng-template #noResults>
-          <div class="col-12 col-sm-12 col-md-6 col-xs-12 col-lg-4 col-xl-3 g-4 d-flex justify-content-center" *ngFor="let _ of [1, 2, 3, 4, 5, 6, 7, 8]">
-            <div class="card border-0 shadow" style="width: 18rem;">
-              <div class="placeholder-glow">
-                <img src="https://www.envelopments.com/uploads/papers/328/front_image/soft-gray_22in-sq-150dpi_gmund_v2.jpg" class="rounded-top-1 placeholder" style="width: 100%; height: 250px;" alt="imagen">
-              </div>
-              <div class="card-body text-center text-muted p-1 pt-2 placeholder-glow">
-                <h5 class="fw-light user-select-none">
-                  <span class="placeholder col-6"></span>
-                </h5>
-                <p class="card-text fw-bold text-muted user-select-none">
-                  <span class="placeholder col-4"></span>
-                </p>
-              </div>
-              <div class="card-footer border-0 bg-transparent rounded-0 p-3 pt-2 text-end placeholder-glow">
-                <span class="btn btn-dark disabled placeholder col-6"></span>
+          <ng-container *ngIf="!isSearching; else noResultsFound">
+            <div class="col-12 col-sm-12 col-md-6 col-xs-12 col-lg-4 col-xl-3 g-4 d-flex justify-content-center" *ngFor="let _ of [1, 2, 3, 4, 5, 6, 7, 8]">
+              <div class="card border-0 shadow" style="width: 18rem;">
+                <div class="placeholder-glow">
+                  <img src="https://www.envelopments.com/uploads/papers/328/front_image/soft-gray_22in-sq-150dpi_gmund_v2.jpg" class="rounded-top-1 placeholder" style="width: 100%; height: 250px;" alt="imagen">
+                </div>
+                <div class="card-body text-center text-muted p-1 pt-2 placeholder-glow">
+                  <h5 class="fw-light user-select-none">
+                    <span class="placeholder col-6"></span>
+                  </h5>
+                  <p class="card-text fw-bold text-muted user-select-none">
+                    <span class="placeholder col-4"></span>
+                  </p>
+                </div>
+                <div class="card-footer border-0 bg-transparent rounded-0 p-3 pt-2 text-end placeholder-glow">
+                  <span class="btn btn-dark disabled placeholder col-6"></span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col-md-12 text-center mt-5 mb-5 align-self-center" style="min-height: 40vh;">
-            <p class="fs-3 text-muted">Ups, no hay resultados para esta búsqueda.</p>
-          </div>
+          </ng-container>
+          <ng-template #noResultsFound>
+            <div class="col-md-12 text-center mt-5 mb-5 align-self-center" style="min-height: 40vh;">
+              <p class="fs-3 text-muted text-body-tertiary"> <span class="fs-3 fw-bold text-body-tertiary">OOPS!</span> No hay resultados para esta búsqueda.</p>
+            </div>
+          </ng-template>
         </ng-template>
       </div>
     </div>

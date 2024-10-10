@@ -42,6 +42,7 @@ export class ProductsComponent implements OnInit {
   categories: Category[] = [];
   originalImage: string = '';
   categoryToy: boolean = false;
+  isSearching: boolean = false;
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -55,11 +56,12 @@ export class ProductsComponent implements OnInit {
       this.loadSubCategories();
       this.loadToys();
       this.viewClearFilter = this.existFilters();
+      this.isSearching = this.existFilters(); 
     });
     this.calculateVisibleCards();
   }
 
-  loadToys(): void {
+  loadToys(): void { 
     this.suscripciones.add(
       this.toyService.getToys(this.currentPage, this.sortBy, this.searchTerm, false, this.category, this.brand).subscribe(
         (response) => {
@@ -169,6 +171,7 @@ export class ProductsComponent implements OnInit {
   filterByCategory(category: string){
     this.router.navigate(['/products'], { queryParams: { category: category } });
     this.category = category;
+    this.isSearching = true;
     this.loadToys();
     this.viewClearFilter = true;
   }
@@ -177,6 +180,8 @@ export class ProductsComponent implements OnInit {
   filterByBrand(brand: string){
     this.router.navigate(['/products'], { queryParams: { brand: brand } });
     this.brand = brand;
+    this.isSearching = true;
+    this.isSearching = true;
     this.loadToys();
     this.viewClearFilter = true;
   }

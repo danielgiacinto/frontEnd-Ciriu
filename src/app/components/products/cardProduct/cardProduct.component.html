@@ -16,8 +16,8 @@
     </div>
 
     <div class="col-md-12">
-      <div class="card rounded-0 shadow border-0">
-        <div class="row">
+      <div class="card border-0">
+        <div class="row align-items-center">
           <div class="col-md-12 col-sm-12 col-lg-6 col-xs-12 m-0 p-0 align-items-center justify-content-center">
             <!-- Imagen principal -->
             <div id="carouselPrincipal" class="carousel slide ps-4 pe-3 pt-3" data-bs-touch="true">
@@ -25,7 +25,7 @@
                 <div *ngFor="let image of toy.image; let i = index"
                   [ngClass]="{'carousel-item': true, 'active': i === 0}">
                   <img [src]="image" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="setImage(i)"
-                    class="d-block img-fluid rounded-end-5" style="width: 100%; height: auto; max-width: fit-content; cursor: pointer;">
+                    class="d-block img-fluid rounded-5" style="width: 100%; height: auto; max-width: fit-content; cursor: pointer;">
                 </div>
               </div>
               <button class="carousel-control-prev" type="button" data-bs-target="#carouselPrincipal"
@@ -41,13 +41,13 @@
             </div>
           </div>
           <div class="col-md-12 col-lg-6 col-sm-12">
-            <div class="card-body">
-              <h5 class="card-title display-6 text-muted">{{toy.name.toUpperCase()}}</h5>
+            <div class="card-body p-3">
+              <h5 class="card-title fw-medium display-6 text-muted">{{toy.name.toUpperCase()}}</h5>
               <p class="mt-4 fs-3 text-muted fw-semibold"> {{'$ ' + (toy.price | number:'1.2-2')}} <span
                   class="fw-light">c/u</span></p>
-              <p *ngIf="showBrand" class="card-text text-muted fs-5"><i class="bi bi-tag"></i> {{toy.brand | titlecase}}</p>
-              <p class="card-text text-muted fs-5"> <i class="bi bi-cash-coin"></i> Medios de pago</p>
-              <button class="btn border-0 rounded-4" data-bs-toggle="modal" data-bs-target="#medioPago">
+              <p *ngIf="showBrand" class="card-text fw-medium text-muted fs-4"><i class="bi bi-tag"></i> {{toy.brand | titlecase}}</p>
+              <p class="card-text text-muted fw-medium fs-4"> <i class="bi bi-cash-coin"></i> Medios de pago</p>
+              <button class="btn border-0 rounded-4 mt-0" data-bs-toggle="modal" data-bs-target="#medioPago">
                 <img class="img-fluid float-start"
                   src="https://d26lpennugtm8s.cloudfront.net/assets/common/img/logos/payment/new_logos_payment/visa@2x.png"
                   alt="visa" style="max-width: 40px; max-height: 40px">
@@ -59,17 +59,17 @@
                   alt="americanexpress" style="max-width: 40px; max-height: 40px">
               </button>
             </div>
-            <div class="card-footer border-0 bg-transparent">
+            <div class="card-footer mt-2 border-0 bg-transparent">
               <ng-container *ngIf="toy.stock > 0; else noStockButton">
-                <button href="#" class="btn btn-primary boton border-0 p-2 rounded-4 w-100 fw-semibold"
+                <button href="#" class="btn btn-primary boton border-0 p-2 rounded-4 w-75 fw-semibold"
                   (click)="addToCart(toy)"><i class="bi bi-bag"></i> Agregar al carrito</button>
               </ng-container>
               <ng-template #noStockButton>
-                <button class="btn btn-warning rounded-4 border-0 p-2 rounded-4 w-100 fw-semibold" disabled><i
+                <button class="btn btn-warning rounded-4 border-0 p-2 rounded-4 w-75 fw-semibold" disabled><i
                     class="bi bi-bag-x"></i> Sin Stock</button>
               </ng-template>
             </div>
-            <div class="col-md-12 d-flex text-center justify-content-center mt-3 ms-4">
+            <div class="col-md-8 d-flex text-center justify-content-center mt-3 ms-4">
               <svg viewBox="0 0 24 24" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -93,10 +93,12 @@
             </div>
           </div>
           <div class="col-md-12 mt-5">
-            <h5 class="text-muted fs-3 fw-light ps-5 text-start mb-3"><i class="bi bi-chat-right-text"></i> Descripción
-            </h5>
-            <pre class="card-text text-muted fs-5 ps-5 pe-5 pb-5 pre-container"
-              style="font-family: Montserrat;"> {{toy.description}}</pre>
+            <div class="card bg-body-tertiary border-0 rounded-5">
+              <h5 class="fs-3 fw-semibold ps-5 text-start mb-3 mt-4" style="color: #86bb3c;"><i class="bi bi-chat-right-text"></i> Descripción
+              </h5>
+              <pre class="card-text text-muted fw-medium fs-5 ps-5 pe-5 pb-5 pre-container"
+                style="font-family: Montserrat;"> {{toy.description}}</pre>
+            </div>
           </div>
         </div>
       </div>
