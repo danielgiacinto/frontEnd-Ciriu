@@ -11,6 +11,13 @@ export class LoginService {
 
   urlLogin = environment.urlLogin;
   constructor(private httpClient: HttpClient) { }
+  private getHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token');
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+  }
 
   loginUser(login: any): Observable<any> {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
@@ -23,6 +30,10 @@ export class LoginService {
 
   verifyAccount(code: any): Observable<any> {
     return this.httpClient.post(this.urlLogin + '/verify', code);
+  }
+
+  validateToken(): Observable<any> {
+    return this.httpClient.post(this.urlLogin + '/validateToken', {}, { headers: this.getHeaders() });
   }
 
 

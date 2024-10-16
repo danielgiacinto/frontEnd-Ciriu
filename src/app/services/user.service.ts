@@ -3,17 +3,19 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { User } from '../models/user';
 import { environment } from '../environments/environment';
+import { jwtDecode } from 'jwt-decode';
+import { LoginService } from './login.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private loginService: LoginService) { }
   urlUsers = environment.urlUsers;
   checkout: boolean = false;
 
-  private roleSubject = new BehaviorSubject<string | null>(localStorage.getItem('rol'));
+  private roleSubject = new BehaviorSubject<string | null>(this.decodeRoleFromToken());
   role$ = this.roleSubject.asObservable();
 
   private getHeaders(): HttpHeaders {
@@ -54,13 +56,22 @@ export class UserService {
     return this.httpClient.get<any>(this.urlUsers + '/orders/' + id + '?page=' + page, {headers: this.getHeaders()});
   }
 
-  setRole(role: string | null) {
-    if (role) {
-      localStorage.setItem('rol', role);
-    } else {
-      localStorage.removeItem('rol');
-    }
+  setRole(role: string) {
     this.roleSubject.next(role);
+  }
+
+  private decodeRoleFromToken(): string | null {
+    const token = localStorage.getItem('token');
+    if (token) {
+      try {
+        const decodedToken: any = jwtDecode(token);
+        return decodedToken.rol;
+      } catch (error) {
+        console.error('Error decodificando el token JWT:', error);
+        return null;
+      }
+    }
+    return null;
   }
 
   getRole(): string | null {

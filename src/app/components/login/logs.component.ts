@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
 import { UserService } from 'src/app/services/user.service';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-logs',
@@ -30,12 +31,13 @@ export class LogsComponent implements OnInit {
       this.loginService.loginUser(this.loginForm.value).subscribe(
         (response: any) => {
           localStorage.setItem('user', response.id);
-          localStorage.setItem('rol', response.rol);
           localStorage.setItem('token', response.token);
-          this.userService.setRole(response.rol);
-          if (response.rol === 'Administrador') {
+          const decodedToken: any = jwtDecode(response.token);
+          this.userService.setRole(decodedToken.rol);
+          
+          if (decodedToken.rol === 'Administrador') {
             this.router.navigate(['/admin/orders']);
-          } else if (response.rol === 'Usuario') {
+          } else if (decodedToken.rol === 'Usuario') {
             this.router.navigate(['/user/info']);
           }
           this.loading = false;

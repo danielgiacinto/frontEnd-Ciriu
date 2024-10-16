@@ -282,10 +282,10 @@
                         </div>
                         <!-- Imagen -->
                         <div formArrayName="image">
-                          <p class="text-muted">Por favor ingrese las imagenes que desea para este producto</p>
+                          <p class="text-muted text-start">Por favor ingrese las urls de las imagenes que desea para este producto, haga click <a href="https://imgur.com/upload" class="text-decoration-none" rel="noreferrer noopener" target="_blank">aquí</a> para subir su foto y copiar la url. </p>
                           <div class="col-md-12 text-center mb-3">
                             <button type="button" class="btn btn-outline-success" (click)="addImage()">+ Agregar
-                              imagen</button>
+                              Url</button>
                           </div>
                           <div class="col-md-10" *ngFor="let img of images.controls; let i=index">
                             <div class="d-flex justify-content-center mb-3">
@@ -546,10 +546,10 @@
                       </div>
                       <!-- Imagen -->
                       <div formArrayName="imageEdit">
-                        <p class="text-muted">Por favor ingrese las imagenes que desea para este producto</p>
+                        <p class="text-muted text-start">Por favor ingrese las urls de las imagenes que desea para este producto, haga click <a href="https://imgur.com/upload" class="text-decoration-none" rel="noreferrer noopener" target="_blank">aquí</a> para subir su foto y copiar la url. </p>
                         <div class="col-md-12 text-center mb-3">
                           <button type="button" class="btn btn-outline-success" (click)="addImageEdit()">+ Agregar
-                            imagen</button>
+                            Url</button>
                         </div>
                         <div class="col-md-10" *ngFor="let img of imagesEdit.controls; let i=index">
                           <div class="d-flex justify-content-center mb-3">

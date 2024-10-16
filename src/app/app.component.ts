@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CartService } from './services/cart.service';
 import { UserService } from './services/user.service';
 import Swal from 'sweetalert2';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -15,19 +16,31 @@ export class AppComponent implements OnInit {
   rutaActual = '';
   quantityCart = 0;
   rol: string | null = '';
+  private suscripciones = new Subscription();
   constructor(private router: Router, private cartService: CartService, private userService: UserService) {}
 
   ngOnInit(): void {
     this.onWindowScroll();
-    this.cartService.cart$.subscribe(cart => {
-      this.quantityCart = cart.length
-    })
-    this.cartService.isCartOpen().subscribe(isOpen => {
-      this.viewCart = isOpen;
-    });
-    this.userService.role$.subscribe(role => {
-      this.rol = role;
-    });
+    this.suscripciones.add(
+      this.cartService.cart$.subscribe(cart => {
+        this.quantityCart = cart.length
+      })
+    )
+    this.suscripciones.add(
+      this.cartService.isCartOpen().subscribe(isOpen => {
+        this.viewCart = isOpen;
+      })
+    )
+    this.suscripciones.add(
+      this.userService.role$.subscribe(role => {
+        this.rol = role;
+      })
+    )
+    
+  }
+
+  ngOnDestroy(): void {
+    this.suscripciones.unsubscribe();
   }
   
   @HostListener('window:scroll', [])
@@ -44,10 +57,7 @@ export class AppComponent implements OnInit {
     return this.router.url.includes('/checkout') || this.router.url.includes('/checkout/payment');
   }
 
-  checkRol() {
-    this.rol = localStorage.getItem('rol') || '';
-    console.log(this.rol);
-  }
+
 
   logout() {
     Swal.fire({
@@ -63,7 +73,6 @@ export class AppComponent implements OnInit {
       if (result.isConfirmed) {
         localStorage.clear();
         window.location.reload();
-        this.router.navigate(['/home']);
       }
     });
   }
