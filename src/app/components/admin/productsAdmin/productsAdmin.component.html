@@ -62,13 +62,10 @@
           </div>
           <div class="row pb-2">
             <div class="col-md-5 col-11 m-0 p-0 col-xs-12">
-              <div class="input-group mb-3 rounded-5">
-                <button class="btn btn-light border-1"
-                  style="background-color: #86BB3C; border-color: #86BB3C; cursor: default; box-shadow: none;"><i
-                    class="bi bi-search text-white"></i></button>
-                <input type="text" class="form-control rounded-end-5 text-muted border-start-0 border-1"
-                  style="border-color: #86BB3C; box-shadow: none;" placeholder="Buscar productos, marcas y más..."
-                  aria-describedby="button-addon2" (change)="searchProducts($event)">
+              <div class="input-group mb-3 rounded-5 bg-secondary-subtle">
+                <button class="btn btn-lg btn-link-light text-white border-0" style="cursor:default;"><i class="bi bi-search"></i></button>
+                <input type="text" id="searchProducts" class="form-control rounded-end-5" style="box-shadow: none;" placeholder="Buscar productos, marcas y más..."
+                  aria-describedby="button-addon2" (input)="searchProducts($event)">
               </div>
             </div>
             <div class="col-md-1 col-1 mb-3 align-self-center">

@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subscription, every, finalize } from 'rxjs';
+import { Observable, Subject, Subscription, debounceTime, distinctUntilChanged } from 'rxjs';
 import { Toy } from 'src/app/models/Toy';
 import { Brand } from 'src/app/models/brand';
 import { Category } from 'src/app/models/category';
@@ -31,6 +31,7 @@ export class ProductsAdminComponent implements OnInit {
   currentPage: number = 0;
   sortBy: string = '';
   searchTerm: string = '';
+  searchSubject: Subject<string> = new Subject<string>();
   nonStock: Boolean = false;
   totalPages: number = 0;
   totalElements: number = 0;
@@ -87,7 +88,7 @@ export class ProductsAdminComponent implements OnInit {
       Validators.required,
       Validators.min(1),
       Validators.max(9999999),
-    ]),
+    ]), 
     brandEdit: new FormControl(''),
     imageEdit: this.formBuilder.array([this.formBuilder.control('')]),
   });
@@ -103,9 +104,6 @@ export class ProductsAdminComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.suscripciones.add(
-      this.loadToys()
-    )
     this.suscripciones.add(
       this.loadCategories()
     );
@@ -131,6 +129,18 @@ export class ProductsAdminComponent implements OnInit {
     this.subCategoryService.subCategoryUpdated$.subscribe(() => {
       
     })
+    this.suscripciones.add(this.loadToys());
+    this.suscripciones.add(
+      this.searchSubject
+        .pipe(
+          debounceTime(700), 
+          distinctUntilChanged()
+        )
+        .subscribe(searchTerm => {
+          this.searchTerm = searchTerm;
+          this.loadToys();
+        })
+    );
   }
 
   loadToys(): void {
@@ -223,7 +233,8 @@ export class ProductsAdminComponent implements OnInit {
 
   searchProducts(event: any) {
     this.searchTerm = event.target.value;
-    this.loadToys();
+    this.searchSubject.next(this.searchTerm);
+    //this.loadToys();
   }
 
   filterByNonStock(event: any) {

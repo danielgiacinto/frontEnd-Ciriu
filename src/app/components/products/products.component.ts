@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Subject, Subscription } from 'rxjs';
 import { Toy } from 'src/app/models/Toy';
 import { Brand } from 'src/app/models/brand';
 import { Category } from 'src/app/models/category';
@@ -32,6 +32,7 @@ export class ProductsComponent implements OnInit {
   currentPage: number = 0;
   sortBy:string = '';
   searchTerm: string = '';
+  searchSubject: Subject<string> = new Subject<string>();
   totalPages: number = 0;
   totalElements: number = 0;
   category: string = '';
@@ -54,7 +55,20 @@ export class ProductsComponent implements OnInit {
       this.loadBrands();
       this.loadCategories();
       this.loadSubCategories();
-      this.loadToys();
+      this.suscripciones.add(this.loadToys());
+      
+      this.suscripciones.add(
+        this.searchSubject
+          .pipe(
+            debounceTime(700), 
+            distinctUntilChanged()
+          )
+          .subscribe(searchTerm => {
+            this.searchTerm = searchTerm;
+            this.router.navigate(['/products'], { queryParams: { searchTerm: this.searchTerm } });
+            this.loadToys();
+          })
+      );
       this.viewClearFilter = this.existFilters();
       this.isSearching = this.existFilters(); 
     });
@@ -187,9 +201,10 @@ export class ProductsComponent implements OnInit {
   }
 
   searchProducts(event: any) {
-    this.router.navigate(['/products'], { queryParams: { searchTerm: event.target.value } });
+    //this.router.navigate(['/products'], { queryParams: { searchTerm: event.target.value } });
     this.searchTerm = event.target.value;
-    this.loadToys();
+    this.searchSubject.next(this.searchTerm);
+    //this.loadToys();
     this.viewClearFilter = true;
   }
 
