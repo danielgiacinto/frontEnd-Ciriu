@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -43,6 +43,7 @@ export class ProductsAdminComponent implements OnInit {
   previewUrl: string | undefined;
   guardandoCambios: boolean = false;
   codeUpdate: string = '';
+  isLoading: boolean = false;
 
   formNewToy = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -143,7 +144,18 @@ export class ProductsAdminComponent implements OnInit {
     );
   }
 
+  @HostListener('window:scroll', [])
+  onScroll(): void {
+    // Verifica si el usuario está cerca del final de la página
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 500) {
+      this.loadMoreToys();
+    }
+  }
+
+
   loadToys(): void {
+    this.currentPage = 0;
+    this.toys = [];
     this.suscripciones.add(
       this.toyService
         .getToys(
@@ -170,6 +182,26 @@ export class ProductsAdminComponent implements OnInit {
     );
   }
 
+  loadMoreToys(): void {
+    if (this.isLoading || this.currentPage >= this.totalPages - 1) return;
+  
+    this.isLoading = true;
+    this.currentPage++; // Aumenta el número de página
+    
+    this.toyService.getToys(this.currentPage, this.sortBy, this.searchTerm, false, '', '').subscribe(
+      (response) => {
+        // Agrega los productos adicionales a la lista actual
+        this.toys = [...this.toys, ...response.content];
+        this.isLoading = false;
+      },
+      (error) => {
+        console.log(error);
+        this.isLoading = false;
+      }
+    );
+  }
+  
+
   loadBrands() {
     // Método para cargar todas las marcas desde el servicio
     this.brandService.getBrands().subscribe(
@@ -194,36 +226,36 @@ export class ProductsAdminComponent implements OnInit {
   }
 
 
-  nextPage(): void {
-    if (this.currentPage + 1 < this.totalPages) {
-      this.currentPage++;
-      this.loadToys();
-    }
-  }
+  // nextPage(): void {
+  //   if (this.currentPage + 1 < this.totalPages) {
+  //     this.currentPage++;
+  //     this.loadToys();
+  //   }
+  // }
 
-  prevPage(): void {
-    if (this.currentPage > 0) {
-      this.currentPage--;
-      this.loadToys();
-    }
-  }
-  onPageChange(event: any) {
-    const selectedPage = parseInt(event.target.value, 10);
-    this.goToPage(selectedPage);
-  }
-  goToPage(pageNumber: number): void {
-    this.currentPage = pageNumber;
-    this.router.navigate(['/admin/products'], {
-      queryParams: { page: this.currentPage },
-    });
-    this.loadToys();
-  }
+  // prevPage(): void {
+  //   if (this.currentPage > 0) {
+  //     this.currentPage--;
+  //     this.loadToys();
+  //   }
+  // }
+  // onPageChange(event: any) {
+  //   const selectedPage = parseInt(event.target.value, 10);
+  //   this.goToPage(selectedPage);
+  // }
+  // goToPage(pageNumber: number): void {
+  //   this.currentPage = pageNumber;
+  //   this.router.navigate(['/admin/products'], {
+  //     queryParams: { page: this.currentPage },
+  //   });
+  //   this.loadToys();
+  // }
 
-  getPageNumbers(): number[] {
-    return Array(this.totalPages)
-      .fill(0)
-      .map((x, i) => i);
-  }
+  // getPageNumbers(): number[] {
+  //   return Array(this.totalPages)
+  //     .fill(0)
+  //     .map((x, i) => i);
+  // }
 
   orderProducts(event: any) {
     this.router.navigate(['/admin/products']);
@@ -232,6 +264,8 @@ export class ProductsAdminComponent implements OnInit {
   }
 
   searchProducts(event: any) {
+    this.toys = [];
+    this.currentPage = 0;
     this.searchTerm = event.target.value;
     this.searchSubject.next(this.searchTerm);
     //this.loadToys();

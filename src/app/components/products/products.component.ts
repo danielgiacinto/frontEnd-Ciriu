@@ -44,6 +44,7 @@ export class ProductsComponent implements OnInit {
   originalImage: string = '';
   categoryToy: boolean = false;
   isSearching: boolean = false;
+  isLoading: boolean = false;
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -75,7 +76,18 @@ export class ProductsComponent implements OnInit {
     this.calculateVisibleCards();
   }
 
+  @HostListener('window:scroll', [])
+  onScroll(): void {
+    // Verifica si el usuario está cerca del final de la página
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 500) {
+      this.loadMoreToys();
+    }
+  }
+
+
   loadToys(): void { 
+    this.currentPage = 0;
+    this.toys = [];
     this.suscripciones.add(
       this.toyService.getToys(this.currentPage, this.sortBy, this.searchTerm, false, this.category, this.brand).subscribe(
         (response) => {
@@ -91,6 +103,26 @@ export class ProductsComponent implements OnInit {
       )
     ); 
   }
+
+  loadMoreToys(): void {
+    if (this.isLoading || this.currentPage >= this.totalPages - 1) return;
+  
+    this.isLoading = true;
+    this.currentPage++; // Aumenta el número de página
+    
+    this.toyService.getToys(this.currentPage, this.sortBy, this.searchTerm, false, this.category, this.brand).subscribe(
+      (response) => {
+        // Agrega los productos adicionales a la lista actual
+        this.toys = [...this.toys, ...response.content];
+        this.isLoading = false;
+      },
+      (error) => {
+        console.log(error);
+        this.isLoading = false;
+      }
+    );
+  }
+  
 
   loadBrands(): void {
     this.suscripciones.add(
@@ -202,6 +234,8 @@ export class ProductsComponent implements OnInit {
 
   searchProducts(event: any) {
     //this.router.navigate(['/products'], { queryParams: { searchTerm: event.target.value } });
+    this.toys = [];
+    this.currentPage = 0;
     this.searchTerm = event.target.value;
     this.searchSubject.next(this.searchTerm);
     //this.loadToys();

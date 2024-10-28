@@ -267,7 +267,7 @@
                           <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-chat"></i></span>
                             <textarea class="form-control" aria-label="With textarea" placeholder="Descripcion..."
-                              formControlName="description" rows="4"
+                              formControlName="description" rows="6"
                               [ngClass]="{'is-invalid': formNewToy.get('description')?.errors 
                               && (formNewToy.get('description')?.dirty || formNewToy.get('description')?.touched) && 'is-invalid'}">
                             </textarea>
@@ -279,11 +279,8 @@
                         </div>
                         <!-- Imagen -->
                         <div formArrayName="image">
-                          <p class="text-muted text-start">Por favor ingrese las urls de las imagenes que desea para este producto, haga click <a href="https://imgur.com/upload" class="text-decoration-none" rel="noreferrer noopener" target="_blank">aquí</a> para subir su foto y copiar la url. </p>
-                          <div class="col-md-12 text-center mb-3">
-                            <button type="button" class="btn btn-outline-success" (click)="addImage()">+ Agregar
-                              Url</button>
-                          </div>
+                          <p class="text-muted text-start pb-3">Por favor ingrese las urls de las imagenes que desea para este producto, haga click <a href="https://imgur.com/upload" class="text-decoration-none" rel="noreferrer noopener" target="_blank">aquí</a> para subir su foto y copiar la dirección de la imagen. </p>
+
                           <div class="col-md-10" *ngFor="let img of images.controls; let i=index">
                             <div class="d-flex justify-content-center mb-3">
                               <div class="input-group">
@@ -300,6 +297,9 @@
                               *ngIf="formNewToy.get('image.' + i)?.invalid && (formNewToy.get('image.' + i)?.dirty || formNewToy.get('image.' + i)?.touched)">
                               <p class="text-danger text-center">Debe ingresar la URL de la imagen</p>
                             </div>
+                          </div>
+                          <div class="col-md-12 text-start mb-3 ps-5">
+                            <button type="button" class="btn btn-outline-success" (click)="addImage()">+ Agregar Url</button>
                           </div>
                         </div>
                       </div>
@@ -345,14 +345,15 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let toy of toys">
+                    <tr *ngFor="let toy of toys" style="border-bottom: 1px solid rgba(0, 0, 0, 0.25);">
                       <th scope="row" class="align-middle text-center p-0 m-0">
                         <img src="{{toy.image}}" width="90px" class="img-fluid rounded shadow" style="cursor: pointer;" height="auto" alt="producto" routerLink="/products/{{toy.code}}">
                       </th>
                       <td scope="row" class="align-middle">
-                        <p>Codigo: {{toy.code}}</p>
+                        <p>Código: {{toy.code}}</p>
                         <p>Nombre: {{toy.name}}</p>
                         <p>Marca: {{toy.brand | titlecase}}</p>
+                        <p>Categoría: {{toy.category | titlecase}} | {{toy.subcategory | titlecase}}</p>
                       </td>
                       <td scope="row" class="align-middle">
                         <p>Precio: {{'$ ' + (toy.price | number:'1.2-2')}}</p>
@@ -361,15 +362,17 @@
                       </td>
                       <td scope="row mt-5" class="align-middle text-center">
                         <div class="col mb-2">
-                          <button type="button" title="Editar" class="btn btn-primary border-0 rounded-circle me-2 mb-2"
+                          <button type="button" title="Editar" class="btn btn-primary border-0 rounded-5 me-2 mb-2 fw-semibold"
                             style="background-color: #FFD27C;" data-bs-toggle="modal" data-bs-target="#exampleModal"
                             (click)="getToyEdit(toy.code)">
-                            <i class="bi bi-pencil-fill"></i>
+                            <i class="bi bi-pencil-fill"> Editar</i>
                           </button>
+                        </div>
+                        <div class="col">
                           <button type="button" title="Eliminar" (click)="deleteProduct(toy.code)"
-                            class="btn btn-primary border-0 rounded-circle me-2 mb-2" style="background-color: #FF8383;"><i
-                              class="bi bi-trash"></i>
-                          </button>
+                          class="btn btn-primary border-0 rounded-5 me-2 mb-2 fw-semibold" style="background-color: #FF8383;"><i
+                            class="bi bi-trash"> Borrar</i>
+                        </button>
                         </div>
                       </td>
                     </tr>
@@ -531,7 +534,7 @@
                         <div class="input-group">
                           <span class="input-group-text"><i class="bi bi-chat"></i></span>
                           <textarea class="form-control" aria-label="With textarea" placeholder="Descripcion..."
-                            formControlName="descriptionEdit" rows="4"
+                            formControlName="descriptionEdit" rows="6"
                             [ngClass]="{'is-invalid': formEditToy.get('descriptionEdit')?.errors 
                             && (formEditToy.get('descriptionEdit')?.dirty || formEditToy.get('descriptionEdit')?.touched) && 'is-invalid'}">
                           </textarea>
@@ -543,20 +546,17 @@
                       </div>
                       <!-- Imagen -->
                       <div formArrayName="imageEdit">
-                        <p class="text-muted text-start">Por favor ingrese las urls de las imagenes que desea para este producto, haga click <a href="https://imgur.com/upload" class="text-decoration-none" rel="noreferrer noopener" target="_blank">aquí</a> para subir su foto y copiar la url. </p>
-                        <div class="col-md-12 text-center mb-3">
-                          <button type="button" class="btn btn-outline-success" (click)="addImageEdit()">+ Agregar
-                            Url</button>
-                        </div>
+                        <p class="text-muted text-start pb-3">Por favor ingrese las urls de las imagenes que desea para este producto, haga click <a href="https://imgur.com/upload" class="text-decoration-none" rel="noreferrer noopener" target="_blank">aquí</a> para subir su foto y copiar la dirección de la imagen. </p>
+
                         <div class="col-md-10" *ngFor="let img of imagesEdit.controls; let i=index">
                           <div class="d-flex justify-content-center mb-3">
                             <div class="input-group">
-                              <span class="input-group-text" id="basic-addon1"><i class="bi bi-image"></i></span>
+                              <img src="{{img.value}}" alt="Image Preview" width="70" height="70" class="img-thumbnail">
                               <input id="alias-{{ i }}" type="text" [formControlName]="i" class="form-control" required
                                 placeholder="Url de la imagen">
-                              <div class="input-group-append">
+                              <div class="input-group-append align-self-center">
                                 <button type="button" class="btn btn-outline-danger ms-2"
-                                  (click)="removeImageEdit(i)"><i class="bi bi-trash"></i></button>
+                                  (click)="removeImageEdit(i)"><i class="bi bi-trash"> Quitar foto</i></button>
                               </div>
                             </div>
                           </div>
@@ -564,6 +564,10 @@
                             *ngIf="formEditToy.get('imageEdit.' + i)?.invalid && (formEditToy.get('imageEdit.' + i)?.dirty || formEditToy.get('imageEdit.' + i)?.touched)">
                             <p class="text-danger text-center">Debe ingresar la URL de la imagen</p>
                           </div>
+                        </div>
+                        <div class="col-md-12 text-start ps-5 mb-3">
+                          <button type="button" class="btn btn-outline-success" (click)="addImageEdit()">+ Agregar
+                            Url</button>
                         </div>
                       </div>
                     </div>
@@ -587,7 +591,7 @@
             </div>
           </div>
           <!--Navegacion-->
-          <div class="row mt-3">
+          <!-- <div class="row mt-3">
             <div class="col-md-12">
               <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
@@ -607,7 +611,7 @@
                 </ul>
               </nav>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

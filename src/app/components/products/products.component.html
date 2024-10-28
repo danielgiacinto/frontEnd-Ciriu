@@ -62,7 +62,7 @@
       </p>
     </div>
   </div>
-  <div class="row align-items-center mb-1">
+  <div class="row align-items-center">
     <div class="col-md-6 col-sm-12">
       <div class="input-group mb-3 rounded-5 bg-secondary-subtle">
         <button class="btn btn-lg btn-link-light text-white border-0" style="cursor:default;"><i class="bi bi-search"></i></button>
@@ -162,7 +162,7 @@
   </div>
   <div class="row align-items-center">
     <!--Productos-->
-    <div class="col-md-12">
+    <div class="col-md-12 pb-5">
       <div class="row row-cols-1 row-cols-md-3 align-items-center">
         <ng-container *ngIf="toys.length > 0; else noResults">
           <div class="col-12 col-sm-12 col-md-6 col-xs-12 col-lg-4 col-xl-3 g-4 d-flex justify-content-center" *ngFor="let toy of toys">
@@ -222,32 +222,6 @@
           </ng-template>
         </ng-template>
       </div>
-    </div>
-  </div>
-
-  <!--Navegacion-->
-  <div class="row mt-5 mb-5" *ngIf="totalElements > 12">
-    <div class="col-md-12 mb-3">
-      <h6 class="text-center"> ¿Queres seguir viendo más productos?</h6>
-    </div>
-    <div class="col-md-12">
-      <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-          <li class="page-item" [class.disabled]="currentPage === 0">
-            <a class="page-link border-0 text-dark" style="box-shadow: none;" [routerLink]="['/products']" [queryParams]="{ page: currentPage - 1}"
-              (click)="prevPage()"><i class="bi bi-chevron-left"> </i></a>
-          </li>
-          <li class="page-item">
-            <select class="form-select border-0 ms-1 focus-ring focus-ring-light" style="box-shadow: none;" [(ngModel)]="currentPage" (change)="onPageChange($event)">
-              <option *ngFor="let pageNumber of getPageNumbers()" [ngValue]="pageNumber">{{ pageNumber + 1 }}</option>
-            </select>
-          </li>
-          <li class="page-item">
-            <a class="page-link border-0 text-dark" style="box-shadow: none;" [routerLink]="['/products']" [queryParams]="{ page: currentPage + 1 }"
-              (click)="nextPage()"> <i class="bi bi-chevron-right"> </i></a>
-          </li>
-        </ul>
-      </nav>
     </div>
   </div>
 </div>
