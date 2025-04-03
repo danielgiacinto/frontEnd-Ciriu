@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -8,6 +8,7 @@ import { StockService } from 'src/app/services/stock.service';
 import { ToyService } from 'src/app/services/toy.service';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
+import { StockMovementsComponent } from '../../stock-movements/stock-movements.component';
 
 @Component({
   selector: 'app-stockAdmin',
@@ -27,14 +28,10 @@ export class StockAdminComponent implements OnInit {
   totalPages: number = 0;
   totalElements: number = 0;
   product = new Toy();
-  message: string = '';
+  selectedProductCode: string = '';
   private suscripciones = new Subscription();
-  formMovements = new FormGroup({
-    date: new FormControl(this.getCurrentDateTime(), [Validators.required]),
-    quantity: new FormControl('', [Validators.required]),
-    movement: new FormControl('', [Validators.required]),
-    code_product: new FormControl('', [Validators.required]),
-  });
+  @ViewChild(StockMovementsComponent) stockMovementsComponent!: StockMovementsComponent;
+
   formSearchStock = new FormGroup({
     fromDateSearch: new FormControl('',),
     toDateSearch: new FormControl('',),
@@ -66,6 +63,7 @@ export class StockAdminComponent implements OnInit {
       this.totalPages = data.totalPages;
     })
   }
+
   formatDate(date: Date, endOfDay: boolean = false): string {
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -80,9 +78,32 @@ export class StockAdminComponent implements OnInit {
   
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   }
+
+  getCurrentDateTime(): string {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const day = now.getDate().toString().padStart(2, '0');
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  }
+
   ngOnDestroy(): void {
     this.suscripciones.unsubscribe();
   }
+
+  reloadData() {
+    this.loadMovements();
+  }
+
+  updateDate(): void {
+    if (this.stockMovementsComponent) {
+      const currentDateTime = this.getCurrentDateTime();
+      this.stockMovementsComponent.formMovements.get('date')?.setValue(currentDateTime);
+    }
+  }
+
 
   logout() {
     Swal.fire({
@@ -102,33 +123,7 @@ export class StockAdminComponent implements OnInit {
     });
   }
 
-  registerMovement(){
-    if(this.formMovements.valid){
-      console.log(this.formMovements.value);
-      this.stockService.createMovement(this.formMovements.value).subscribe(data => {
-        console.log(data);
-        this.loadMovements();
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-          }
-        });
-        Toast.fire({
-          icon: "success",
-          title: "Se registro el movimiento con éxito"
-        });
-      }, error => {
-        this.message = error.error.message;
-        console.log(error);
-      })
-    }
-  }
+  
 
   orderBy(event: any) {
     const value = event.target.value;
@@ -145,15 +140,7 @@ export class StockAdminComponent implements OnInit {
     })
   }
 
-  getCurrentDateTime(): string {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = (now.getMonth() + 1).toString().padStart(2, '0');
-    const day = now.getDate().toString().padStart(2, '0');
-    const hours = now.getHours().toString().padStart(2, '0');
-    const minutes = now.getMinutes().toString().padStart(2, '0');
-    return `${year}-${month}-${day}T${hours}:${minutes}`;
-  }
+
 
   nextPage(): void {
     if(this.currentPage + 1 < this.totalPages){

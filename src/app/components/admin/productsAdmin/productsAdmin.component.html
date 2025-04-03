@@ -356,11 +356,15 @@
                         <p>Categoría: {{toy.category | titlecase}} | {{toy.subcategory | titlecase}}</p>
                       </td>
                       <td scope="row" class="align-middle">
-                        <p>Precio: {{'$ ' + (toy.price | number:'1.2-2')}}</p>
-                        <p>Stock: {{toy.stock}}</p>
-                        <a routerLink="/admin/stock" class="text-decoration-none"><i class="bi bi-box"> Agregar stock</i></a>
+                        <p class="fs-5">Precio: {{'$ ' + (toy.price | number:'1.2-2')}}</p>
+                        <p class="fs-5">Stock: {{toy.stock}}</p>
                       </td>
                       <td scope="row mt-5" class="align-middle text-center">
+                        <div class="col mb-2">
+                          <button class="btn btn-primary border-0 rounded-5 me-2 mb-2 fw-semibold" style="background-color: #379ec7; opacity: 0.9;" data-bs-toggle="modal"
+                          data-bs-target="#exampleModal2" (click)="setSelectedCodeProduct(toy.code)"><i class="bi bi-arrow-down-up"> Stock</i>
+                        </button>
+                        </div>
                         <div class="col mb-2">
                           <button type="button" title="Editar" class="btn btn-primary border-0 rounded-5 me-2 mb-2 fw-semibold"
                             style="background-color: #FFD27C;" data-bs-toggle="modal" data-bs-target="#exampleModal"
@@ -368,7 +372,7 @@
                             <i class="bi bi-pencil-fill"> Editar</i>
                           </button>
                         </div>
-                        <div class="col">
+                        <div class="col mb-2">
                           <button type="button" title="Eliminar" (click)="deleteProduct(toy.code)"
                           class="btn btn-primary border-0 rounded-5 me-2 mb-2 fw-semibold" style="background-color: #FF8383;"><i
                             class="bi bi-trash"> Borrar</i>
@@ -613,6 +617,25 @@
             </div>
           </div> -->
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- Registrar Movimiento -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-5 border-0 p-2">
+      <div class="modal-header border-0">
+        <h1 class="modal-title fs-5 text-muted" id="exampleModalLabel">Registrar movimiento</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <app-stock-movements [productCode]="selectedProductCode" (movementRegistered)="reloadData()"></app-stock-movements>
       </div>
     </div>
   </div>

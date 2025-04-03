@@ -36,6 +36,7 @@ import { PendingComponent } from './components/pending/pending.component';
 import { PasswordComponent } from './components/password/password.component';
 import { ChangePasswordComponent } from './components/password/changePassword/changePassword.component';
 import { SortByPipe } from './pipes/pipes/sort-by.pipe';
+import { StockMovementsComponent } from './components/stock-movements/stock-movements.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { SortByPipe } from './pipes/pipes/sort-by.pipe';
     PendingComponent,
     PasswordComponent,
     ChangePasswordComponent,
-    SortByPipe
+    SortByPipe,
+    StockMovementsComponent
   ],
   imports: [
     BrowserModule,

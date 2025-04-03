@@ -1,0 +1,50 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <form action="" [formGroup]="formMovements" (ngSubmit)="registerMovement()">
+                <div class="row">
+                  <div class="col-md-12">
+                    <p class="text-muted">Por favor, complete los campos para registrar un nuevo movimiento de Ingreso o Egreso de stock.</p> 
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="datetime-local" style="box-shadow: none;" class="form-control rounded-5" id="floatingInput" placeholder=" "
+                        formControlName="date">
+                      <label for="floatingInput">Fecha</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="number" class="form-control rounded-5" style="box-shadow: none;" id="floatingInput" placeholder=" " formControlName="quantity">
+                      <label for="floatingInput">Cantidad</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <select name="estado" id="movimiento" style="box-shadow: none;" class="form-select rounded-5" formControlName="movement">
+                        <option value="Ingreso">Ingreso</option>
+                        <option value="Egreso">Egreso</option>
+                      </select>
+                      <label for="floatingInput">Movimiento</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control rounded-5" style="box-shadow: none;" id="floatingInput" placeholder=" "
+                        formControlName="code_product">
+                      <label for="floatingInput">Código de producto</label>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <p class="text-danger" *ngIf="message"><i class="bi bi-exclamation-circle"></i> {{message}}</p>
+                  </div>
+                </div> 
+              </form>
+              <div class="col-md-12 d-flex justify-content-end">
+                <button type="button" class="btn btn-secondary rounded-5 shadow me-3" data-bs-dismiss="modal"><i class="bi bi-x-circle-fill text-white"></i> Cancelar</button>
+                <button type="button" class="btn btn-info rounded-5 boton shadow text-light" (click)="registerMovement()"><i class="bi bi-floppy2-fill"></i> Registrar movimiento</button>
+              </div>
+        </div>
+    </div>
+</div>
+

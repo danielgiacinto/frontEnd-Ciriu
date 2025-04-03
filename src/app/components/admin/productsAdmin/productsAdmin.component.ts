@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -19,6 +19,7 @@ import { SubCategoryService } from 'src/app/services/subCategory.service';
 import { ToyService } from 'src/app/services/toy.service';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
+import { StockMovementsComponent } from '../../stock-movements/stock-movements.component';
 
 @Component({
   selector: 'app-productsAdmin',
@@ -44,6 +45,8 @@ export class ProductsAdminComponent implements OnInit {
   guardandoCambios: boolean = false;
   codeUpdate: string = '';
   isLoading: boolean = false;
+  selectedProductCode: string = '';
+  @ViewChild(StockMovementsComponent) stockMovementsComponent!: StockMovementsComponent;
 
   formNewToy = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -180,6 +183,10 @@ export class ProductsAdminComponent implements OnInit {
           }
         )
     );
+  }
+
+  reloadData() {
+    this.loadToys();
   }
 
   loadMoreToys(): void {
@@ -346,27 +353,23 @@ export class ProductsAdminComponent implements OnInit {
     }
   }
 
-  // uploadFile(event: any) {
-  //   const file = event.target.files[0];
-  //   if (file) {
-  //     this.selectedImage = file;
-  //   }
-  // }
+  setSelectedCodeProduct(code: string) {
+    this.selectedProductCode = code;
+    if (this.stockMovementsComponent) {
+      const currentDateTime = this.getCurrentDateTime();
+      this.stockMovementsComponent.formMovements.get('date')?.setValue(currentDateTime);
+    }
+  }
 
-  // private saveToy(imageURL: string) {
-  //   const toyData = { ...this.formNewToy.value, image: imageURL };
-  //   this.toyService.postToy(toyData).subscribe(
-  //     (data) => {
-  //       this.formNewToy.reset();
-  //       this.previewUrl = '';
-  //       this.loadToys();
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     }
-  //   );
-  //   this.guardandoCambios = false;
-  // }
+  getCurrentDateTime(): string {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const day = now.getDate().toString().padStart(2, '0');
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  }
 
   onCategoryChange(event: any) {
     const categoryId = event.target.value;
