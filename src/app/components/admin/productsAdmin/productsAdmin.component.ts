@@ -44,7 +44,7 @@ export class ProductsAdminComponent implements OnInit {
   previewUrl: string | undefined;
   guardandoCambios: boolean = false;
   codeUpdate: string = '';
-  isLoading: boolean = false;
+  isLoading: boolean = true;
   selectedProductCode: string = '';
   @ViewChild(StockMovementsComponent) stockMovementsComponent!: StockMovementsComponent;
 
@@ -157,6 +157,7 @@ export class ProductsAdminComponent implements OnInit {
 
 
   loadToys(): void {
+    this.isLoading = true;
     this.currentPage = 0;
     this.toys = [];
     this.suscripciones.add(
@@ -171,12 +172,13 @@ export class ProductsAdminComponent implements OnInit {
         )
         .subscribe(
           (response) => {
-            console.log(response);
+            this.isLoading = false;
             this.totalPages = response.totalPages;
             this.toys = response.content;
             this.totalElements = response.totalElements;
             console.log(this.totalPages);
             console.log(this.currentPage);
+            
           },
           (error) => {
             console.log(error);
@@ -190,20 +192,19 @@ export class ProductsAdminComponent implements OnInit {
   }
 
   loadMoreToys(): void {
-    if (this.isLoading || this.currentPage >= this.totalPages - 1) return;
-  
-    this.isLoading = true;
+    if (this.currentPage >= this.totalPages - 1) return;
+
     this.currentPage++; // Aumenta el número de página
     
     this.toyService.getToys(this.currentPage, this.sortBy, this.searchTerm, false, '', '').subscribe(
       (response) => {
         // Agrega los productos adicionales a la lista actual
         this.toys = [...this.toys, ...response.content];
-        this.isLoading = false;
+
       },
       (error) => {
         console.log(error);
-        this.isLoading = false;
+
       }
     );
   }
