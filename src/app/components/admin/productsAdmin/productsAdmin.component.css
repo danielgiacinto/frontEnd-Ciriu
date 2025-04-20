@@ -36,4 +36,37 @@
     width: 3rem;
     height: 3rem;
 }
+
+/* Estilo base para los botones */
+.custom-button {
+    background-color: white; /* Fondo blanco */
+    color: #6c757d; /* Texto gris */
+    border: none; /* Sin bordes */
+    border-radius: 25px; /* Bordes redondeados */
+    padding: 30px 30px; /* Espaciado interno */
+    font-size: 1.2rem; /* Tamaño de fuente */
+    transition: all 0.3s ease; /* Transición suave */
+}
+  
+  /* Sombra para los botones */
+.custom-button.shadow {
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+}
+  
+  /* Hover para el botón de "Nuevo producto" */
+.custom-button:hover {
+    transform: translateY(-2px); /* Elevar ligeramente al pasar el mouse */
+}
+  
+  /* Hover específico para "Nuevo producto" */
+.custom-button[data-bs-target="#staticBackdrop"]:hover {
+    background-color: #86BB3C; /* Verde */
+    color: white; /* Texto blanco */
+}
+  
+  /* Hover específico para "Papelera" */
+.custom-button[data-bs-target="#trashModal"]:hover {
+    background-color: #FF8383; /* Rojo */
+    color: white; /* Texto blanco */
+}
   

@@ -3,6 +3,7 @@ export class Toy {
     code: string = '';
     category: string = '';
     subcategory: string = '';
+    subcategory2: string = '';
     description: string = '';
     price: number = 0;
     brand: string = '';

@@ -60,7 +60,26 @@
               </h4>
             </div>
           </div>
+          <div class="row pb-4 pt-2">
+            <div class="card shadow border-0 rounded-5 p-3">
+              <div class="row align-items-center">
+                <div class="col-md-6 mb-4 justify-content-center align-self-center text-center">
+                  <button type="button" title="Añadir producto" class="btn btn-lg custom-button shadow" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    <i class="bi bi-plus-circle"></i> Nuevo producto
+                  </button>
+                </div>
+                <div class="col-md-6  mb-4 justify-content-center align-self-center text-center">
+                  <button type="button" title="Papelera" class="btn btn-lg custom-button shadow" data-bs-toggle="modal" data-bs-target="#trashModal">
+                    <i class="bi bi-trash3"></i> Papelera
+                  </button>
+                </div>
+              </div> 
+              
+            </div>
+            
+          </div>
           <div class="row pb-2">
+
             <div class="col-md-5 col-11 m-0 p-0 col-xs-12">
               <div class="input-group mb-3 rounded-5 bg-secondary-subtle">
                 <button class="btn btn-lg btn-link-light text-white border-0" style="cursor:default;"><i class="bi bi-search"></i></button>
@@ -68,11 +87,7 @@
                   aria-describedby="button-addon2" (input)="searchProducts($event)">
               </div>
             </div>
-            <div class="col-md-1 col-1 mb-3 align-self-center">
-              <button type="button" title="Añadir producto" class="btn btn-primary rounded-circle border-0" style="background-color: #86BB3C;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                <i class="bi bi-plus-circle"></i>
-              </button>
-            </div>
+
             <div class="col-md-3 col-6 pe-5 mb-3">
               <select class="form-select rounded-5" style="box-shadow: none;" (change)="orderProducts($event)">
                 <option class="form-select text-muted" selected disabled>Ordenar</option>
@@ -108,14 +123,14 @@
                         <!-- Codigo-->
                         <div class="col-md-5 mb-4">
                           <div class="input-group">
-                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-chat"></i></span>
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-list-ol"></i></span>
                             <input type="text" class="form-control" formControlName="code" placeholder="Codigo"
                               [ngClass]="{'is-invalid': formNewToy.get('code')?.errors 
                             && (formNewToy.get('code')?.dirty || formNewToy.get('code')?.touched) && 'is-invalid'}">
                           </div>
                           <div
                             *ngIf="formNewToy.get('code')?.invalid && (formNewToy.get('code')?.dirty || formNewToy.get('code')?.touched)">
-                            <p class="text-danger"> Debe ingresar un código válido</p>
+                            <p class="text-danger"> Debe ingresar un código válido que no sea de otro producto</p>
                           </div>
                         </div>
                         <!-- Nombre-->
@@ -199,6 +214,21 @@
                                 </div>
                               </div>
                             </div>
+                          </div>
+                        </div>
+
+                        <!--Sub Categoria 2-->
+                        <div class="col-md-5 mb-4">
+                          <div class="input-group">
+                            <label class="input-group-text" for="inputGroupSelect01"><i
+                                class="bi bi-c-circle-fill"></i></label>
+                            <select class="form-select text-muted" id="inputSubCategory" formControlName="subcategory2"
+                              [ngClass]="{'is-invalid': formNewToy.get('subcategory2')?.errors 
+                          && (formNewToy.get('subcategory2')?.dirty || formNewToy.get('subcategory2')?.touched) && 'is-invalid'}">
+                              <option value="" disabled selected> Sub categoria</option>
+                              <option *ngFor="let subCategory of subCategories | sortBy: 'subcategory'" [value]="subCategory.id">
+                                {{subCategory.subcategory | titlecase}}</option>
+                            </select>
                           </div>
                         </div>
                         <!-- Marca -->
@@ -286,17 +316,17 @@
                               <div class="input-group">
                                 <span class="input-group-text" id="basic-addon1"><i class="bi bi-image"></i></span>
                                 <input id="alias-{{ i }}" type="text" [formControlName]="i" class="form-control"
-                                  required placeholder="Url de la imagen">
+                                  placeholder="Url de la imagen">
                                 <div class="input-group-append">
                                   <button type="button" class="btn btn-outline-danger ms-2" (click)="removeImage(i)"><i
                                       class="bi bi-trash"></i></button>
                                 </div>
                               </div>
                             </div>
-                            <div
+                            <!-- <div
                               *ngIf="formNewToy.get('image.' + i)?.invalid && (formNewToy.get('image.' + i)?.dirty || formNewToy.get('image.' + i)?.touched)">
                               <p class="text-danger text-center">Debe ingresar la URL de la imagen</p>
-                            </div>
+                            </div> -->
                           </div>
                           <div class="col-md-12 text-start mb-3 ps-5">
                             <button type="button" class="btn btn-outline-success" (click)="addImage()">+ Agregar Url</button>
@@ -354,7 +384,7 @@
                         <p>Código: {{toy.code}}</p>
                         <p>Nombre: {{toy.name}}</p>
                         <p>Marca: {{toy.brand | titlecase}}</p>
-                        <p>Categoría: {{toy.category | titlecase}} | {{toy.subcategory | titlecase}}</p>
+                        <p>Categoría: {{toy.category | titlecase}} | {{toy.subcategory | titlecase}} <span *ngIf="toy.subcategory2"> / {{toy.subcategory2 | titlecase}}</span></p>
                       </td>
                       <td scope="row" class="align-middle">
                         <p class="fs-5">Precio: {{'$ ' + (toy.price | number:'1.2-2')}}</p>
@@ -411,6 +441,19 @@
                     <div class="row">
                       <div class="col-md-12">
                         <p class="text-muted">Edite los siguientes campos para actualizar el producto</p>
+                      </div>
+                      <!-- Codigo-->
+                      <div class="col-md-5 mb-4">
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1"><i class="bi bi-list-ol"></i></span>
+                          <input type="text" class="form-control" formControlName="codeEdit" placeholder="Codigo"
+                            [ngClass]="{'is-invalid': formNewToy.get('code')?.errors 
+                          && (formNewToy.get('codeEdit')?.dirty || formNewToy.get('codeEdit')?.touched) && 'is-invalid'}">
+                        </div>
+                        <div
+                          *ngIf="formNewToy.get('codeEdit')?.invalid && (formNewToy.get('codeEdit')?.dirty || formNewToy.get('codeEdit')?.touched)">
+                          <p class="text-danger"> Debe ingresar un código válido que no sea de otro producto</p>
+                        </div>
                       </div>
                       <!-- Nombre-->
                       <div class="col-md-7 mb-4">
@@ -508,6 +551,22 @@
                           </div>
                         </div>
                       </div>
+
+                      <!--Sub Categoria 2-->
+                      <div class="col-md-4 mb-4">
+                        <div class="input-group">
+                          <label class="input-group-text" for="inputGroupSelect01"><i
+                              class="bi bi-c-circle-fill"></i></label>
+                          <select class="form-select text-muted" id="inputSubCategory"
+                            formControlName="subcategoryEdit2"
+                            [ngClass]="{'is-invalid': formEditToy.get('subcategoryEdit2')?.errors 
+                        && (formEditToy.get('subcategoryEdit2')?.dirty || formEditToy.get('subcategoryEdit2')?.touched) && 'is-invalid'}">
+                            <option value="" disabled selected> Sub categoria</option>
+                            <option *ngFor="let subCategory of subCategories | sortBy: 'subcategory'" [value]="subCategory.id">
+                              {{subCategory.subcategory | titlecase}}</option>
+                          </select>
+                        </div>
+                      </div>
                       <!-- Marca -->
                       <div class=" col-md-4 mb-4">
                         <div class="input-group">
@@ -579,7 +638,7 @@
                         </div>
                         <div class="col-md-12 text-start ps-5 mb-3">
                           <button type="button" class="btn btn-outline-success" (click)="addImageEdit()">+ Agregar
-                            Url</button>
+                            Foto</button>
                         </div>
                       </div>
                     </div>

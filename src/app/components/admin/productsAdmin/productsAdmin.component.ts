@@ -52,15 +52,16 @@ export class ProductsAdminComponent implements OnInit {
     name: new FormControl('', [Validators.required, Validators.minLength(3)]),
     code: new FormControl('', [
       Validators.required,
-      Validators.minLength(3),
+      Validators.minLength(2),
       this.validateToyCode.bind(this),
     ]),
     category: new FormControl('', [Validators.required]),
     subcategory: new FormControl('', [Validators.required]),
+    subcategory2: new FormControl(''),
     description: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
-      Validators.maxLength(500),
+      Validators.maxLength(3000),
     ]),
     price: new FormControl('', [
       Validators.required,
@@ -77,16 +78,21 @@ export class ProductsAdminComponent implements OnInit {
   });
 
   formEditToy = new FormGroup({
+    codeEdit: new FormControl('', [
+      Validators.required,
+      Validators.minLength(2)
+    ]),
     nameEdit: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
     ]),
     categoryEdit: new FormControl('', [Validators.required]),
     subcategoryEdit: new FormControl('', [Validators.required]),
+    subcategoryEdit2: new FormControl(''),
     descriptionEdit: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
-      Validators.maxLength(500),
+      Validators.maxLength(3000),
     ]),
     priceEdit: new FormControl(1, [
       Validators.required,
@@ -471,10 +477,15 @@ export class ProductsAdminComponent implements OnInit {
         const subCategoryId = this.subCategoriesEdit
           .find((sub) => sub.subcategory === data.subcategory)
           ?.id.toString();
+        const subCategory2Id = this.subCategoriesEdit
+          .find((sub) => sub.subcategory === data.subcategory2)
+          ?.id.toString();
         this.formEditToy.patchValue({
+          codeEdit: data.code,
           nameEdit: data.name,
           categoryEdit: categoryId,
           subcategoryEdit: subCategoryId,
+          subcategoryEdit2: subCategory2Id,
           descriptionEdit: data.description,
           brandEdit: brandId,
           priceEdit: data.price,
@@ -512,9 +523,11 @@ export class ProductsAdminComponent implements OnInit {
       console.log(this.formEditToy.value);
       this.guardandoCambios = true;
       const toyData = {
+        code: this.formEditToy.value.codeEdit,
         name: this.formEditToy.value.nameEdit,
         category: this.formEditToy.value.categoryEdit,
         sub_category: this.formEditToy.value.subcategoryEdit,
+        sub_category2: this.formEditToy.value.subcategoryEdit2,
         description: this.formEditToy.value.descriptionEdit,
         brand: this.formEditToy.value.brandEdit,
         price: this.formEditToy.value.priceEdit,
@@ -537,11 +550,26 @@ export class ProductsAdminComponent implements OnInit {
             icon: "success",
             title: "Producto actualizado con éxito"
           });
-          console.log(data);
+
           this.loadToys();
         },
         (error) => {
           console.log(error);
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 5000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            }
+          });
+          Toast.fire({
+            icon: "error",
+            title: 'No se pudo actualizar el producto, verifique que el código no exista previamente.'
+          });
         }
       );
       this.guardandoCambios = false;
