@@ -62,44 +62,53 @@
           </div>
           <div class="row pb-4 pt-2">
             <div class="card shadow border-0 rounded-5 p-3">
-              <div class="row align-items-center">
-                <div class="col-md-6 mb-4 justify-content-center align-self-center text-center">
+              <div class="row align-items-center m-1">
+
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xl-6 pt-1 pb-1">
+                  <div class="input-group mb-3 rounded-5 bg-secondary-subtle">
+                    <button class="btn btn-lg btn-link-light text-white border-0" style="cursor:default;"><i class="bi bi-search"></i></button>
+                    <input type="text" id="searchProducts" class="form-control rounded-end-5" style="box-shadow: none;" placeholder="Buscar productos, marcas y más..."
+                      aria-describedby="button-addon2" (input)="searchProducts($event)">
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xl-2 justify-content-center text-center pt-1 pb-1">
                   <button type="button" title="Añadir producto" class="btn btn-lg custom-button shadow" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                    <i class="bi bi-plus-circle"></i> Nuevo producto
+                    <i class="bi bi-plus-circle"></i> Nuevo
                   </button>
                 </div>
-                <div class="col-md-6  mb-4 justify-content-center align-self-center text-center">
+                <div class="col-md-4 col-sm-6 col-xl-2 justify-content-center text-center pt-1 pb-1">
                   <button type="button" title="Papelera" class="btn btn-lg custom-button shadow" data-bs-toggle="modal" data-bs-target="#trashModal">
                     <i class="bi bi-trash3"></i> Papelera
                   </button>
                 </div>
+                <div class="col-md-4 col-sm-6 col-xl-2 justify-content-center text-center pt-1 pb-1">
+                  <button 
+                    type="button" 
+                    class="btn btn-lg custom-button shadow" 
+                    [ngClass]="{'active-filter': isFilterActive}" 
+                    (click)="toggleFilter()">
+                    <i class="bi bi-filter"></i> Sin Stock
+                  </button>
+                </div>
               </div> 
-              
             </div>
-            
           </div>
           <div class="row pb-2">
 
-            <div class="col-md-5 col-11 m-0 p-0 col-xs-12">
-              <div class="input-group mb-3 rounded-5 bg-secondary-subtle">
-                <button class="btn btn-lg btn-link-light text-white border-0" style="cursor:default;"><i class="bi bi-search"></i></button>
-                <input type="text" id="searchProducts" class="form-control rounded-end-5" style="box-shadow: none;" placeholder="Buscar productos, marcas y más..."
-                  aria-describedby="button-addon2" (input)="searchProducts($event)">
+            <!--Total resultados-->
+            <div class="row mb-3 mt-2 align-items-center">
+              <div class="col-md-6 col-sm-12 col-xs-12">
+                <h6 class="fw-light fs-5 text-muted">{{totalElements}} Resultados</h6>
               </div>
-            </div>
 
-            <div class="col-md-3 col-6 pe-5 mb-3">
-              <select class="form-select rounded-5" style="box-shadow: none;" (change)="orderProducts($event)">
-                <option class="form-select text-muted" selected disabled>Ordenar</option>
-                <option value="default" class="form-select text-muted">Por defecto</option>
-                <option class="form-select text-muted" value="asc">Menor precio</option>
-                <option class="form-select text-muted" value="desc">Mayor precio</option>
-              </select>
-            </div>
-            <div class="col-md-3 mb-3 col-6 align-self-center form-check form-switch form-check-center">
-              <input class="form-check-input fs-5" style="box-shadow: none; outline: none;" type="checkbox" role="switch" id="flexSwitchCheckDefault"
-                (change)="filterByNonStock($event)">
-              <label class="form-check-label text-muted mt-1" class="form-label fs-5 text-danger fw-semibold"for="flexSwitchCheckDefault">Sin stock</label>
+              <div class="col-md-6 col-sm-12 col-xs-12 mb-3 text-end">
+                <select class="form-select rounded-5" style="box-shadow: none;" (change)="orderProducts($event)">
+                  <option class="form-select text-muted" selected disabled>Ordenar</option>
+                  <option value="default" class="form-select text-muted">Por defecto</option>
+                  <option class="form-select text-muted" value="asc">Menor precio</option>
+                  <option class="form-select text-muted" value="desc">Mayor precio</option>
+                </select>
+              </div>
             </div>
 
             <!--Nuevo producto-->
@@ -355,12 +364,7 @@
               </div>
             </div>
           </div>
-          <!--Total resultados-->
-          <div class="row mb-3 mt-2">
-            <div class="col-md-12">
-              <h6 class="fw-light fs-5 text-muted">{{totalElements}} Resultados</h6>
-            </div>
-          </div>
+
           <!-- Productos -->
           <div class="row">
             <div class="col-md-12 col-12">

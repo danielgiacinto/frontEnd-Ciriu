@@ -46,6 +46,7 @@ export class ProductsAdminComponent implements OnInit {
   codeUpdate: string = '';
   isLoading: boolean = true;
   selectedProductCode: string = '';
+  isFilterActive: boolean = false;
   @ViewChild(StockMovementsComponent) stockMovementsComponent!: StockMovementsComponent;
 
   formNewToy = new FormGroup({
@@ -285,10 +286,19 @@ export class ProductsAdminComponent implements OnInit {
     //this.loadToys();
   }
 
-  filterByNonStock(event: any) {
-    console.log(event.target.checked);
-    this.nonStock = event.target.checked;
-    this.loadToys();
+  toggleFilter(): void {
+    this.isFilterActive = !this.isFilterActive; // Alternar el estado
+    this.filterByNonStock(this.isFilterActive); // Llamar al método de filtrado
+  }
+
+  filterByNonStock(isActive: boolean) {
+    if(isActive) {
+      this.nonStock = true;
+      this.loadToys();
+    } else {
+      this.nonStock = false;
+      this.loadToys();
+    }
   }
 
   ngOnDestroy(): void {

@@ -69,4 +69,12 @@
     background-color: #FF8383; /* Rojo */
     color: white; /* Texto blanco */
 }
+
+
+  
+  /* Estado activo del botón */
+.custom-button.active-filter {
+    background-color: #379ec7; /* Fondo celeste */
+    color: white; /* Texto blanco */
+}
   
